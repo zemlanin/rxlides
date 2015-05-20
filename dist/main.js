@@ -27704,6 +27704,51 @@ module.exports = property;
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"_process":1}],119:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.renderStream = renderStream;
+
+function renderStream(canvas) {
+  var ctx = canvas.getContext("2d");
+  ctx.font = "20px monospace";
+
+  return function (keys) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    var _iteratorNormalCompletion = true;
+    var _didIteratorError = false;
+    var _iteratorError = undefined;
+
+    try {
+      for (var _iterator = keys[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+        var _step$value = _step.value;
+        var text = _step$value.text;
+        var position = _step$value.position;
+
+        ctx.fillStyle = "#000000";
+        ctx.fillText(text, position > 0 ? position : canvas.width + position, canvas.height - 5);
+      }
+    } catch (err) {
+      _didIteratorError = true;
+      _iteratorError = err;
+    } finally {
+      try {
+        if (!_iteratorNormalCompletion && _iterator["return"]) {
+          _iterator["return"]();
+        }
+      } finally {
+        if (_didIteratorError) {
+          throw _iteratorError;
+        }
+      }
+    }
+  };
+}
+
+},{}],120:[function(require,module,exports){
 'use strict';
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
@@ -27720,10 +27765,11 @@ var _lodashFp = require('lodash-fp');
 
 var _lodashFp2 = _interopRequireDefault(_lodashFp);
 
+var _vision = require('./vision');
+
 var keyboardStream = _rx2['default'].Observable.fromEvent(document.body, 'keyup');
 var cnvs = document.querySelector('canvas#main');
 var ctx = cnvs.getContext('2d');
-ctx.font = '20px monospace';
 
 var frameStream = _rx2['default'].Observable.create(function (observer) {
   return (function loop() {
@@ -27762,44 +27808,8 @@ var canvasKeys = keyboardStream.pluck('keyCode').map(function (keyCode) {
   return { text: text, position: -position };
 })).distinctUntilChanged();
 
-canvasKeys.subscribe(function (keys) {
-  ctx.clearRect(0, 0, cnvs.width, cnvs.height);
-
-  var _iteratorNormalCompletion = true;
-  var _didIteratorError = false;
-  var _iteratorError = undefined;
-
-  try {
-    for (var _iterator = keys[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-      var _step$value = _step.value;
-      var text = _step$value.text;
-      var position = _step$value.position;
-
-      ctx.fillStyle = '#000000';
-      ctx.fillText(text, position > 0 ? position : cnvs.width + position, cnvs.height - 5);
-    }
-  } catch (err) {
-    _didIteratorError = true;
-    _iteratorError = err;
-  } finally {
-    try {
-      if (!_iteratorNormalCompletion && _iterator['return']) {
-        _iterator['return']();
-      }
-    } finally {
-      if (_didIteratorError) {
-        throw _iteratorError;
-      }
-    }
-  }
-});
-
-var cnvsMap = document.querySelector('canvas#main_map');
-var ctxMap = cnvsMap.getContext('2d');
-ctxMap.font = '20px monospace';
-
 var canvasKeysMap = keyboardStream.pluck('keyCode').map(function (text) {
-  return [{ text: text, position: ctxMap.measureText(text).width }, 0];
+  return [{ text: text, position: ctx.measureText(text).width }, 0];
 }).merge(frameStream.map([null, 1])).scan([], function (acc, _ref6) {
   var _ref62 = _slicedToArray(_ref6, 2);
 
@@ -27822,115 +27832,20 @@ var canvasKeysMap = keyboardStream.pluck('keyCode').map(function (text) {
   var text = _ref9.text;
   var position = _ref9.position;
   return { text: text, position: -position };
-}));
+})).distinctUntilChanged();
 
-canvasKeysMap.subscribe(function (keys) {
-  ctxMap.clearRect(0, 0, cnvsMap.width, cnvsMap.height);
-
-  var _iteratorNormalCompletion2 = true;
-  var _didIteratorError2 = false;
-  var _iteratorError2 = undefined;
-
-  try {
-    for (var _iterator2 = keys[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-      var _step2$value = _step2.value;
-      var text = _step2$value.text;
-      var position = _step2$value.position;
-
-      ctxMap.fillStyle = '#000000';
-      ctxMap.fillText(text, position > 0 ? position : cnvsMap.width + position, cnvsMap.height - 5);
-    }
-  } catch (err) {
-    _didIteratorError2 = true;
-    _iteratorError2 = err;
-  } finally {
-    try {
-      if (!_iteratorNormalCompletion2 && _iterator2['return']) {
-        _iterator2['return']();
-      }
-    } finally {
-      if (_didIteratorError2) {
-        throw _iteratorError2;
-      }
-    }
-  }
-});
-
-var cnvsFilter = document.querySelector('canvas#main_filter');
-var ctxFilter = cnvsFilter.getContext('2d');
-ctxFilter.font = '20px monospace';
 var canvasKeysFilter = canvasKeysMap.map(_lodashFp2['default'].filter(function (_ref10) {
   var text = _ref10.text;
   return text > 70;
 }));
 
-canvasKeysFilter.subscribe(function (keys) {
-  ctxFilter.clearRect(0, 0, cnvsFilter.width, cnvsFilter.height);
-
-  var _iteratorNormalCompletion3 = true;
-  var _didIteratorError3 = false;
-  var _iteratorError3 = undefined;
-
-  try {
-    for (var _iterator3 = keys[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-      var _step3$value = _step3.value;
-      var text = _step3$value.text;
-      var position = _step3$value.position;
-
-      ctxFilter.fillStyle = '#000000';
-      ctxFilter.fillText(text, position > 0 ? position : cnvsFilter.width + position, cnvsFilter.height - 5);
-    }
-  } catch (err) {
-    _didIteratorError3 = true;
-    _iteratorError3 = err;
-  } finally {
-    try {
-      if (!_iteratorNormalCompletion3 && _iterator3['return']) {
-        _iterator3['return']();
-      }
-    } finally {
-      if (_didIteratorError3) {
-        throw _iteratorError3;
-      }
-    }
-  }
-});
-
-var cnvsRequest = document.querySelector('canvas#main_request');
-var ctxRequest = cnvsRequest.getContext('2d');
-ctxRequest.font = '20px monospace';
-canvasKeysFilter.flatMap(function (v) {
+var canvasKeysFlatmap = canvasKeysFilter.flatMap(function (v) {
   return _rx2['default'].Observable.timer(1000).map(v);
-}).subscribe(function (keys) {
-  ctxRequest.clearRect(0, 0, cnvsRequest.width, cnvsRequest.height);
-
-  var _iteratorNormalCompletion4 = true;
-  var _didIteratorError4 = false;
-  var _iteratorError4 = undefined;
-
-  try {
-    for (var _iterator4 = keys[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
-      var _step4$value = _step4.value;
-      var text = _step4$value.text;
-      var position = _step4$value.position;
-
-      ctxRequest.fillStyle = '#000000';
-      ctxRequest.fillText(text, position > 0 ? position : cnvsRequest.width + position, cnvsRequest.height - 5);
-    }
-  } catch (err) {
-    _didIteratorError4 = true;
-    _iteratorError4 = err;
-  } finally {
-    try {
-      if (!_iteratorNormalCompletion4 && _iterator4['return']) {
-        _iterator4['return']();
-      }
-    } finally {
-      if (_didIteratorError4) {
-        throw _iteratorError4;
-      }
-    }
-  }
 });
 
-},{"lodash-fp":3,"rx":118}]},{},[119]);
+canvasKeys.subscribe((0, _vision.renderStream)(document.querySelector('canvas#main')));
+canvasKeysMap.subscribe((0, _vision.renderStream)(document.querySelector('canvas#main_map')));
+canvasKeysFilter.subscribe((0, _vision.renderStream)(document.querySelector('canvas#main_filter')));
+canvasKeysFlatmap.subscribe((0, _vision.renderStream)(document.querySelector('canvas#main_request')));
+
+},{"./vision":119,"lodash-fp":3,"rx":118}]},{},[120]);
