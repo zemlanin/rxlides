@@ -10508,29 +10508,156 @@ process.umask = function() { return 0; };
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"_process":1}],3:[function(require,module,exports){
-"use strict";
+'use strict';
 
-Object.defineProperty(exports, "__esModule", {
+Object.defineProperty(exports, '__esModule', {
   value: true
 });
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-var _map_filter_flatmapJs = require("./map_filter_flatmap.js");
+var _map_filter_flatmapJs = require('./map_filter_flatmap.js');
 
 var _map_filter_flatmapJs2 = _interopRequireDefault(_map_filter_flatmapJs);
 
-exports["default"] = function (page) {
+var _keyboard_demoJs = require('./keyboard_demo.js');
+
+var _keyboard_demoJs2 = _interopRequireDefault(_keyboard_demoJs);
+
+exports['default'] = function (page) {
   switch (page) {
-    case "map_filter_flatmap":
-      (0, _map_filter_flatmapJs2["default"])();
+    case 'map_filter_flatmap':
+      (0, _map_filter_flatmapJs2['default'])();
+      break;
+    case 'keyboard_demo':
+      (0, _keyboard_demoJs2['default'])();
       break;
   }
 };
 
-module.exports = exports["default"];
+module.exports = exports['default'];
 
-},{"./map_filter_flatmap.js":4}],4:[function(require,module,exports){
+},{"./keyboard_demo.js":4,"./map_filter_flatmap.js":5}],4:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+
+var _keyCanvasData;
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _slicedToArray(arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i['return']) _i['return'](); } finally { if (_d) throw _e; } } return _arr; } else { throw new TypeError('Invalid attempt to destructure non-iterable instance'); } }
+
+function _defineProperty(obj, key, value) { return Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); }
+
+var _rx = require('rx');
+
+var _rx2 = _interopRequireDefault(_rx);
+
+var _vision = require('../vision');
+
+var UP = 38;
+var DOWN = 40;
+var Q = 81;
+var W = 87;
+var E = 69;
+var A = 65;
+var S = 83;
+var D = 68;
+
+var keyCanvasData = (_keyCanvasData = {}, _defineProperty(_keyCanvasData, Q, ['Q', 1, 1]), _defineProperty(_keyCanvasData, W, ['W', 111, 1]), _defineProperty(_keyCanvasData, E, ['E', 221, 1]), _defineProperty(_keyCanvasData, A, ['A', 41, 111]), _defineProperty(_keyCanvasData, S, ['S', 151, 111]), _defineProperty(_keyCanvasData, D, ['D', 261, 111]), _keyCanvasData);
+
+exports['default'] = function () {
+  var canvas = document.querySelector('canvas');
+  var ctx = canvas.getContext('2d');
+  ctx.strokeStyle = '#00a500';
+  ctx.fillStyle = ctx.strokeStyle;
+  ctx.font = document.body.style.font;
+
+  var keys = _rx2['default'].Observable.fromEvent(document.body, 'keydown').pluck('keyCode');
+  var startStream = keys.filter(function (keyCode) {
+    return keyCode === Q;
+  });
+  var stopStream = keys.filter(function (keyCode) {
+    return keyCode === E;
+  });
+
+  var drawToCanvas = function drawToCanvas(keyCode) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    for (var key in keyCanvasData) {
+      ctx.strokeRect(keyCanvasData[key][1], keyCanvasData[key][2], 100, 100);
+      ctx.fillText(keyCanvasData[key][0], keyCanvasData[key][1] + 20, keyCanvasData[key][2] + 40);
+    }
+
+    if (keyCode && keyCanvasData[keyCode]) {
+      ctx.fillRect(keyCanvasData[keyCode][1], keyCanvasData[keyCode][2], 100, 100);
+      ctx.fillStyle = '#DFFEE3';
+      ctx.fillText(keyCanvasData[keyCode][0], keyCanvasData[keyCode][1] + 20, keyCanvasData[keyCode][2] + 40);
+      ctx.fillStyle = ctx.strokeStyle;
+    }
+  };
+
+  drawToCanvas();
+
+  _rx2['default'].Observable.fromEvent(document.body, 'keyup').map(null).subscribe(drawToCanvas);
+  startStream.map(function (q) {
+    return keys.startWith(q).takeUntil(stopStream);
+  })['switch']().filter(function (keyCode) {
+    return keyCanvasData[keyCode];
+  }).subscribe(drawToCanvas);
+
+  _rx2['default'].Observable.fromEvent(document.body, 'keyup').pluck('keyCode').filter(function (keyCode) {
+    return keyCode === UP || keyCode === DOWN;
+  }).map(function (keyCode) {
+    return keyCode - 39;
+  }) // UP = -1, DOWN = +1
+  .scan(0, function (acc, move) {
+    if (acc + move < 0) {
+      return acc;
+    }
+    if (acc + move > 6) {
+      return 0;
+    }
+    return acc + move;
+  }).subscribe(function (acc) {
+    var _iteratorNormalCompletion = true;
+    var _didIteratorError = false;
+    var _iteratorError = undefined;
+
+    try {
+      for (var _iterator = Array(7).entries()[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+        var _step$value = _slicedToArray(_step.value, 1);
+
+        var index = _step$value[0];
+
+        var part = document.querySelector('#part_' + index);
+        if (part) {
+          part.style.color = !acc || acc === index ? 'black' : 'gray';
+        }
+      }
+    } catch (err) {
+      _didIteratorError = true;
+      _iteratorError = err;
+    } finally {
+      try {
+        if (!_iteratorNormalCompletion && _iterator['return']) {
+          _iterator['return']();
+        }
+      } finally {
+        if (_didIteratorError) {
+          throw _iteratorError;
+        }
+      }
+    }
+  });
+};
+
+module.exports = exports['default'];
+
+},{"../vision":6,"rx":2}],5:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -10547,9 +10674,7 @@ var _rx2 = _interopRequireDefault(_rx);
 
 var _vision = require('../vision');
 
-var LEFT = 37;
 var UP = 38;
-var RIGHT = 39;
 var DOWN = 40;
 
 exports['default'] = function () {
@@ -10638,7 +10763,7 @@ exports['default'] = function () {
 
 module.exports = exports['default'];
 
-},{"../vision":5,"rx":2}],5:[function(require,module,exports){
+},{"../vision":6,"rx":2}],6:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -10670,7 +10795,7 @@ function renderStream(canvas) {
         var position = _step$value.position;
         var mirror = _step$value.mirror;
 
-        ctx.fillStyle = "#000000";
+        ctx.fillStyle = "#00A500";
         ctx.fillText(text, mirror ? canvas.width - position : position, canvas.height - 7);
       }
     } catch (err) {
@@ -10717,7 +10842,7 @@ function wrapToDisplay(ctx) {
   };
 }
 
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 'use strict';
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
@@ -10755,4 +10880,4 @@ _rx2['default'].Observable.fromEvent(document.body, 'keyup').pluck('keyCode').ma
   return location.href = meta.content;
 });
 
-},{"./slides":3,"rx":2}]},{},[6]);
+},{"./slides":3,"rx":2}]},{},[7]);

@@ -2,7 +2,7 @@ import Rx from 'rx'
 
 import {wrapToDisplay, renderStream, accumutate} from '../vision'
 
-const [LEFT, UP, RIGHT, DOWN] = [37, 38, 39, 40]
+const [UP, DOWN] = [38, 40]
 
 export default () => {
   var keyCodesStream = Rx.Observable

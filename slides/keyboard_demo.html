@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>rxlides</title>
+    <meta property="page" content="keyboard_demo">
+    <meta property="prev" content="../index.html">
+    <meta property="next" content="./map_filter_flatmap.html">
+    <style type="text/css">
+      .wrapper {margin: 100px auto; width: 90vw;}
+      canvas { margin-bottom: -5px; }
+      table { width: inherit; }
+    </style>
+</head>
+<body style="margin: 0; background-color: #DFFEE3; font: 28px monospace;">
+    <div class="wrapper">
+        <table>
+            <tr>
+                <td>
+                    <span>
+                        <span id="part_1">
+                        const [Q, W, E, A, S, D] = [81, 87, 69, 65, 83, 68]<br/>
+                        const keyCanvasData = {<br/>
+                        &nbsp;&nbsp;81: ['Q', 1, 1], //...<br/>
+                        }<br/>
+                        </span>
+                        <span id="part_2">
+                        <br/>
+                        var keys = Rx.Observable.fromEvent(document.body, 'keydown').pluck('keyCode')<br/>
+                        var startStream = keys.filter(keyCode => keyCode === Q)<br/>
+                        var stopStream = keys.filter(keyCode => keyCode === E)<br/>
+                        <br/>
+                        </span>
+                        <span id="part_3">
+                        startStream<br/>
+                        &nbsp;&nbsp;.map(v => keys.takeUntil(stopStream))<br/>
+                        </span>
+                        <span id="part_4">
+                        &nbsp;&nbsp;.switch()<br/>
+                        </span>
+                        <span id="part_5">
+                        &nbsp;&nbsp;.filter(keyCode => keyBorders[keyCode])<br/>
+                        &nbsp;&nbsp;.subscribe(drawToCanvas)<br/>
+                        </span>
+                        <span id="part_6">
+                        Rx.Observable.fromEvent(document.body, 'keyup').map(null).subscribe(drawToCanvas)<br/>
+                        </span>
+                        <br/>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <canvas width="400" height="220"></canvas>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <script type="text/javascript" src="../dist/main.js"></script>
+</body>
+</html>

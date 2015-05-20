@@ -6,7 +6,7 @@ export function renderStream(canvas) {
     ctx.clearRect(0, 0, canvas.width, canvas.height)
 
     for (var {text, position, mirror} of keys) {
-      ctx.fillStyle = "#000000"
+      ctx.fillStyle = "#00A500"
       ctx.fillText(text, mirror ? canvas.width - position : position, canvas.height - 7)
     }
   }
