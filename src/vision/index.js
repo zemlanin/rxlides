@@ -1,12 +1,12 @@
 export function renderStream(canvas) {
   var ctx = canvas.getContext("2d")
-  ctx.font = document.body.style.font
 
   return keys => {
     ctx.clearRect(0, 0, canvas.width, canvas.height)
+    ctx.font = document.body.style.font
+    ctx.fillStyle = "#00A500"
 
     for (var {text, position, mirror} of keys) {
-      ctx.fillStyle = "#00A500"
       ctx.fillText(text, mirror ? canvas.width - position : position, canvas.height - 7)
     }
   }

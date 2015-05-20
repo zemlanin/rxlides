@@ -1,4 +1,5 @@
 import Rx from 'rx'
+import range from 'lodash.range'
 
 import {wrapToDisplay, renderStream, accumutate} from '../vision'
 
@@ -49,21 +50,19 @@ export default () => {
     .filter(keyCode => keyCanvasData[keyCode])
     .subscribe(drawToCanvas)
 
+  var parts = document.querySelectorAll('[id^=part_]').length
+
   Rx.Observable.fromEvent(document.body, 'keyup')
     .pluck('keyCode')
     .filter(keyCode => keyCode === UP || keyCode === DOWN)
     .map(keyCode => keyCode - 39) // UP = -1, DOWN = +1
     .scan(0, (acc, move) => {
-      if (acc + move < 0) { return acc }
-      if (acc + move > 6) { return 0 }
+      if (acc + move < 0 || acc + move > parts) { return 0 }
       return acc + move
     })
     .subscribe(acc => {
-      for (var [index] of Array(7).entries()) {
-        let part = document.querySelector('#part_'+index)
-        if (part) {
-          part.style.color = (!acc || acc === index) ? 'black' : 'gray'
-        }
+      for (var index of range(1, parts+1)) {
+        document.getElementById('part_'+index).style.color = (!acc || acc === index) ? 'black' : 'gray'
       }
     })
 }

@@ -1,6 +1,8 @@
 import Rx from 'rx'
-
 import slides from './slides'
+
+import 'babel/polyfill'
+
 var metaPage = document.querySelector('meta[property=page]')
 if (metaPage) { slides(metaPage.content) }
 

@@ -11,41 +11,40 @@
       table { width: inherit; }
     </style>
 </head>
-<body style="margin: 0; background-color: #DFFEE3; font: 28px monospace;">
+<body style="margin: 0; background-color: #DFFEE3; font: 26px monospace;">
     <div class="wrapper">
         <table>
             <tr>
                 <td>
-                    <span>
-                        <span id="part_1">
-                        const [Q, W, E, A, S, D] = [81, 87, 69, 65, 83, 68]<br/>
-                        const keyCanvasData = {<br/>
-                        &nbsp;&nbsp;81: ['Q', 1, 1], //...<br/>
-                        }<br/>
-                        </span>
-                        <span id="part_2">
-                        <br/>
-                        var keys = Rx.Observable.fromEvent(document.body, 'keydown').pluck('keyCode')<br/>
-                        var startStream = keys.filter(keyCode => keyCode === Q)<br/>
-                        var stopStream = keys.filter(keyCode => keyCode === E)<br/>
-                        <br/>
-                        </span>
-                        <span id="part_3">
-                        startStream<br/>
-                        &nbsp;&nbsp;.map(v => keys.takeUntil(stopStream))<br/>
-                        </span>
-                        <span id="part_4">
-                        &nbsp;&nbsp;.switch()<br/>
-                        </span>
-                        <span id="part_5">
-                        &nbsp;&nbsp;.filter(keyCode => keyBorders[keyCode])<br/>
-                        &nbsp;&nbsp;.subscribe(drawToCanvas)<br/>
-                        </span>
-                        <span id="part_6">
-                        Rx.Observable.fromEvent(document.body, 'keyup').map(null).subscribe(drawToCanvas)<br/>
-                        </span>
-                        <br/>
+                    <span id="part_1">
+                    const [Q, W, E, A, S, D] = [81, 87, 69, 65, 83, 68]<br/>
+                    const keyCanvasData = {<br/>
+                    &nbsp;&nbsp;81: ['Q', 1, 1], //...<br/>
+                    }<br/>
                     </span>
+                    <span id="part_2">
+                    <br/>
+                    var keys = Rx.Observable.fromEvent(document.body, 'keydown').pluck('keyCode')<br/>
+                    var startStream = keys.filter(keyCode => keyCode === Q)<br/>
+                    var stopStream = keys.filter(keyCode => keyCode === E)<br/>
+                    <br/>
+                    </span>
+                    <span id="part_3">
+                    startStream<br/>
+                    &nbsp;&nbsp;.map(v => keys.takeUntil(stopStream))<br/>
+                    </span>
+                    <span id="part_4">
+                    &nbsp;&nbsp;.switch()<br/>
+                    </span>
+                    <span id="part_5">
+                    &nbsp;&nbsp;.filter(keyCode => keyBorders[keyCode])<br/>
+                    &nbsp;&nbsp;.subscribe(drawToCanvas)<br/>
+                    </span>
+                    <span id="part_6">
+                    Rx.Observable.fromEvent(document.body, 'keyup').map(null).subscribe(drawToCanvas)<br/>
+                    </span>
+                    <br/>
+                    <br/>
                 </td>
             </tr>
             <tr>
