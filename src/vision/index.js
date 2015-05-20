@@ -1,6 +1,6 @@
 export function renderStream(canvas) {
   var ctx = canvas.getContext("2d")
-  ctx.font = '32px monospace'
+  ctx.font = document.body.style.font
 
   return keys => {
     ctx.clearRect(0, 0, canvas.width, canvas.height)
@@ -18,7 +18,7 @@ export function accumutate(acc, [value, shift]) {
   }
 
   return acc
-    .filter(({position}) => position <= 500)
+    .filter(({position}) => position <= 600)
     .map(({text, position, mirror}) => ({text, position: position+shift, mirror}))
 }
 

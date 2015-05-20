@@ -15,7 +15,6 @@
     "node-static": "^0.7.6"
   },
   "dependencies": {
-    "lodash-fp": "^0.8.0",
     "rx": "^2.5.2"
   }
 }
