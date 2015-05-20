@@ -4,12 +4,53 @@
     <meta name="viewport" content="initial-scale=1, maximum-scale=1">
     <title>rxlides</title>
     <style type="text/css">
-      body { margin: 0; background-color: #DFFEE3; }
-      .tile { width: 64px; height: 64px; background-color: white; margin: 3px; float: left; text-align: center; cursor: pointer; }
+      body { margin: 0; background-color: #DFFEE3; font: 20px monospace;}
+      .wrapper {margin: 40px auto; width: 1400px;}
+      .canvas-wrapper { display: inline; }
+      .canvas-wrapper::before { content: "<"; }
+      .canvas-wrapper::after { content: ">"; }
+      canvas {margin-bottom: -5px; }
     </style>
 </head>
 <body>
-    <canvas width="400" height="35"></canvas>
+    <div class="wrapper">
+    <table>
+        <tr> 
+            <td>Rx.Observable</td>
+        </tr>
+        <tr> 
+            <td>&nbsp;&nbsp;.fromEvent(document.body, 'keyup')</td>
+            <td>
+                <div class="canvas-wrapper">
+                    <canvas id="main" width="400" height="25"></canvas>
+                </div>
+            <td>
+        </tr>
+        <tr> 
+            <td>&nbsp;&nbsp;.map(({keyCode}) => keyCode)</td>
+            <td>
+                <div class="canvas-wrapper">
+                    <canvas id="main_map" width="400" height="25"></canvas>
+                </div>
+            <td>
+        </tr>
+        <tr> 
+            <td>&nbsp;&nbsp;.filter(keyCode => keyCode > 70)</td>
+            <td>
+                <div class="canvas-wrapper">
+                    <canvas id="main_filter" width="400" height="25"></canvas>
+                </div>
+            <td>
+        </tr>
+        <tr> 
+            <td>&nbsp;&nbsp;.flatMap(keyCode => Rx.GET('/' + keyCode))</td>
+            <td>
+                <div class="canvas-wrapper">
+                    <canvas id="main_request" width="400" height="25"></canvas>
+                </div>
+            <td>
+        </tr>
+    </table>
     <script type="text/javascript" src="./dist/main.js"></script>
 </body>
 </html>

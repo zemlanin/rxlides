@@ -27720,8 +27720,8 @@ var _lodashFp = require('lodash-fp');
 
 var _lodashFp2 = _interopRequireDefault(_lodashFp);
 
-var keyboardStream = _rx2['default'].Observable.fromEvent(document.body, 'keypress');
-var cnvs = document.querySelector('canvas');
+var keyboardStream = _rx2['default'].Observable.fromEvent(document.body, 'keyup');
+var cnvs = document.querySelector('canvas#main');
 var ctx = cnvs.getContext('2d');
 ctx.font = '20px monospace';
 
@@ -27734,7 +27734,7 @@ var frameStream = _rx2['default'].Observable.create(function (observer) {
   })();
 });
 
-keyboardStream.pluck('keyCode').map(function (keyCode) {
+var canvasKeys = keyboardStream.pluck('keyCode').map(function (keyCode) {
   return '[' + String.fromCharCode(keyCode) + ']';
 }).map(function (text) {
   return [{ text: text, position: ctx.measureText(text).width }, 0];
@@ -27760,7 +27760,9 @@ keyboardStream.pluck('keyCode').map(function (keyCode) {
   var text = _ref5.text;
   var position = _ref5.position;
   return { text: text, position: -position };
-})).distinctUntilChanged().subscribe(function (keys) {
+})).distinctUntilChanged();
+
+canvasKeys.subscribe(function (keys) {
   ctx.clearRect(0, 0, cnvs.width, cnvs.height);
 
   var _iteratorNormalCompletion = true;
@@ -27774,7 +27776,7 @@ keyboardStream.pluck('keyCode').map(function (keyCode) {
       var position = _step$value.position;
 
       ctx.fillStyle = '#000000';
-      ctx.fillText(text, position > 0 ? position : cnvs.width + position, cnvs.height - 10);
+      ctx.fillText(text, position > 0 ? position : cnvs.width + position, cnvs.height - 5);
     }
   } catch (err) {
     _didIteratorError = true;
@@ -27787,6 +27789,145 @@ keyboardStream.pluck('keyCode').map(function (keyCode) {
     } finally {
       if (_didIteratorError) {
         throw _iteratorError;
+      }
+    }
+  }
+});
+
+var cnvsMap = document.querySelector('canvas#main_map');
+var ctxMap = cnvsMap.getContext('2d');
+ctxMap.font = '20px monospace';
+
+var canvasKeysMap = keyboardStream.pluck('keyCode').map(function (text) {
+  return [{ text: text, position: ctxMap.measureText(text).width }, 0];
+}).merge(frameStream.map([null, 1])).scan([], function (acc, _ref6) {
+  var _ref62 = _slicedToArray(_ref6, 2);
+
+  var value = _ref62[0];
+  var shift = _ref62[1];
+
+  if (value) {
+    acc = [value].concat(_toConsumableArray(acc));
+  }
+
+  return _lodashFp2['default'].flow(_lodashFp2['default'].map(function (_ref7) {
+    var text = _ref7.text;
+    var position = _ref7.position;
+    return { text: text, position: position + shift };
+  }), _lodashFp2['default'].filter(function (_ref8) {
+    var position = _ref8.position;
+    return position <= cnvs.width + 30;
+  }))(acc);
+}).map(_lodashFp2['default'].map(function (_ref9) {
+  var text = _ref9.text;
+  var position = _ref9.position;
+  return { text: text, position: -position };
+}));
+
+canvasKeysMap.subscribe(function (keys) {
+  ctxMap.clearRect(0, 0, cnvsMap.width, cnvsMap.height);
+
+  var _iteratorNormalCompletion2 = true;
+  var _didIteratorError2 = false;
+  var _iteratorError2 = undefined;
+
+  try {
+    for (var _iterator2 = keys[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+      var _step2$value = _step2.value;
+      var text = _step2$value.text;
+      var position = _step2$value.position;
+
+      ctxMap.fillStyle = '#000000';
+      ctxMap.fillText(text, position > 0 ? position : cnvsMap.width + position, cnvsMap.height - 5);
+    }
+  } catch (err) {
+    _didIteratorError2 = true;
+    _iteratorError2 = err;
+  } finally {
+    try {
+      if (!_iteratorNormalCompletion2 && _iterator2['return']) {
+        _iterator2['return']();
+      }
+    } finally {
+      if (_didIteratorError2) {
+        throw _iteratorError2;
+      }
+    }
+  }
+});
+
+var cnvsFilter = document.querySelector('canvas#main_filter');
+var ctxFilter = cnvsFilter.getContext('2d');
+ctxFilter.font = '20px monospace';
+var canvasKeysFilter = canvasKeysMap.map(_lodashFp2['default'].filter(function (_ref10) {
+  var text = _ref10.text;
+  return text > 70;
+}));
+
+canvasKeysFilter.subscribe(function (keys) {
+  ctxFilter.clearRect(0, 0, cnvsFilter.width, cnvsFilter.height);
+
+  var _iteratorNormalCompletion3 = true;
+  var _didIteratorError3 = false;
+  var _iteratorError3 = undefined;
+
+  try {
+    for (var _iterator3 = keys[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+      var _step3$value = _step3.value;
+      var text = _step3$value.text;
+      var position = _step3$value.position;
+
+      ctxFilter.fillStyle = '#000000';
+      ctxFilter.fillText(text, position > 0 ? position : cnvsFilter.width + position, cnvsFilter.height - 5);
+    }
+  } catch (err) {
+    _didIteratorError3 = true;
+    _iteratorError3 = err;
+  } finally {
+    try {
+      if (!_iteratorNormalCompletion3 && _iterator3['return']) {
+        _iterator3['return']();
+      }
+    } finally {
+      if (_didIteratorError3) {
+        throw _iteratorError3;
+      }
+    }
+  }
+});
+
+var cnvsRequest = document.querySelector('canvas#main_request');
+var ctxRequest = cnvsRequest.getContext('2d');
+ctxRequest.font = '20px monospace';
+canvasKeysFilter.flatMap(function (v) {
+  return _rx2['default'].Observable.timer(1000).map(v);
+}).subscribe(function (keys) {
+  ctxRequest.clearRect(0, 0, cnvsRequest.width, cnvsRequest.height);
+
+  var _iteratorNormalCompletion4 = true;
+  var _didIteratorError4 = false;
+  var _iteratorError4 = undefined;
+
+  try {
+    for (var _iterator4 = keys[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
+      var _step4$value = _step4.value;
+      var text = _step4$value.text;
+      var position = _step4$value.position;
+
+      ctxRequest.fillStyle = '#000000';
+      ctxRequest.fillText(text, position > 0 ? position : cnvsRequest.width + position, cnvsRequest.height - 5);
+    }
+  } catch (err) {
+    _didIteratorError4 = true;
+    _iteratorError4 = err;
+  } finally {
+    try {
+      if (!_iteratorNormalCompletion4 && _iterator4['return']) {
+        _iterator4['return']();
+      }
+    } finally {
+      if (_didIteratorError4) {
+        throw _iteratorError4;
       }
     }
   }
