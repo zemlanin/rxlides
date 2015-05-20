@@ -1,7 +1,7 @@
 import Rx from 'rx'
 import _ from 'lodash-fp'
 
-import {renderStream} from './vision'
+import {wrapToDisplay, renderStream, accumutate} from './vision'
 
 var keyboardStream = Rx.Observable.fromEvent(document.body, 'keyup')
 var cnvs = document.querySelector('canvas#main')
@@ -9,7 +9,7 @@ var ctx = cnvs.getContext("2d")
 
 var frameStream = Rx.Observable.create(observer => (function loop() {
   window.requestAnimationFrame(() => {
-    observer.onNext()
+    observer.onNext([null, 1])
     loop()
   })
 })())
@@ -17,36 +17,16 @@ var frameStream = Rx.Observable.create(observer => (function loop() {
 var canvasKeys = keyboardStream
   .pluck('keyCode')
   .map(keyCode => `[${String.fromCharCode(keyCode)}]`)
-  .map(text => [{text, position: ctx.measureText(text).width}, 0])
-  .merge(frameStream.map([null, 1]))
-  .scan([], (acc, [value, shift]) => {
-    if (value) {
-      acc = [value, ...acc]
-    }
-
-    return _.flow(
-      _.map(({text, position}) => ({text, position: position+shift})),
-      _.filter(({position}) => position <= cnvs.width + 30)
-    )(acc)
-  })
-  .map(_.map(({text, position}) => ({text, position: -position})))
+  .map(wrapToDisplay(ctx))
+  .merge(frameStream)
+  .scan([], accumutate)
   .distinctUntilChanged()
 
 var canvasKeysMap = keyboardStream
   .pluck('keyCode')
-  .map(text => [{text, position: ctx.measureText(text).width}, 0])
-  .merge(frameStream.map([null, 1]))
-  .scan([], (acc, [value, shift]) => {
-    if (value) {
-      acc = [value, ...acc]
-    }
-
-    return _.flow(
-      _.map(({text, position}) => ({text, position: position+shift})),
-      _.filter(({position}) => position <= cnvs.width + 30)
-    )(acc)
-  })
-  .map(_.map(({text, position}) => ({text, position: -position})))
+  .map(wrapToDisplay(ctx))
+  .merge(frameStream)
+  .scan([], accumutate)
   .distinctUntilChanged()
 
 var canvasKeysFilter = canvasKeysMap

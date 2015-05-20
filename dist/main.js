@@ -27710,6 +27710,12 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.renderStream = renderStream;
+exports.accumutate = accumutate;
+exports.wrapToDisplay = wrapToDisplay;
+
+function _slicedToArray(arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) arr2[i] = arr[i]; return arr2; } else { return Array.from(arr); } }
 
 function renderStream(canvas) {
   var ctx = canvas.getContext("2d");
@@ -27727,9 +27733,10 @@ function renderStream(canvas) {
         var _step$value = _step.value;
         var text = _step$value.text;
         var position = _step$value.position;
+        var mirror = _step$value.mirror;
 
         ctx.fillStyle = "#000000";
-        ctx.fillText(text, position > 0 ? position : canvas.width + position, canvas.height - 5);
+        ctx.fillText(text, mirror ? canvas.width - position : position, canvas.height - 5);
       }
     } catch (err) {
       _didIteratorError = true;
@@ -27748,14 +27755,37 @@ function renderStream(canvas) {
   };
 }
 
+function accumutate(acc, _ref) {
+  var _ref2 = _slicedToArray(_ref, 2);
+
+  var value = _ref2[0];
+  var shift = _ref2[1];
+
+  if (value) {
+    acc = [value].concat(_toConsumableArray(acc));
+  }
+
+  return acc.filter(function (_ref3) {
+    var position = _ref3.position;
+    return position <= 500;
+  }).map(function (_ref4) {
+    var text = _ref4.text;
+    var position = _ref4.position;
+    var mirror = _ref4.mirror;
+    return { text: text, position: position + shift, mirror: mirror };
+  });
+}
+
+function wrapToDisplay(ctx) {
+  return function (text) {
+    return [{ text: text, position: parseInt(ctx.measureText(text).width, 10), mirror: true }, 0];
+  };
+}
+
 },{}],120:[function(require,module,exports){
 'use strict';
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-function _slicedToArray(arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i['return']) _i['return'](); } finally { if (_d) throw _e; } } return _arr; } else { throw new TypeError('Invalid attempt to destructure non-iterable instance'); } }
-
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) arr2[i] = arr[i]; return arr2; } else { return Array.from(arr); } }
 
 var _rx = require('rx');
 
@@ -27774,7 +27804,7 @@ var ctx = cnvs.getContext('2d');
 var frameStream = _rx2['default'].Observable.create(function (observer) {
   return (function loop() {
     window.requestAnimationFrame(function () {
-      observer.onNext();
+      observer.onNext([null, 1]);
       loop();
     });
   })();
@@ -27782,60 +27812,12 @@ var frameStream = _rx2['default'].Observable.create(function (observer) {
 
 var canvasKeys = keyboardStream.pluck('keyCode').map(function (keyCode) {
   return '[' + String.fromCharCode(keyCode) + ']';
-}).map(function (text) {
-  return [{ text: text, position: ctx.measureText(text).width }, 0];
-}).merge(frameStream.map([null, 1])).scan([], function (acc, _ref) {
-  var _ref2 = _slicedToArray(_ref, 2);
+}).map((0, _vision.wrapToDisplay)(ctx)).merge(frameStream).scan([], _vision.accumutate).distinctUntilChanged();
 
-  var value = _ref2[0];
-  var shift = _ref2[1];
+var canvasKeysMap = keyboardStream.pluck('keyCode').map((0, _vision.wrapToDisplay)(ctx)).merge(frameStream).scan([], _vision.accumutate).distinctUntilChanged();
 
-  if (value) {
-    acc = [value].concat(_toConsumableArray(acc));
-  }
-
-  return _lodashFp2['default'].flow(_lodashFp2['default'].map(function (_ref3) {
-    var text = _ref3.text;
-    var position = _ref3.position;
-    return { text: text, position: position + shift };
-  }), _lodashFp2['default'].filter(function (_ref4) {
-    var position = _ref4.position;
-    return position <= cnvs.width + 30;
-  }))(acc);
-}).map(_lodashFp2['default'].map(function (_ref5) {
-  var text = _ref5.text;
-  var position = _ref5.position;
-  return { text: text, position: -position };
-})).distinctUntilChanged();
-
-var canvasKeysMap = keyboardStream.pluck('keyCode').map(function (text) {
-  return [{ text: text, position: ctx.measureText(text).width }, 0];
-}).merge(frameStream.map([null, 1])).scan([], function (acc, _ref6) {
-  var _ref62 = _slicedToArray(_ref6, 2);
-
-  var value = _ref62[0];
-  var shift = _ref62[1];
-
-  if (value) {
-    acc = [value].concat(_toConsumableArray(acc));
-  }
-
-  return _lodashFp2['default'].flow(_lodashFp2['default'].map(function (_ref7) {
-    var text = _ref7.text;
-    var position = _ref7.position;
-    return { text: text, position: position + shift };
-  }), _lodashFp2['default'].filter(function (_ref8) {
-    var position = _ref8.position;
-    return position <= cnvs.width + 30;
-  }))(acc);
-}).map(_lodashFp2['default'].map(function (_ref9) {
-  var text = _ref9.text;
-  var position = _ref9.position;
-  return { text: text, position: -position };
-})).distinctUntilChanged();
-
-var canvasKeysFilter = canvasKeysMap.map(_lodashFp2['default'].filter(function (_ref10) {
-  var text = _ref10.text;
+var canvasKeysFilter = canvasKeysMap.map(_lodashFp2['default'].filter(function (_ref) {
+  var text = _ref.text;
   return text > 70;
 }));
 
