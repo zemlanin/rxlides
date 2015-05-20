@@ -18,7 +18,7 @@ export function accumutate(acc, [value, shift]) {
   }
 
   return acc
-    .filter(({position}) => position <= 600)
+    .filter(({position}) => position <= document.body.clientWidth)
     .map(({text, position, mirror}) => ({text, position: position+shift, mirror}))
 }
 

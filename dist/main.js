@@ -10702,7 +10702,7 @@ function accumutate(acc, _ref) {
 
   return acc.filter(function (_ref3) {
     var position = _ref3.position;
-    return position <= 600;
+    return position <= document.body.clientWidth;
   }).map(function (_ref4) {
     var text = _ref4.text;
     var position = _ref4.position;
