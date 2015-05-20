@@ -1,9 +1,9 @@
-import slide1 from './1.js'
+import mapFilterFlatmap from './map_filter_flatmap.js'
 
 export default page => {
   switch (page) {
-    case "1":
-      slide1()
+    case "map_filter_flatmap":
+      mapFilterFlatmap()
       break;
   }
 }

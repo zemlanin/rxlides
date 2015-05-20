@@ -10508,6 +10508,29 @@ process.umask = function() { return 0; };
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"_process":1}],3:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+var _map_filter_flatmapJs = require("./map_filter_flatmap.js");
+
+var _map_filter_flatmapJs2 = _interopRequireDefault(_map_filter_flatmapJs);
+
+exports["default"] = function (page) {
+  switch (page) {
+    case "map_filter_flatmap":
+      (0, _map_filter_flatmapJs2["default"])();
+      break;
+  }
+};
+
+module.exports = exports["default"];
+
+},{"./map_filter_flatmap.js":4}],4:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -10615,30 +10638,7 @@ exports['default'] = function () {
 
 module.exports = exports['default'];
 
-},{"../vision":5,"rx":2}],4:[function(require,module,exports){
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-var _js = require("./1.js");
-
-var _js2 = _interopRequireDefault(_js);
-
-exports["default"] = function (page) {
-  switch (page) {
-    case "1":
-      (0, _js2["default"])();
-      break;
-  }
-};
-
-module.exports = exports["default"];
-
-},{"./1.js":3}],5:[function(require,module,exports){
+},{"../vision":5,"rx":2}],5:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -10755,4 +10755,4 @@ _rx2['default'].Observable.fromEvent(document.body, 'keyup').pluck('keyCode').ma
   return location.href = meta.content;
 });
 
-},{"./slides":4,"rx":2}]},{},[6]);
+},{"./slides":3,"rx":2}]},{},[6]);
