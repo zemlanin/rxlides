@@ -27722,12 +27722,23 @@ var _lodashFp2 = _interopRequireDefault(_lodashFp);
 
 var keyboardStream = _rx2['default'].Observable.fromEvent(document.body, 'keypress');
 var cnvs = document.querySelector('canvas');
+var ctx = cnvs.getContext('2d');
+ctx.font = '20px monospace';
+
+var frameStream = _rx2['default'].Observable.create(function (observer) {
+  return (function loop() {
+    window.requestAnimationFrame(function () {
+      observer.onNext();
+      loop();
+    });
+  })();
+});
 
 keyboardStream.pluck('keyCode').map(function (keyCode) {
   return '[' + String.fromCharCode(keyCode) + ']';
 }).map(function (text) {
-  return [{ text: text, position: 0 }, 0];
-}).merge(_rx2['default'].Observable.interval(15).map([null, 1])).scan([], function (acc, _ref) {
+  return [{ text: text, position: ctx.measureText(text).width }, 0];
+}).merge(frameStream.map([null, 1])).scan([], function (acc, _ref) {
   var _ref2 = _slicedToArray(_ref, 2);
 
   var value = _ref2[0];
@@ -27745,9 +27756,11 @@ keyboardStream.pluck('keyCode').map(function (keyCode) {
     var position = _ref4.position;
     return position <= cnvs.width + 30;
   }))(acc);
-}).distinctUntilChanged().subscribe(function (keys) {
-  var ctx = cnvs.getContext('2d');
-  ctx.font = '20px monospace';
+}).map(_lodashFp2['default'].map(function (_ref5) {
+  var text = _ref5.text;
+  var position = _ref5.position;
+  return { text: text, position: -position };
+})).distinctUntilChanged().subscribe(function (keys) {
   ctx.clearRect(0, 0, cnvs.width, cnvs.height);
 
   var _iteratorNormalCompletion = true;
@@ -27761,7 +27774,7 @@ keyboardStream.pluck('keyCode').map(function (keyCode) {
       var position = _step$value.position;
 
       ctx.fillStyle = '#000000';
-      ctx.fillText(text, cnvs.width - position, cnvs.height - 10);
+      ctx.fillText(text, position > 0 ? position : cnvs.width + position, cnvs.height - 10);
     }
   } catch (err) {
     _didIteratorError = true;
