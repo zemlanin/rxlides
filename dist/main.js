@@ -10516,18 +10516,25 @@ Object.defineProperty(exports, '__esModule', {
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
+function _slicedToArray(arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i['return']) _i['return'](); } finally { if (_d) throw _e; } } return _arr; } else { throw new TypeError('Invalid attempt to destructure non-iterable instance'); } }
+
 var _rx = require('rx');
 
 var _rx2 = _interopRequireDefault(_rx);
 
 var _vision = require('../vision');
 
+var LEFT = 37;
+var UP = 38;
+var RIGHT = 39;
+var DOWN = 40;
+
 exports['default'] = function () {
   var keyCodesStream = _rx2['default'].Observable.fromEvent(document.body, 'keyup').pluck('keyCode').filter(function (keyCode) {
     return keyCode === 32 || keyCode >= 65 && keyCode <= 90;
   });
 
-  var ctx = document.querySelector('canvas#main').getContext('2d');
+  var ctx = document.querySelector('#main canvas').getContext('2d');
 
   var frameStream = _rx2['default'].Observable.create(function (observer) {
     return (function loop() {
@@ -10551,14 +10558,59 @@ exports['default'] = function () {
     });
   });
 
-  var canvasKeysFlatmap = canvasKeysFilter.flatMap(function (v) {
-    return _rx2['default'].Observable.timer(1000).map('resp: ' + v);
+  var canvasKeysFlatmap = canvasKeysFilter.map(function (keys) {
+    return keys.map(function (_ref2) {
+      var text = _ref2.text;
+      var position = _ref2.position;
+      var mirror = _ref2.mirror;
+      return { text: 'pong', position: position - 100, mirror: mirror };
+    });
   });
 
-  canvasKeys.subscribe((0, _vision.renderStream)(document.querySelector('canvas#main')));
-  canvasKeysMap.subscribe((0, _vision.renderStream)(document.querySelector('canvas#main_map')));
-  canvasKeysFilter.subscribe((0, _vision.renderStream)(document.querySelector('canvas#main_filter')));
-  canvasKeysFlatmap.subscribe((0, _vision.renderStream)(document.querySelector('canvas#main_request')));
+  canvasKeys.subscribe((0, _vision.renderStream)(document.querySelector('#main canvas')));
+  canvasKeysMap.subscribe((0, _vision.renderStream)(document.querySelector('#main_map canvas')));
+  canvasKeysFilter.subscribe((0, _vision.renderStream)(document.querySelector('#main_filter canvas')));
+  canvasKeysFlatmap.subscribe((0, _vision.renderStream)(document.querySelector('#main_request canvas')));
+
+  _rx2['default'].Observable.fromEvent(document.body, 'keyup').pluck('keyCode').filter(function (keyCode) {
+    return keyCode === UP || keyCode === DOWN;
+  }).map(function (keyCode) {
+    return keyCode - 39;
+  }) // UP = -1, DOWN = +1
+  .scan(0, function (acc, move) {
+    if (acc + move < 0 || acc + move > 3) {
+      return acc;
+    }
+    return acc + move;
+  }).subscribe(function (acc) {
+    var _iteratorNormalCompletion = true;
+    var _didIteratorError = false;
+    var _iteratorError = undefined;
+
+    try {
+      for (var _iterator = ['#main_map', '#main_filter', '#main_request'].entries()[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+        var _step$value = _slicedToArray(_step.value, 2);
+
+        var index = _step$value[0];
+        var sel = _step$value[1];
+
+        document.querySelector(sel).hidden = acc <= index;
+      }
+    } catch (err) {
+      _didIteratorError = true;
+      _iteratorError = err;
+    } finally {
+      try {
+        if (!_iteratorNormalCompletion && _iterator['return']) {
+          _iterator['return']();
+        }
+      } finally {
+        if (_didIteratorError) {
+          throw _iteratorError;
+        }
+      }
+    }
+  });
 };
 
 module.exports = exports['default'];
