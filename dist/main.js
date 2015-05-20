@@ -27719,7 +27719,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
 function renderStream(canvas) {
   var ctx = canvas.getContext("2d");
-  ctx.font = "20px monospace";
+  ctx.font = "32px monospace";
 
   return function (keys) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -27736,7 +27736,7 @@ function renderStream(canvas) {
         var mirror = _step$value.mirror;
 
         ctx.fillStyle = "#000000";
-        ctx.fillText(text, mirror ? canvas.width - position : position, canvas.height - 5);
+        ctx.fillText(text, mirror ? canvas.width - position : position, canvas.height - 7);
       }
     } catch (err) {
       _didIteratorError = true;
@@ -27797,7 +27797,10 @@ var _lodashFp2 = _interopRequireDefault(_lodashFp);
 
 var _vision = require('./vision');
 
-var keyboardStream = _rx2['default'].Observable.fromEvent(document.body, 'keyup');
+var keyCodesStream = _rx2['default'].Observable.fromEvent(document.body, 'keyup').pluck('keyCode').filter(function (keyCode) {
+  return keyCode === 32 || keyCode >= 65 && keyCode <= 90;
+});
+
 var cnvs = document.querySelector('canvas#main');
 var ctx = cnvs.getContext('2d');
 
@@ -27810,11 +27813,11 @@ var frameStream = _rx2['default'].Observable.create(function (observer) {
   })();
 });
 
-var canvasKeys = keyboardStream.pluck('keyCode').map(function (keyCode) {
+var canvasKeys = keyCodesStream.map(function (keyCode) {
   return '[' + String.fromCharCode(keyCode) + ']';
 }).map((0, _vision.wrapToDisplay)(ctx)).merge(frameStream).scan([], _vision.accumutate).distinctUntilChanged();
 
-var canvasKeysMap = keyboardStream.pluck('keyCode').map((0, _vision.wrapToDisplay)(ctx)).merge(frameStream).scan([], _vision.accumutate).distinctUntilChanged();
+var canvasKeysMap = keyCodesStream.map((0, _vision.wrapToDisplay)(ctx)).merge(frameStream).scan([], _vision.accumutate).distinctUntilChanged();
 
 var canvasKeysFilter = canvasKeysMap.map(_lodashFp2['default'].filter(function (_ref) {
   var text = _ref.text;
