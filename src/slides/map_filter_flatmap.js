@@ -49,6 +49,12 @@ export default () => {
   canvasKeysFilter.subscribe(renderStream(document.querySelector('#part_1 canvas')))
   canvasKeysFlatmap.subscribe(renderStream(document.querySelector('#part_2 canvas')))
 
+  if (location.hash === '#touch') {
+    for (var el of document.querySelectorAll('[hidden]')) {
+      el.hidden = false
+    }
+  }
+
   var parts = document.querySelectorAll('[id^=part_]').length
 
   Rx.Observable.fromEvent(document.body, 'keyup')
