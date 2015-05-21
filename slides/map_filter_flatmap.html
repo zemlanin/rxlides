@@ -13,7 +13,8 @@
       table { width: inherit; }
 
       @media (max-width: 1000px) {
-        .wrapper {width: 100vw;}
+        .wrapper {width: 95vw;}
+        canvas { margin-top: -2vw; }
       }
     </style>
 </head>
@@ -25,7 +26,7 @@
                 <td>&nbsp;&nbsp;.fromEvent(document.body, 'keyup')</td>
                 <td align="right">
                     <div class="canvas-wrapper">
-                        <canvas width="450" height="38"></canvas>
+                        <canvas width="400" height="38"></canvas>
                     </div>
                 </td>
             </tr>
@@ -33,7 +34,7 @@
                 <td>&nbsp;&nbsp;.map(({keyCode}) => keyCode)</td>
                 <td align="right">
                     <div class="canvas-wrapper">
-                        <canvas width="450" height="38"></canvas>
+                        <canvas width="400" height="38"></canvas>
                     </div>
                 </td>
             </tr>
@@ -41,7 +42,7 @@
                 <td>&nbsp;&nbsp;.filter(keyCode => keyCode > 70)</td>
                 <td align="right">
                     <div class="canvas-wrapper">
-                        <canvas width="450" height="38"></canvas>
+                        <canvas width="400" height="38"></canvas>
                     </div>
                 </td>
             </tr>
@@ -49,7 +50,7 @@
                 <td>&nbsp;&nbsp;.flatMap(() => Rx.GET('/ping'))</td>
                 <td align="right">
                     <div class="canvas-wrapper">
-                        <canvas width="450" height="38"></canvas>
+                        <canvas width="400" height="38"></canvas>
                     </div>
                 </td>
             </tr>

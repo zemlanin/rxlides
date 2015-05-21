@@ -13,7 +13,7 @@
       span.wasd.active { background-color: #00A500; color: #DFFEE3; }
 
       @media (max-width: 1000px) {
-        .wrapper { margin: 20px auto; width: 100vw; }
+        .wrapper { margin: 20px auto; width: 95vw; }
       }
     </style>
 </head>
@@ -45,12 +45,13 @@
                     <span id="part_5">
                     &nbsp;&nbsp;.filter(keyCode => keyBorders[keyCode])<br/>
                     &nbsp;&nbsp;.subscribe(setActive)<br/>
+                    <br/>
                     </span>
                     <span id="part_6">
-                    Rx.Observable.fromEvent(document.body, 'keyup').map(null).subscribe(setActive)<br/>
+                    Rx.Observable.fromEvent(document.body, 'keyup')<br/>
+                    &nbsp;&nbsp;.map(null)<br/>
+                    &nbsp;&nbsp;.subscribe(setActive)<br/>
                     </span>
-                    <br/>
-                    <br/>
                 </td>
             </tr>
             <tr>
