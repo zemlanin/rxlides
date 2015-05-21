@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>rxlides</title>
+    <meta property="page" content="single_subscribe">
+    <meta property="prev" content="./keyboard_demo.html">
+    <meta property="next" content="./map_filter_flatmap.html">
+    <style type="text/css">
+      .wrapper {margin: 40vh auto; width: 90vw; text-align: center; }
+      .canvas-wrapper { display: inline; color: #00A500}
+      .canvas-wrapper::before { content: "<"; }
+      .canvas-wrapper::after { content: ">"; }
+      canvas { margin-bottom: -5px; }
+
+      @media (max-width: 1000px) {
+        .wrapper {width: 95vw;}
+        canvas { margin-top: -2vw; }
+      }
+    </style>
+</head>
+<body style="margin: 0; background-color: #DFFEE3; font: 2vw monospace;">
+    <div class="wrapper">
+        <div class="canvas-wrapper">
+            <canvas width="400" height="38"></canvas>
+        </div><span>.subscribe((<span id="subscribe_arg"> e </span>) => {})</span>
+    </div>
+    <script type="text/javascript" src="../dist/main.js"></script>
+</body>
+</html>
