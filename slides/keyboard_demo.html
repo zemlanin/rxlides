@@ -6,14 +6,18 @@
     <meta property="prev" content="../index.html">
     <meta property="next" content="./map_filter_flatmap.html">
     <style type="text/css">
-      .wrapper {margin: 70px auto; width: 90vw;}
+      .wrapper { margin: 70px auto; width: 90vw; }
       canvas { margin-bottom: -5px; }
       table { width: inherit; }
       span.wasd { border: 2px solid #00A500; color: #00A500; padding: 20px 60px 60px 20px; }
       span.wasd.active { background-color: #00A500; color: #DFFEE3; }
+
+      @media (max-width: 1000px) {
+        .wrapper { margin: 20px auto; width: 100vw; }
+      }
     </style>
 </head>
-<body style="margin: 0; background-color: #DFFEE3; font: 1.4vw monospace;">
+<body style="margin: 0; background-color: #DFFEE3; font: 1.3vw monospace;">
     <div class="wrapper">
         <table>
             <tr>
@@ -51,7 +55,7 @@
             </tr>
             <tr>
                 <td align="right">
-                    <div style="width: 400px">
+                    <div>
                         <div style="margin-bottom: 100px; margin-right: 40px">
                             <span id="wasd_q" class="wasd">Q</span>
                             <span id="wasd_w" class="wasd">W</span>
