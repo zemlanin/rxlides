@@ -6,9 +6,11 @@
     <meta property="prev" content="../index.html">
     <meta property="next" content="./map_filter_flatmap.html">
     <style type="text/css">
-      .wrapper {margin: 100px auto; width: 90vw;}
+      .wrapper {margin: 70px auto; width: 90vw;}
       canvas { margin-bottom: -5px; }
       table { width: inherit; }
+      span.wasd { border: 2px solid #00A500; color: #00A500; padding: 20px 60px 60px 20px; }
+      span.wasd.active { background-color: #00A500; color: #DFFEE3; }
     </style>
 </head>
 <body style="margin: 0; background-color: #DFFEE3; font: 26px monospace;">
@@ -38,10 +40,10 @@
                     </span>
                     <span id="part_5">
                     &nbsp;&nbsp;.filter(keyCode => keyBorders[keyCode])<br/>
-                    &nbsp;&nbsp;.subscribe(drawToCanvas)<br/>
+                    &nbsp;&nbsp;.subscribe(setActive)<br/>
                     </span>
                     <span id="part_6">
-                    Rx.Observable.fromEvent(document.body, 'keyup').map(null).subscribe(drawToCanvas)<br/>
+                    Rx.Observable.fromEvent(document.body, 'keyup').map(null).subscribe(setActive)<br/>
                     </span>
                     <br/>
                     <br/>
@@ -49,7 +51,19 @@
             </tr>
             <tr>
                 <td align="right">
-                    <canvas width="400" height="220"></canvas>
+                    <div style="width: 400px">
+                        <div style="margin-bottom: 100px; margin-right: 40px">
+                            <span id="wasd_q" class="wasd">Q</span>
+                            <span id="wasd_w" class="wasd">W</span>
+                            <span id="wasd_e" class="wasd">E</span>
+                        </div>
+
+                        <div style="margin-left: 40px">
+                            <span id="wasd_a" class="wasd">A</span>
+                            <span id="wasd_s" class="wasd">S</span>
+                            <span id="wasd_d" class="wasd">D</span>
+                        </div>
+                    </div>
                 </td>
             </tr>
         </table>
