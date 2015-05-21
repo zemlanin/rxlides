@@ -1,15 +1,21 @@
 import Rx from 'rx'
 import range from 'lodash.range'
 
-import {wrapToDisplay, renderStream, accumutate} from '../vision'
+import {wrapToDisplay, renderStream, accumutate, getMockKeys} from '../vision'
 
 const [UP, DOWN] = [38, 40]
 
 export default () => {
-  var keyCodesStream = Rx.Observable
+  var keyCodesStream
+
+  if (location.hash === '#touch') {
+    keyCodesStream = getMockKeys()
+  } else {
+    keyCodesStream = Rx.Observable
     .fromEvent(document.body, 'keyup')
     .pluck('keyCode')
     .filter(keyCode => keyCode === 32 || keyCode >= 65 && keyCode <= 90)
+  }
 
   var ctx = document.querySelector('#main canvas').getContext("2d")
 
@@ -40,7 +46,7 @@ export default () => {
   var pongWidth = ctx.measureText('pong').width
   var canvasKeysFlatmap = canvasKeysFilter
     // delay pongs without jitter
-    .map(keys => keys.map(({text, position, mirror}) => ({text: 'pong', position: position-0, mirror})))
+    .map(keys => keys.map(({text, position, mirror}) => ({text: 'pong', position: position-30, mirror})))
     // appear instead of moving in
     .map(keys => keys.filter(({position}) => position > pongWidth))
 

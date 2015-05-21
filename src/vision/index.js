@@ -1,3 +1,6 @@
+import Rx from 'rx'
+import range from 'lodash.range'
+
 export function renderStream(canvas) {
   var ctx = canvas.getContext("2d")
 
@@ -24,4 +27,14 @@ export function accumutate(acc, [value, shift]) {
 
 export function wrapToDisplay(ctx) {
   return text => [{text, position: parseInt(ctx.measureText(text).width, 10), mirror: true}, 0]
+}
+
+export function getMockKeys() {
+  var touchMockKeys = range(65, 91).concat(32)
+
+  return Rx.Observable.interval(2000)
+    .startWith(null)
+    .flatMap(() => Rx.Observable.timer(Math.random() * 2000 - 500))
+    .map(() => touchMockKeys[parseInt(Math.random() * touchMockKeys.length)])
+    .share()
 }

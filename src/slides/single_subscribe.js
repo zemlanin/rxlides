@@ -1,12 +1,18 @@
 import Rx from 'rx'
 
-import {wrapToDisplay, renderStream, accumutate} from '../vision'
+import {wrapToDisplay, renderStream, accumutate, getMockKeys} from '../vision'
 
 export default () => {
-  var keyCodesStream = Rx.Observable
-    .fromEvent(document.body, 'keyup')
-    .pluck('keyCode')
-    .filter(keyCode => keyCode === 32 || keyCode >= 65 && keyCode <= 90)
+  var keyCodesStream
+
+  if (location.hash === '#touch') {
+    keyCodesStream = getMockKeys()
+  } else {
+    keyCodesStream = Rx.Observable
+      .fromEvent(document.body, 'keyup')
+      .pluck('keyCode')
+      .filter(keyCode => keyCode === 32 || keyCode >= 65 && keyCode <= 90)
+  }
 
   var frameStream = Rx.Observable.create(observer => (function loop() {
     window.requestAnimationFrame(() => {
