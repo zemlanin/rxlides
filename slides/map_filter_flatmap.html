@@ -5,15 +5,19 @@
     <meta property="page" content="map_filter_flatmap">
     <meta property="prev" content="./keyboard_demo.html">
     <style type="text/css">
-      .wrapper {margin: 200px auto; width: 90vw;}
+      .wrapper {margin: 30vh auto; width: 90vw;}
       .canvas-wrapper { display: inline; color: #00A500}
       .canvas-wrapper::before { content: "<"; }
       .canvas-wrapper::after { content: ">"; }
       canvas { margin-bottom: -5px; }
       table { width: inherit; }
+
+      @media (max-width: 1000px) {
+        .wrapper {width: 100vw;}
+      }
     </style>
 </head>
-<body style="margin: 0; background-color: #DFFEE3; font: 32px monospace;">
+<body style="margin: 0; background-color: #DFFEE3; font: 2vw monospace;">
     <div class="wrapper">
         <table>
             <tr><td>Rx.Observable</td></tr>
@@ -21,7 +25,7 @@
                 <td>&nbsp;&nbsp;.fromEvent(document.body, 'keyup')</td>
                 <td align="right">
                     <div class="canvas-wrapper">
-                        <canvas width="500" height="32"></canvas>
+                        <canvas width="450" height="38"></canvas>
                     </div>
                 </td>
             </tr>
@@ -29,7 +33,7 @@
                 <td>&nbsp;&nbsp;.map(({keyCode}) => keyCode)</td>
                 <td align="right">
                     <div class="canvas-wrapper">
-                        <canvas width="500" height="32"></canvas>
+                        <canvas width="450" height="38"></canvas>
                     </div>
                 </td>
             </tr>
@@ -37,15 +41,15 @@
                 <td>&nbsp;&nbsp;.filter(keyCode => keyCode > 70)</td>
                 <td align="right">
                     <div class="canvas-wrapper">
-                        <canvas width="500" height="32"></canvas>
+                        <canvas width="450" height="38"></canvas>
                     </div>
                 </td>
             </tr>
             <tr id="part_2" hidden> 
-                <td>&nbsp;&nbsp;.flatMap(() => Rx.ajax.GET('/ping'))</td>
+                <td>&nbsp;&nbsp;.flatMap(() => Rx.GET('/ping'))</td>
                 <td align="right">
                     <div class="canvas-wrapper">
-                        <canvas width="500" height="32"></canvas>
+                        <canvas width="450" height="38"></canvas>
                     </div>
                 </td>
             </tr>
