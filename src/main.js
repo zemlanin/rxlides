@@ -4,7 +4,10 @@ import slides from './slides'
 import 'babel/polyfill'
 
 var metaPage = document.querySelector('meta[property=page]')
-if (metaPage) { slides(metaPage.content) }
+if (metaPage) {
+  document.querySelector('nav .slide_name').textContent = 'slides/' + metaPage.content
+  slides(metaPage.content)
+}
 
 const [LEFT, UP, RIGHT, DOWN] = [37, 38, 39, 40]
 Rx.Observable.fromEvent(document.body, 'keyup')
