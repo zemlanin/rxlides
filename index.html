@@ -4,13 +4,23 @@
     <title>rxlides</title>
     <meta property="next" content="./slides/keyboard_demo.html">
     <style type="text/css">
-      .wrapper {margin: 40vh auto; width: 90vw; text-align: center;}
+      .wrapper {margin: 40vh auto 0; width: 90vw; text-align: center;}
+      nav { font-size: 1vw; position: fixed; bottom: 0; right: 0; margin: 1vw; text-align: right; z-index: -1;}
+      nav a { display: block; }
+
+      @media (max-width: 1000px) {
+        nav span { display: none; }
+      }
     </style>
 </head>
-<body style="margin: 0; background-color: #DFFEE3; font: 32px monospace;">
+<body style="margin: 0; background-color: #DFFEE3; font: 2vw monospace;">
     <div class="wrapper">
         <p>[insert title here]</p>
     </div>
+    <nav>
+        <span>&rarr;</span>
+        <a href="http://anton.codes/rxlides">anton.codes/rxlides</a>
+    </nav>
     <script type="text/javascript" src="./dist/main.js"></script>
 </body>
 </html>

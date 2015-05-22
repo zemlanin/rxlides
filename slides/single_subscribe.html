@@ -11,10 +11,13 @@
       .canvas-wrapper::before { content: "<"; }
       .canvas-wrapper::after { content: ">"; }
       canvas { margin-bottom: -5px; }
+      nav { font-size: 1vw; position: fixed; bottom: 0; right: 0; margin: 1vw; text-align: right; z-index: -1;}
+      nav a { display: block; }
 
       @media (max-width: 1000px) {
         .wrapper {width: 95vw;}
         canvas { margin-top: -2vw; }
+        nav span { display: none; }
       }
     </style>
 </head>
@@ -24,6 +27,13 @@
             <canvas width="400" height="38"></canvas>
         </div><span>.subscribe((<span id="subscribe_arg"> e </span>) => {})</span>
     </div>
+    <nav>
+        <span>&larr;</span>
+        <span id="nav_u">&nbsp;</span>
+        <span id="nav_d">&nbsp;</span>
+        <span>&rarr;</span>
+        <a href="http://anton.codes/rxlides">anton.codes/rxlides</a>
+    </nav>
     <script type="text/javascript" src="../dist/main.js"></script>
 </body>
 </html>

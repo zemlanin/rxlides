@@ -2,6 +2,7 @@ import Rx from 'rx'
 import range from 'lodash.range'
 
 import {wrapToDisplay, renderStream, accumutate, getMockKeys} from '../vision'
+import {getNavigationStream} from '../navigation'
 
 const [UP, DOWN] = [38, 40]
 
@@ -61,17 +62,8 @@ export default () => {
     }
   }
 
-  var parts = document.querySelectorAll('[id^=part_]').length
-
-  Rx.Observable.fromEvent(document.body, 'keyup')
-    .pluck('keyCode')
-    .filter(keyCode => keyCode === UP || keyCode === DOWN)
-    .map(keyCode => keyCode - 39) // UP = -1, DOWN = +1
-    .scan(0, (acc, move) => {
-      if (acc + move < 0 || acc + move > parts) { return acc }
-      return acc + move
-    })
-    .subscribe(acc => {
+  getNavigationStream(false)
+    .subscribe(({acc, parts}) => {
       for (var index of range(parts)) {
         document.getElementById('part_'+index).hidden = acc <= index
       }

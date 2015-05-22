@@ -11,16 +11,19 @@
       table { width: inherit; }
       span.wasd { border: 2px solid #00A500; color: #00A500; padding: 20px 60px 60px 20px; }
       span.wasd.active { background-color: #00A500; color: #DFFEE3; }
+      nav { font-size: 1vw; position: fixed; bottom: 0; right: 0; margin: 1vw; text-align: right; z-index: -1;}
+      nav a { display: block; }
 
       @media (max-width: 1000px) {
         .wrapper { margin: 20px auto; width: 95vw; }
+        nav span { display: none; }
       }
     </style>
 </head>
 <body style="margin: 0; background-color: #DFFEE3; font: 1.3vw monospace;">
     <div class="wrapper">
         <table>
-            <tr>
+            <tr> 
                 <td>
                     <span id="part_1">
                     const [Q, W, E, A, S, D] = [81, 87, 69, 65, 83, 68]<br/>
@@ -73,6 +76,13 @@
             </tr>
         </table>
     </div>
+    <nav>
+        <span>&larr;</span>
+        <span id="nav_u">&nbsp;</span>
+        <span id="nav_d">&nbsp;</span>
+        <span>&rarr;</span>
+        <a href="http://anton.codes/rxlides">anton.codes/rxlides</a>
+    </nav>
     <script type="text/javascript" src="../dist/main.js"></script>
 </body>
 </html>
