@@ -16,6 +16,7 @@ const slides = [
   ['promises', null],
   ['promises_chain', null],
   ['promises_cons', promisesCons],
+  ['microsoft_go4', null],
   ['single_subscribe', singleSubscribe],
   ['map_filter_flatmap', mapFilterFlatmap],
   ['keyboard_demo', keyboardDemo],
