@@ -4,6 +4,7 @@ import mapFilterFlatmap from './map_filter_flatmap.js'
 import keyboardDemo from './keyboard_demo.js'
 import singleSubscribe from './single_subscribe.js'
 import singleCallback from './single_callback.js'
+import promisesCons from './promises_cons.js'
 
 const slides = [
   ['index', null],
@@ -14,6 +15,7 @@ const slides = [
   ['callbacks_chain', null],
   ['promises', null],
   ['promises_chain', null],
+  ['promises_cons', promisesCons],
   ['single_subscribe', singleSubscribe],
   ['map_filter_flatmap', mapFilterFlatmap],
   ['keyboard_demo', keyboardDemo],
