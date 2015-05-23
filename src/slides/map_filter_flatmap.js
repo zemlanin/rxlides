@@ -41,7 +41,7 @@ export default () => {
     .distinctUntilChanged()
 
   var canvasKeysFilter = canvasKeysMap
-    .map(keys => keys.filter(({text}) => text > 70))
+    .map(keys => keys.filter(({text}) => text > 73))
 
   ctx.font = document.body.style.font
   var pongWidth = ctx.measureText('pong').width
