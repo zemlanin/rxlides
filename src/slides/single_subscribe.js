@@ -1,18 +1,9 @@
 import Rx from 'rx'
 
-import {wrapToDisplay, renderStream, accumutate, getMockKeys} from '../vision'
+import {wrapToDisplay, renderStream, accumutate} from '../vision'
 
 export default () => {
-  var keyCodesStream
-
-  if (location.hash === '#touch') {
-    keyCodesStream = getMockKeys()
-  } else {
-    keyCodesStream = Rx.Observable
-      .fromEvent(document.body, 'keyup')
-      .pluck('keyCode')
-      .filter(keyCode => keyCode === 32 || keyCode >= 65 && keyCode <= 90)
-  }
+  var clickStream = Rx.Observable.fromEvent(document, 'click').map('click')
 
   var frameStream = Rx.Observable.create(observer => (function loop() {
     window.requestAnimationFrame(() => {
@@ -21,18 +12,15 @@ export default () => {
     })
   })())
 
-  var canvasKeys = keyCodesStream
-    .map(keyCode => `[${String.fromCharCode(keyCode)}]`)
-
-  var visualStream = canvasKeys
+  var visualStream = clickStream
     .map(wrapToDisplay(document.querySelector('canvas').getContext("2d")))
     .merge(frameStream)
     .scan([], accumutate)
     .distinctUntilChanged()
 
   visualStream.subscribe(renderStream(document.querySelector('canvas')))
-  canvasKeys
-    .flatMap(text => Rx.Observable.of({text: ' e ', color: ''}).delay(700).startWith({text, color: '#00A500'}))
+  clickStream
+    .flatMap(text => Rx.Observable.of({text: 'event', color: ''}).delay(700).startWith({text, color: '#00A500'}))
     .subscribe(({text, color}) => {
       document.getElementById('subscribe_arg').textContent = text
       document.getElementById('subscribe_arg').style.color = color
