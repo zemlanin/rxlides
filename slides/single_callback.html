@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>rxlides</title>
+    <meta property="page" content="single_callback">
+    <meta property="prev" content="./ui.html">
+    <meta property="next" content="./single_subscribe.html">
+    <link rel="stylesheet" type="text/css" href="../dist/common.css">
+    <style type="text/css">
+        .wrapper {margin: 40vh auto; text-align: center; }
+        .canvas-wrapper { color: gray; }
+        .canvas-wrapper::before { content: "["; }
+        .canvas-wrapper::after { content: "]"; }
+    </style>
+</head>
+<body style="font: 2vw monospace;">
+    <div class="wrapper">
+        <div>
+            <span style="color: gray"> // events == </span>
+            <div class="canvas-wrapper">
+                <canvas width="400" height="38"></canvas>
+            </div>
+        </div>
+        <span>document.querySelector('.clicky').onclick = (<span id="subscribe_arg">event</span>) => {}</span>
+    </div>
+    <nav>
+        <span class="arrow">&larr;</span>
+        <span class="arrow" id="nav_u">&nbsp;</span>
+        <span class="arrow" id="nav_d">&nbsp;</span>
+        <span class="arrow">&rarr;</span>
+        <span class="slide_name">&nbsp;</a>
+    </nav>
+    <script type="text/javascript" src="../dist/main.js"></script>
+</body>
+</html>
