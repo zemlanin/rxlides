@@ -13,6 +13,7 @@ const slides = [
   ['callbacks_sync', null],
   ['callbacks_chain', null],
   ['promises', null],
+  ['promises_chain', null],
   ['single_subscribe', singleSubscribe],
   ['map_filter_flatmap', mapFilterFlatmap],
   ['keyboard_demo', keyboardDemo],
