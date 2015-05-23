@@ -5,8 +5,8 @@
     <meta property="page" content="callbacks_chain">
     <link rel="stylesheet" type="text/css" href="../dist/common.css">
     <style type="text/css">
-      .wrapper { margin: 30vh auto; text-align: center; }
-      table { width: 80vw; margin: 0 auto; font-size: 3vw; }
+      .wrapper { margin: 33vh auto; text-align: center; }
+      table { width: 80vw; margin: 0 auto; font-size: 3vw; color: gray; }
       td.colored {
         color: #DFFEE3;
         border-radius: 1vw;
@@ -17,6 +17,9 @@
       td.smaller {
         font-size: 2vw;
       }
+      td.green {
+        color: #00A500;
+      }
     </style>
 </head>
 <body style="font: 2vw monospace;">
@@ -24,9 +27,9 @@
         <table>
             <tr>
                 <td class="colored" rowspan="6">main.js</td>
-                <td rowspan="6">&rarr;</td>
+                <td class="green" rowspan="6">&rarr;</td>
                 <td class="smaller" align="left">function (e) {</td>
-                <td rowspan="6">&rarr;</td>
+                <td class="green" rowspan="6">&rarr;</td>
             </tr>
             <tr>
                 <td class="colored" rowspan="4">.onclick</td>
