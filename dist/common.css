@@ -1,3 +1,4 @@
+body { margin: 0; background-color: #DFFEE3 }
 .wrapper {margin: 10vh auto; width: 90vw;}
 .canvas-wrapper { display: inline; color: #00A500}
 .canvas-wrapper::before { content: "<"; }
