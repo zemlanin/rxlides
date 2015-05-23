@@ -12,6 +12,7 @@ const slides = [
   ['microsoft_xhr', null],
   ['callbacks_sync', null],
   ['callbacks_chain', null],
+  ['promises', null],
   ['single_subscribe', singleSubscribe],
   ['map_filter_flatmap', mapFilterFlatmap],
   ['keyboard_demo', keyboardDemo],
