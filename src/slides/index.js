@@ -22,6 +22,7 @@ const slides = [
   ['map_filter_flatmap', mapFilterFlatmap],
   ['keyboard_demo', keyboardDemo],
   ['summary', summary],
+  ['links', null],
 ]
 
 export var prevSlide = slide => {
