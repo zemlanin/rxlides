@@ -5,6 +5,7 @@ import keyboardDemo from './keyboard_demo.js'
 import singleSubscribe from './single_subscribe.js'
 import singleCallback from './single_callback.js'
 import promisesCons from './promises_cons.js'
+import summary from './summary.js'
 
 const slides = [
   ['index', null],
@@ -20,6 +21,7 @@ const slides = [
   ['single_subscribe', singleSubscribe],
   ['map_filter_flatmap', mapFilterFlatmap],
   ['keyboard_demo', keyboardDemo],
+  ['summary', summary],
 ]
 
 export var prevSlide = slide => {
