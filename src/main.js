@@ -1,12 +1,12 @@
 import Rx from 'rx'
-import slides from './slides'
+import {slideLogic, nextSlide, prevSlide} from './slides'
 
 import 'babel/polyfill'
 
-var metaPage = document.querySelector('meta[property=page]')
-if (metaPage) {
-  document.querySelector('nav .slide_name').textContent = 'slides/' + metaPage.content
-  slides(metaPage.content)
+var metaPage = document.querySelector('meta[property=page]').content
+if (metaPage !== 'index') {
+  document.querySelector('nav .slide_name').textContent = 'slides/' + metaPage
+  slideLogic(metaPage)
 }
 
 const [LEFT, UP, RIGHT, DOWN] = [37, 38, 39, 40]
@@ -31,12 +31,12 @@ Rx.Observable.fromEvent(document.body, 'keyup')
   .map(({keyCode, touch}) => {
     switch (keyCode) {
       case LEFT:
-        return {meta: document.querySelector('meta[property=prev]'), touch}
+        return {page: prevSlide(metaPage), touch}
       case RIGHT:
-        return {meta: document.querySelector('meta[property=next]'), touch}
+        return {page: nextSlide(metaPage), touch}
       default:
         return
     }
   })
-  .filter(v => v && v.meta)
-  .subscribe(({meta, touch}) => location.href = meta.content + (touch ? '#touch' : ''))
+  .filter(v => v && v.page)
+  .subscribe(({page, touch}) => location.href = page + (touch ? '#touch' : ''))

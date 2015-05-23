@@ -20,7 +20,7 @@ export default () => {
 
   visualStream.subscribe(renderStream(document.querySelector('canvas')))
   clickStream
-    .flatMap(text => Rx.Observable.of({text: 'click', color: ''}).delay(700).startWith({text, color: '#00A500'}))
+    .flatMap(text => Rx.Observable.of({text: 'event', color: ''}).delay(700).startWith({text, color: '#00A500'}))
     .subscribe(({text, color}) => {
       document.getElementById('subscribe_arg').textContent = text
       document.getElementById('subscribe_arg').style.color = color
