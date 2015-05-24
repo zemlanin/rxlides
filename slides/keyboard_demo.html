@@ -6,7 +6,6 @@
     <link rel="stylesheet" type="text/css" href="../dist/common.css">
     <style type="text/css">
         .wrapper { margin: 70px auto; }
-        td span { font-size: 2.2vw; } /* because mobile safari */
         span.wasd {
             border: 2px solid #00A500;
             color: #00A500;
@@ -17,12 +16,14 @@
 
         @media (max-width: 1000px) {
             .wrapper { margin: 20px auto; }
+            table:first-of-type { font-size: 1.7vw; }
+            table { font-size: 2vw; }
         }
     </style>
 </head>
 <body style="font: 2.2vw monospace;">
     <div class="wrapper">
-        <table style="font-size: 2vw;">
+        <table>
             <tr> 
                 <td>
                     <span id="part_1">
@@ -36,7 +37,7 @@
                 </td>
             </tr>
         </table>
-        <table style="font-size: 2vw;">
+        <table>
             <tr>
                 <td>
                     <span id="part_2">
