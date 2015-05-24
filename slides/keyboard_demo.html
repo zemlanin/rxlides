@@ -32,7 +32,8 @@
                     </span>
                     <span id="part_2">
                     <br/>
-                    var keys = Rx.Observable.fromEvent(document.body, 'keydown').pluck('keyCode')<br/>
+                    var body = document.body<br/>
+                    var keys = Rx.Observable.fromEvent(body, 'keydown')<wbr/>.pluck('keyCode')<br/>
                     var startStream = keys.filter(keyCode => keyCode === Q)<br/>
                     var stopStream = keys.filter(keyCode => keyCode === E)<br/>
                     <br/>
@@ -43,19 +44,21 @@
                 <td>
                     <span id="part_3">
                     startStream<br/>
-                    &nbsp;&nbsp;.map(v => keys.takeUntil(stopStream))<br/>
+                    &nbsp;&nbsp;.map(q => keys.startWith(q)<br/>
+                    &nbsp;&nbsp;&nbsp;&nbsp;.takeUntil(stopStream)<br/>
+                    &nbsp;&nbsp;)<br/>
                     </span>
                     <span id="part_4">
                     &nbsp;&nbsp;.switch()<br/>
                     </span>
                     <span id="part_5">
-                    &nbsp;&nbsp;.filter(keyCode => keyBorders[keyCode])<br/>
+                    &nbsp;&nbsp;.filter(c => keyBorders[c])<br/>
                     &nbsp;&nbsp;.subscribe(setActive)<br/>
                     <br/>
                     </span>
                     <span id="part_6">
                     Rx.Observable<br/>
-                    &nbsp;&nbsp;.fromEvent(document.body, 'keyup')<br/>
+                    &nbsp;&nbsp;.fromEvent(body, 'keyup')<br/>
                     &nbsp;&nbsp;.map(null)<br/>
                     &nbsp;&nbsp;.subscribe(setActive)<br/>
                     </span>

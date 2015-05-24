@@ -28,7 +28,10 @@ export default () => {
 
   Rx.Observable.fromEvent(document.body, 'keyup').map(null).subscribe(setActive)
   startStream
-    .map(q => keys.startWith(q).takeUntil(stopStream))
+    .map(q => keys
+      .startWith(q)
+      .takeUntil(stopStream)
+    )
     .switch()
     .filter(keyCode => keyIds[keyCode])
     .subscribe(setActive)
