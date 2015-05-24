@@ -5,7 +5,7 @@ import {wrapToDisplay, renderStream, accumutate, getMockKeys} from '../vision'
 export default () => {
   var frameStream = Rx.Observable.create(observer => (function loop() {
     window.requestAnimationFrame(() => {
-      observer.onNext([null, 1])
+      observer.onNext([null, 1.5])
       loop()
     })
   })())

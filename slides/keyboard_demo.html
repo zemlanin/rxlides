@@ -5,20 +5,25 @@
     <meta property="page" content="keyboard_demo">
     <link rel="stylesheet" type="text/css" href="../dist/common.css">
     <style type="text/css">
-      .wrapper { margin: 70px auto; }
-      span.wasd { border: 2px solid #00A500; color: #00A500; padding: 20px 60px 60px 20px; }
-      span.wasd.active { background-color: #00A500; color: #DFFEE3; }
+        .wrapper { margin: 70px auto; }
+        span.wasd {
+            border: 2px solid #00A500;
+            color: #00A500;
+            padding: 1.5vw 5vw 5vw 1.5vw;
+            font-size: 3vw;
+        }
+        span.wasd.active { background-color: #00A500; color: #DFFEE3; }
 
-      @media (max-width: 1000px) {
-        .wrapper { margin: 20px auto; }
-      }
+        @media (max-width: 1000px) {
+            .wrapper { margin: 20px auto; }
+        }
     </style>
 </head>
-<body style="font: 1.3vw monospace;">
+<body style="font: 1.8vw monospace;">
     <div class="wrapper">
         <table>
             <tr> 
-                <td>
+                <td colspan="2">
                     <span id="part_1">
                     const [Q, W, E, A, S, D] = [81, 87, 69, 65, 83, 68]<br/>
                     const keyIds = {<br/>
@@ -32,6 +37,10 @@
                     var stopStream = keys.filter(keyCode => keyCode === E)<br/>
                     <br/>
                     </span>
+                </td>
+            </tr>
+            <tr>
+                <td>
                     <span id="part_3">
                     startStream<br/>
                     &nbsp;&nbsp;.map(v => keys.takeUntil(stopStream))<br/>
@@ -45,22 +54,21 @@
                     <br/>
                     </span>
                     <span id="part_6">
-                    Rx.Observable.fromEvent(document.body, 'keyup')<br/>
+                    Rx.Observable<br/>
+                    &nbsp;&nbsp;.fromEvent(document.body, 'keyup')<br/>
                     &nbsp;&nbsp;.map(null)<br/>
                     &nbsp;&nbsp;.subscribe(setActive)<br/>
                     </span>
                 </td>
-            </tr>
-            <tr>
                 <td align="right">
                     <div>
-                        <div style="margin-bottom: 100px; margin-right: 40px">
+                        <div style="margin-bottom: 8vw; margin-right: 3.5vw">
                             <span id="wasd_q" class="wasd">Q</span>
                             <span id="wasd_w" class="wasd">W</span>
                             <span id="wasd_e" class="wasd">E</span>
                         </div>
 
-                        <div style="margin-left: 40px">
+                        <div style="margin-left: 3.5vw">
                             <span id="wasd_a" class="wasd">A</span>
                             <span id="wasd_s" class="wasd">S</span>
                             <span id="wasd_d" class="wasd">D</span>
