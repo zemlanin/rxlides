@@ -2,6 +2,7 @@ import zipObject from 'lodash.zipobject'
 
 import mapFilterFlatmap from './map_filter_flatmap.js'
 import keyboardDemo from './keyboard_demo.js'
+import intervalDemo from './interval_demo.js'
 import singleSubscribe from './single_subscribe.js'
 import singleCallback from './single_callback.js'
 import promisesCons from './promises_cons.js'
@@ -20,6 +21,7 @@ const slides = [
   ['microsoft_go4', null],
   ['single_subscribe', singleSubscribe],
   ['map_filter_flatmap', mapFilterFlatmap],
+  ['interval_demo', intervalDemo],
   ['keyboard_demo', keyboardDemo],
   ['summary', summary],
   ['links', null],

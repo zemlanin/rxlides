@@ -4,8 +4,6 @@ import range from 'lodash.range'
 import {wrapToDisplay, renderStream, accumutate, getMockKeys} from '../vision'
 import {getNavigationStream} from '../navigation'
 
-const [UP, DOWN] = [38, 40]
-
 export default () => {
   var keyCodesStream
 

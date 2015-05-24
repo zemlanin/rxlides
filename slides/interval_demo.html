@@ -2,26 +2,44 @@
 <html>
 <head>
     <title>rxlides</title>
-    <meta property="page" content="map_filter_flatmap">
+    <meta property="page" content="interval_demo">
     <link rel="stylesheet" type="text/css" href="../dist/common.css">
     <style type="text/css">
-      .wrapper { margin: 30vh auto 0; }
+      .wrapper { margin: 15vh auto 0; }
     </style>
 </head>
 <body style="font: 2vw monospace;">
     <div class="wrapper">
         <table>
-            <tr><td>Rx.Observable</td></tr>
-            <tr id="main"> 
-                <td>&nbsp;&nbsp;.fromEvent(document.body, 'keyup')</td>
+            <tr>
+                <td colspan="2">
+                    var keyups = Rx.Observable.fromEvent(document.body, 'keyup')
+                </td>
+            </tr>
+            <tr id="main">
+                <td>&nbsp;</td>
                 <td align="right">
                     <div class="canvas-wrapper">
                         <canvas width="400" height="38"></canvas>
                     </div>
                 </td>
             </tr>
+            <tr id="qs"> 
+                <td colspan="2">
+                    var qs = keys.filter(({keyCode}) => keyCode === 81)
+                </td>
+            </tr>
+            <tr id="ws"> 
+                <td colspan="2">
+                    var ws = keys.filter(({keyCode}) => keyCode === 87)
+                </td>
+            </tr>
+            <tr><td>&nbsp;</td></tr>
+            <tr><td>&nbsp;</td></tr>
             <tr id="part_0" hidden style="background-color: #f0fff0;"> 
-                <td>&nbsp;&nbsp;.map(({keyCode}) => keyCode)</td>
+                <td>
+                    qs.skipUntil(ws)
+                </td>
                 <td align="right">
                     <div class="canvas-wrapper">
                         <canvas width="400" height="38"></canvas>
@@ -29,7 +47,9 @@
                 </td>
             </tr>
             <tr id="part_1" hidden> 
-                <td>&nbsp;&nbsp;.filter(keyCode => keyCode > 73)</td>
+                <td>
+                    qs.delay(1000)
+                </td>
                 <td align="right">
                     <div class="canvas-wrapper">
                         <canvas width="400" height="38"></canvas>
@@ -37,7 +57,10 @@
                 </td>
             </tr>
             <tr id="part_2" hidden style="background-color: #f0fff0;"> 
-                <td>&nbsp;&nbsp;.flatMap(() => Rx.GET('/ping'))</td>
+                <td>
+                    qs.timeInterval()<br/>
+                    &nbsp;&nbsp;.map(v => v.interval)
+                </td>
                 <td align="right">
                     <div class="canvas-wrapper">
                         <canvas width="400" height="38"></canvas>
