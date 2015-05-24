@@ -5,8 +5,10 @@
     <meta property="page" content="interval_demo">
     <link rel="stylesheet" type="text/css" href="../dist/common.css">
     <style type="text/css">
-      .wrapper { margin: 15vh auto 0; }
-      td span { font-size: 2.2vw; } /* because mobile safari */
+        .wrapper { margin: 15vh auto 0; }
+        @media (max-width: 1000px) {
+            table { font-size: 1.7vw; }
+        }
     </style>
 </head>
 <body style="font: 2vw monospace;">
