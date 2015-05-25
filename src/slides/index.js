@@ -15,6 +15,7 @@ const slides = [
   ['single_callback', singleCallback],
   ['microsoft_xhr', null],
   ['callbacks_sync', null],
+  ['callbacks_hell', null],
   ['callbacks_chain', null],
   ['promises', null],
   ['promises_chain', null],
