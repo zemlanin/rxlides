@@ -6,6 +6,7 @@ import intervalDemo from './interval_demo.js'
 import singleSubscribe from './single_subscribe.js'
 import singleCallback from './single_callback.js'
 import promisesCons from './promises_cons.js'
+import programmableStream from './programmable_stream.js'
 import summary from './summary.js'
 
 const slides = [
@@ -23,6 +24,8 @@ const slides = [
   ['map_filter_flatmap', mapFilterFlatmap],
   ['interval_demo', intervalDemo],
   ['keyboard_demo', keyboardDemo],
+  ['programmable_stream', programmableStream],
+
   ['summary', summary],
   ['links', null],
 ]
