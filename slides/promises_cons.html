@@ -5,7 +5,7 @@
     <meta property="page" content="promises_cons">
     <link rel="stylesheet" type="text/css" href="../dist/common.css">
     <style type="text/css">
-        .wrapper {margin: 35vh auto; text-align: center; }
+        .wrapper {margin: 35vh auto;}
         .canvas-wrapper { color: gray; }
         .canvas-wrapper::before { content: "["; }
         .canvas-wrapper::after { content: "]"; }
@@ -13,15 +13,27 @@
 </head>
 <body style="font: 2.7vw monospace;">
     <div class="wrapper">
-        <span style="color: gray"> // events ==
-            <div class="canvas-wrapper">
-                <canvas width="400" height="50"></canvas>
-            </div>
-        </span>
-        <br/>
-        <span>
-            Promise(document, 'click').then((<span id="subscribe_arg">event</span>) => {})
-        </span>
+        <table>
+            <tr>
+                <td>
+                    <span style="color: gray"> // events ==
+                        <div class="canvas-wrapper">
+                            <canvas width="400" height="50"></canvas>
+                        </div>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Promise(document, 'click').then((<span id="subscribe_arg">event</span>) => {})
+                </td>
+            </tr>
+            <tr>
+                <td align="right" style="font-size: 1.8vw; color: gray;">
+                    <br/><br/>* pseudo promise
+                </td>
+            </tr>
+        </table>
     </div>
     <nav>
         <span class="arrow">&larr;</span>
