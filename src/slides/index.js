@@ -5,6 +5,7 @@ import keyboardDemo from './keyboard_demo.js'
 import intervalDemo from './interval_demo.js'
 import singleSubscribe from './single_subscribe.js'
 import singleCallback from './single_callback.js'
+import callbacksChain from './callbacks_chain.js'
 import promisesCons from './promises_cons.js'
 import programmableStream from './programmable_stream.js'
 import summary from './summary.js'
@@ -15,8 +16,7 @@ const slides = [
   ['single_callback', singleCallback],
   ['microsoft_xhr', null],
   ['callbacks_sync', null],
-  ['callbacks_hell', null],
-  ['callbacks_chain', null],
+  ['callbacks_chain', callbacksChain],
   ['promises', null],
   ['promises_chain', null],
   ['promises_cons', promisesCons],
