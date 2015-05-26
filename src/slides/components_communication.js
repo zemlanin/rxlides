@@ -29,12 +29,8 @@ export default () => {
       active: cell.querySelector('.star').textContent === inactiveStar
     }))
     .scan(new Set([1, 2, 4]), (acc, v) => {
-      if (v.active) {
-        return acc.add(v.id)
-      } else {
-        acc.delete(v.id)
-        return acc
-      }
+      v.active ? acc.add(v.id) : acc.delete(v.id)
+      return acc
     })
     .subscribe(favsStream)
 

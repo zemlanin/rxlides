@@ -37,7 +37,7 @@
                     </div>
                 </td>
                 <td id="part_1" class="smaller">
-                    onclick: <b>send_via_appbus</b>({<br/>
+                    onClick: <b>send_via_appbus</b>({<br/>
                     &nbsp;&nbsp;tell: 'singleFavUpdate',<br/>
                     &nbsp;&nbsp;data: {id, active: !active},<br/>
                     })
@@ -76,10 +76,11 @@
                     <b>appBus</b><br/>
                     &nbsp;&nbsp;.filter(v => v.tell === 'singleFavUpdate')<br/>
                     &nbsp;&nbsp;.pluck('data')<br/>
-                    &nbsp;&nbsp;.scan(Set(), (acc, v) => {<br/>
+                    &nbsp;&nbsp;.scan(new Set(), (acc, v) => {<br/>
                     &nbsp;&nbsp;&nbsp;&nbsp;v.active ? acc.add(v.id) : acc.delete(v.id)<br/>
+                    &nbsp;&nbsp;&nbsp;&nbsp;return acc<br/>
                     &nbsp;&nbsp;})<br/>
-                    &nbsp;&nbsp;.subscribe(favsStream)<br/>
+                    &nbsp;&nbsp;.subscribe(<b>favsStream</b>)<br/>
                 </td>
                 <td>[<span class="star_count">3</span>]</td>
             </tr>
