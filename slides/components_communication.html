@@ -7,8 +7,9 @@
     <style type="text/css">
         .wrapper { margin: 15vh auto 0; }
         .gif-wrap { width: 11vw; height: 11vh; overflow: hidden; }
-        .star_0 .gif { margin-top: -4vh; }
-        .star_2 .gif { margin-top: -6vh; }
+        .gif_cell .star { cursor: pointer; }
+        .gif_cell[data-id="0"] .gif { margin-top: -4vh; }
+        .gif_cell[data-id="2"] .gif { margin-top: -6vh; }
         .smaller {
             font-size: 1.4vw;
         }
@@ -18,64 +19,64 @@
     <div class="wrapper">
         <table>
             <tr>
-                <td class="star_0">
-                    [id:0 <span>&#9734;</span>]<br/>
+                <td class="gif_cell" data-id="0">
+                    [id:0 <span class="star">☆</span>]<br/>
                     <div class="gif-wrap">
                         <img class="gif" src="https://media4.giphy.com/media/1uPiL9Amv5zkk/200w.gif">
                     </div>
                 </td>
-                <td class="star_1">
-                    [id:1 <span>&#9733;</span>]<br/>
+                <td class="gif_cell" data-id="1">
+                    [id:1 <span class="star">★</span>]<br/>
                     <div class="gif-wrap">
                         <img class="gif" src="https://media3.giphy.com/media/1CLBGBQ1lM3QI/200w.gif">
                     </div>
                 </td>
-                <td class="star_2">
-                    [id:2 <span>&#9733;</span>]<br/>
+                <td class="gif_cell" data-id="2">
+                    [id:2 <span class="star">★</span>]<br/>
                     <div class="gif-wrap">
                         <img class="gif" src="https://media1.giphy.com/media/l41lOtw1sHjHcgLWo/200w.gif">
                     </div>
                 </td>
-                <td class="star_3">
-                    [id:3 <span>&#9734;</span>]<br/>
+                <td class="gif_cell" data-id="3">
+                    [id:3 <span class="star">☆</span>]<br/>
                     <div class="gif-wrap">
                         <img class="gif" src="https://media1.giphy.com/media/zsg9Adj13Dh2E/200w.gif">
                     </div>
                 </td>
                 <td id="part_1" class="smaller">
-                    onclick: send_via_appbus({<br/>
+                    onclick: <b>send_via_appbus</b>({<br/>
                     &nbsp;&nbsp;tell: 'singleFavUpdate',<br/>
                     &nbsp;&nbsp;data: {id, active: !active},<br/>
                     })
                 </td>
             </tr>
             <tr>
-                <td class="star_2">
-                    [id:2 <span>&#9733;</span>]<br/>
+                <td class="gif_cell" data-id="2">
+                    [id:2 <span class="star">★</span>]<br/>
                     <div class="gif-wrap">
                         <img class="gif" src="https://media1.giphy.com/media/l41lOtw1sHjHcgLWo/200w.gif">
                     </div>
                 </td>
-                <td class="star_3">
-                    [id:3 <span>&#9734;</span>]<br/>
+                <td class="gif_cell" data-id="3">
+                    [id:3 <span class="star">☆</span>]<br/>
                     <div class="gif-wrap">
                         <img class="gif" src="https://media1.giphy.com/media/zsg9Adj13Dh2E/200w.gif">
                     </div>
                 </td>
-                <td class="star_4">
-                    [id:4 <span>&#9733;</span>]<br/>
+                <td class="gif_cell" data-id="4">
+                    [id:4 <span class="star">★</span>]<br/>
                     <div class="gif-wrap">
                         <img class="gif" src="https://media2.giphy.com/media/LH4yPm9OhgHEk/200w.gif">
                     </div>
                 </td>
-                <td class="star_5">
-                    [id:5 <span>&#9734;</span>]<br/>
+                <td class="gif_cell" data-id="5">
+                    [id:5 <span class="star">☆</span>]<br/>
                     <div class="gif-wrap">
                         <img class="gif" src="https://media3.giphy.com/media/Mi616nCQFsIFO/200w.gif">
                     </div>
                 </td>
                 <td id="part_2" class="smaller">
-                    favsStream<br/>
+                    <b>favsStream</b><br/>
                     &nbsp;&nbsp;.map(favs => favs.indexOf(id) > -1)<br/>
                     &nbsp;&nbsp;.subscribe(active => {<br/>
                     &nbsp;&nbsp;&nbsp;&nbsp;component.setProps({active})<br/>
@@ -85,12 +86,8 @@
             <tr><td>&nbsp;</td></tr>
             <tr><td>&nbsp;</td></tr>
             <tr>
-                <td colspan="4">()</td>
-                <td>[<span class="star_count">3</span>]</td>
-            </tr>
-            <tr>
-                <td id="part_3" colspan="4" class="smaller">
-                    appBus<br/>
+                <td id="part_3" colspan="4" rowspan="2" class="smaller">
+                    <b>appBus</b><br/>
                     &nbsp;&nbsp;.filter(v => v.tell === 'singleFavUpdate')<br/>
                     &nbsp;&nbsp;.pluck('data')<br/>
                     &nbsp;&nbsp;.scan(Set(), (acc, v) => {<br/>
@@ -98,8 +95,11 @@
                     &nbsp;&nbsp;})<br/>
                     &nbsp;&nbsp;.subscribe(favsStream)<br/>
                 </td>
+                <td>[<span class="star_count">3</span>]</td>
+            </tr>
+            <tr>
                 <td id="part_4" class="smaller">
-                    favsStream<br/>
+                    <b>favsStream</b><br/>
                     &nbsp;&nbsp;.pluck('size')<br/>
                     &nbsp;&nbsp;.subscribe(count => {<br/>
                     &nbsp;&nbsp;&nbsp;&nbsp;component.setProps({count})<br/>
