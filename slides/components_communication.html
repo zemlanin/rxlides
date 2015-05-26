@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>rxlides</title>
+    <meta property="page" content="components_communication">
+    <link rel="stylesheet" type="text/css" href="../dist/common.css">
+    <style type="text/css">
+        .wrapper { margin: 15vh auto 0; }
+        .gif-wrap { height: 11vh; overflow: hidden; }
+        .star_0 .gif { margin-top: -4vh; }
+        .star_2 .gif { margin-top: -6vh; }
+        .smaller {
+            font-size: 1.4vw;
+        }
+    </style>
+</head>
+<body style="font: 2vw monospace;">
+    <div class="wrapper">
+        <table>
+            <tr>
+                <td class="star_0">
+                    [id:0 <span>&#9734;</span>]<br/>
+                    <div class="gif-wrap">
+                        <img class="gif" src="https://media4.giphy.com/media/1uPiL9Amv5zkk/200w.gif">
+                    </div>
+                </td>
+                <td class="star_1">
+                    [id:1 <span>&#9733;</span>]<br/>
+                    <div class="gif-wrap">
+                        <img class="gif" src="https://media3.giphy.com/media/1CLBGBQ1lM3QI/200w.gif">
+                    </div>
+                </td>
+                <td class="star_2">
+                    [id:2 <span>&#9733;</span>]<br/>
+                    <div class="gif-wrap">
+                        <img class="gif" src="https://media1.giphy.com/media/l41lOtw1sHjHcgLWo/200w.gif">
+                    </div>
+                </td>
+                <td class="star_3">
+                    [id:3 <span>&#9734;</span>]<br/>
+                    <div class="gif-wrap">
+                        <img class="gif" src="https://media1.giphy.com/media/zsg9Adj13Dh2E/200w.gif">
+                    </div>
+                </td>
+                <td id="part_1" class="smaller">
+                    onclick: send_via_appbus({<br/>
+                    &nbsp;&nbsp;tell: 'singleFavUpdate',<br/>
+                    &nbsp;&nbsp;data: {id, active: !active},<br/>
+                    })
+                </td>
+            </tr>
+            <tr>
+                <td class="star_2">
+                    [id:2 <span>&#9733;</span>]<br/>
+                    <div class="gif-wrap">
+                        <img class="gif" src="https://media1.giphy.com/media/l41lOtw1sHjHcgLWo/200w.gif">
+                    </div>
+                </td>
+                <td class="star_3">
+                    [id:3 <span>&#9734;</span>]<br/>
+                    <div class="gif-wrap">
+                        <img class="gif" src="https://media1.giphy.com/media/zsg9Adj13Dh2E/200w.gif">
+                    </div>
+                </td>
+                <td class="star_4">
+                    [id:4 <span>&#9733;</span>]<br/>
+                    <div class="gif-wrap">
+                        <img class="gif" src="https://media2.giphy.com/media/LH4yPm9OhgHEk/200w.gif">
+                    </div>
+                </td>
+                <td class="star_5">
+                    [id:5 <span>&#9734;</span>]<br/>
+                    <div class="gif-wrap">
+                        <img class="gif" src="https://media3.giphy.com/media/Mi616nCQFsIFO/200w.gif">
+                    </div>
+                </td>
+                <td id="part_2" class="smaller">
+                    favsStream<br/>
+                    &nbsp;&nbsp;.map(favs => favs.indexOf(id) > -1)<br/>
+                    &nbsp;&nbsp;.subscribe(active => {<br/>
+                    &nbsp;&nbsp;&nbsp;&nbsp;component.setProps({active})<br/>
+                    &nbsp;&nbsp;})
+                </td>
+            </tr>
+            <tr><td>&nbsp;</td></tr>
+            <tr><td>&nbsp;</td></tr>
+            <tr>
+                <td colspan="4">()</td>
+                <td>[<span class="star_count">3</span>]</td>
+            </tr>
+            <tr>
+                <td id="part_3" colspan="4" class="smaller">
+                    appBus<br/>
+                    &nbsp;&nbsp;.filter(v => v.tell === 'singleFavUpdate')<br/>
+                    &nbsp;&nbsp;.pluck('data')<br/>
+                    &nbsp;&nbsp;.scan(Set(), (acc, v) => {<br/>
+                    &nbsp;&nbsp;&nbsp;&nbsp;v.active ? acc.add(v.id) : acc.delete(v.id)<br/>
+                    &nbsp;&nbsp;})<br/>
+                    &nbsp;&nbsp;.subscribe(favsStream)<br/>
+                </td>
+                <td id="part_4" class="smaller">
+                    favsStream<br/>
+                    &nbsp;&nbsp;.pluck('size')<br/>
+                    &nbsp;&nbsp;.subscribe(count => {<br/>
+                    &nbsp;&nbsp;&nbsp;&nbsp;component.setProps({count})<br/>
+                    &nbsp;&nbsp;})
+                </td>
+            </tr>
+        </table>
+    </div>
+    <nav>
+        <span class="arrow">&larr;</span>
+        <span class="arrow" id="nav_u">&nbsp;</span>
+        <span class="arrow" id="nav_d">&nbsp;</span>
+        <span class="arrow">&rarr;</span>
+        <span class="slide_name">&nbsp;</a>
+    </nav>
+    <script type="text/javascript" src="../dist/main.js"></script>
+</body>
+</html>

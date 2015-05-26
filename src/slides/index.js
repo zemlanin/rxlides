@@ -8,6 +8,7 @@ import singleCallback from './single_callback.js'
 import callbacksChain from './callbacks_chain.js'
 import promisesCons from './promises_cons.js'
 import programmableStream from './programmable_stream.js'
+import componentsCommunication from './components_communication.js'
 import summary from './summary.js'
 
 const slides = [
@@ -26,6 +27,7 @@ const slides = [
   ['interval_demo', intervalDemo],
   ['keyboard_demo', keyboardDemo],
   ['programmable_stream', programmableStream],
+  ['components_communication', componentsCommunication],
 
   ['summary', summary],
   ['links', null],
