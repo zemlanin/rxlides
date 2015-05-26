@@ -9,10 +9,11 @@ export default () => {
   var favsStream = new Rx.Subject()
 
   Rx.Observable.fromEvent(document.body, 'click')
-    .filter(e => e.target.classList.contains('star'))
-    .map(e => ({
-      id: parseInt(e.path.find(p => p.dataset.id !== undefined).dataset.id, 10),
-      active: e.target.textContent === inactiveStar
+    .map(e => e.path.find(p => p.classList.contains('gif_cell')))
+    .filter(cell => cell)
+    .map(cell => ({
+      id: parseInt(cell.dataset.id, 10),
+      active: cell.querySelector('.star').textContent === inactiveStar
     }))
     .scan(new Set([1, 2, 4]), (acc, v) => {
       if (v.active) {
