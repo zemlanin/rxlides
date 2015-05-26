@@ -5,11 +5,24 @@ import {getNavigationStream} from '../navigation'
 
 const [inactiveStar, activeStar] = ['☆', '★']
 
+function getDomPath(e) {
+  if (e.path) { return e.path }
+
+  var path = [];
+  var node = e.target;
+  while (node != document.body) {
+    path.push(node);
+    node = node.parentNode;
+  }
+  return path;
+}
+
 export default () => {
   var favsStream = new Rx.Subject()
 
   Rx.Observable.fromEvent(document.body, 'click')
-    .map(e => e.path.find(p => p.classList && p.classList.contains('gif_cell')))
+    .map(getDomPath)
+    .map(path => path.find(p => p.classList && p.classList.contains('gif_cell')))
     .filter(cell => cell)
     .map(cell => ({
       id: parseInt(cell.dataset.id, 10),
