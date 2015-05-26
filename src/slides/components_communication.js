@@ -9,7 +9,7 @@ export default () => {
   var favsStream = new Rx.Subject()
 
   Rx.Observable.fromEvent(document.body, 'click')
-    .map(e => e.path.find(p => p.classList.contains('gif_cell')))
+    .map(e => e.path.find(p => p.classList && p.classList.contains('gif_cell')))
     .filter(cell => cell)
     .map(cell => ({
       id: parseInt(cell.dataset.id, 10),
