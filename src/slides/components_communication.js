@@ -3,22 +3,6 @@ import range from 'lodash.range'
 
 import {getNavigationStream} from '../navigation'
 
-const opacity50Rule = `
-  .gif-wrap {
-    -webkit-filter: opacity(50%);
-    -moz-filter: opacity(50%);
-    -ms-filter: opacity(50%);
-    -o-filter: opacity(50%);
-  }
-`
-const opacityNoneRule = `
-  .gif-wrap {
-    -webkit-filter: none;
-    -moz-filter: none;
-    -ms-filter: none;
-    -o-filter: none;
-  }
-`
 const [inactiveStar, activeStar] = ['☆', '★']
 
 export default () => {
@@ -56,10 +40,10 @@ export default () => {
   getNavigationStream(true)
     .do(({acc}) => {
       if (!acc || acc === 1) {
-        document.styleSheets[1].insertRule(
-          acc ? opacity50Rule : opacityNoneRule,
-          document.styleSheets[1].rules.length
-        )
+        var size = acc ? '200w_s.gif' : '200w.gif'
+        for (var img of document.querySelectorAll('.gif')) {
+          img.src = img.src.replace(/200w(_s)?\.gif/, size)
+        }
       }
     })
     .subscribe(({acc, parts}) => {
