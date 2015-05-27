@@ -13,7 +13,7 @@
         <table>
             <tr>
                 <td colspan="2">
-                    var keyups = Rx.Observable.fromEvent(document.body, 'keyup')
+                    var <b>keyups</b> = Rx.Observable.fromEvent(document.body, 'keyup')
                 </td>
             </tr>
             <tr id="main">
@@ -26,19 +26,19 @@
             </tr>
             <tr id="qs"> 
                 <td colspan="2">
-                    var qs = keys.filter(e => e.keyCode === Q)
+                    var <b>qs</b> = keys.filter(e => e.keyCode === Q)
                 </td>
             </tr>
             <tr id="ws"> 
                 <td colspan="2">
-                    var ws = keys.filter(e => e.keyCode === W)
+                    var <b>ws</b> = keys.filter(e => e.keyCode === W)
                 </td>
             </tr>
             <tr><td>&nbsp;</td></tr>
             <tr><td>&nbsp;</td></tr>
-            <tr id="part_0" hidden style="background-color: #f0fff0;"> 
+            <tr id="part_0" hidden> 
                 <td>
-                    qs.skipUntil(ws)
+                    var <b>skipped</b> = qs.skipUntil(ws)
                 </td>
                 <td align="right">
                     <div class="canvas-wrapper">
@@ -46,9 +46,10 @@
                     </div>
                 </td>
             </tr>
+            <tr><td>&nbsp;</td></tr>
             <tr id="part_1" hidden> 
                 <td>
-                    qs.delay(1000)
+                    var <b>delayed</b> = qs.delay(1000)
                 </td>
                 <td align="right">
                     <div class="canvas-wrapper">
@@ -56,9 +57,10 @@
                     </div>
                 </td>
             </tr>
-            <tr id="part_2" hidden style="background-color: #f0fff0;"> 
+            <tr><td>&nbsp;</td></tr>
+            <tr id="part_2" hidden> 
                 <td>
-                    qs.timeInterval()<br/>
+                    var <b>intervals</b> = qs.timeInterval()<br/>
                     &nbsp;&nbsp;.map(v => v.interval/1000)
                 </td>
                 <td align="right">

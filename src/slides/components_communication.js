@@ -53,6 +53,8 @@ export default () => {
         var size = acc ? '200w_s.gif' : '200w.gif'
         for (var img of document.querySelectorAll('.gif')) {
           img.src = img.src.replace(/200w(_s)?\.gif/, size)
+
+          acc ? img.classList.add('transparent') : img.classList.remove('transparent')
         }
       }
     })

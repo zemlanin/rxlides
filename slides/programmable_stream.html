@@ -24,19 +24,20 @@
                     </span>
                     <br/>
                     <span id="part_2">
-                    var bus = new Rx.Subject()<br/>
-                    var button = React.render(Btn, {bus})<br/>
+                    var <b>bus</b> = new Rx.Subject()<br/>
+                    var <b>button</b> = React.render(Btn, {bus})<br/>
                     </span>
                     <br/>
                     <span id="part_3">
-                    bus<br/>
+                    var <b>propsStream</b> = bus<br/>
                     &nbsp;&nbsp;.filter(e => e.type === 'click')<br/>
                     &nbsp;&nbsp;.map(e => getNewProps(e))<br/>
                     </span>
+                    <br/>
                     <span id="part_4">
-                    &nbsp;&nbsp;.subscribe(props => {<br/>
-                    &nbsp;&nbsp;&nbsp;&nbsp;button.setProps(props)<br/>
-                    &nbsp;&nbsp;})
+                    propsStream.subscribe(props => {<br/>
+                    &nbsp;&nbsp;button.setProps(props)<br/>
+                    })
                     </span>
                 </td>
                 <td>
