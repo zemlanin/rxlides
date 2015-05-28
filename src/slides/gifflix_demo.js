@@ -50,15 +50,17 @@ export default () => {
   getNavigationStream(true)
     .do(({acc}) => {
       if (!acc || acc === 1) {
-        var size = acc ? '200w_s.gif' : '200w.gif'
         for (var img of document.querySelectorAll('img')) {
-          img.src = img.src.replace(/200w(_s)?\.gif/, size)
+          acc ? img.classList.add('transparent') : img.classList.remove('transparent')
+        }
+        for (var img of document.querySelectorAll('.star')) {
+          acc ? img.classList.add('visible') : img.classList.remove('visible')
         }
       }
     })
     .subscribe(({acc, parts}) => {
-      for (var index of range(1, parts+1)) {
-        document.getElementById('part_'+index).style.color = (!acc || acc === index) ? 'black' : 'gray'
+      for (var index of range(parts)) {
+        document.getElementById('part_'+index).hidden = acc !== index
       }
     })
 }
