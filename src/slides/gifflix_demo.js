@@ -59,7 +59,7 @@ export default () => {
       }
     })
     .subscribe(({acc, parts}) => {
-      for (var index of range(parts)) {
+      for (var index of range(1, parts+1)) {
         document.getElementById('part_'+index).hidden = acc !== index
       }
     })
