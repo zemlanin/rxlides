@@ -18,7 +18,7 @@
     <div class="wrapper">
         <table>
             <tr>
-                <td id="part_1">
+                <td id="part_1" rowspan="2">
                     onClick: <b>send_via_appbus</b>({<br/>
                     &nbsp;&nbsp;to: <b>'favorites'</b>,<br/>
                     &nbsp;&nbsp;from: 'star_' + id,<br/>
@@ -26,6 +26,11 @@
                     &nbsp;&nbsp;data: {id, active: !active},<br/>
                     })
                 </td>
+                <td colspan="3" align="right">
+                    <b>[<span class="star_count">3</span>]</b>
+                </td>
+            </tr>
+            <tr>
                 <td class="gif_cell" data-id="0">
                     [id:0 <span class="star">☆</span>]<br/>
                     <div class="gif-wrap">
@@ -71,9 +76,7 @@
                     </div>
                 </td>
             </tr>
-            <tr><td colspan="4" align="right">
-                <b>[<span class="star_count">3</span>]</b>
-            </td></tr>
+            <tr><td>&nbsp;</td></tr>
             <tr>
                 <td id="part_3">
                     var <b>singleStream</b> = favsStream<br/>
