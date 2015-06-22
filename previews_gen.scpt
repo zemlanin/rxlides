@@ -9,9 +9,9 @@ var urls = ["file:///Users/zem/js/rxlides/index.html"]
 urls.push.apply(urls,
   Application('System Events').folders
     .byName('/Users/zem/js/rxlides/slides')
-	.diskItems
-	.name()
-	.map(function(n) {return 'file:///Users/zem/js/rxlides/slides/'+n})
+    .diskItems
+    .name()
+    .map(function(n) {return 'file:///Users/zem/js/rxlides/slides/'+n})
 )
 
 for (var i=0; i < urls.length; i++) {
