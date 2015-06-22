@@ -1,5 +1,6 @@
 import Rx from 'rx'
 import {slideLogic, nextSlide, prevSlide} from './slides'
+import {sendSlide, listenInputs} from './remote_io'
 
 import 'babel/polyfill'
 
@@ -27,6 +28,16 @@ Rx.Observable.fromEvent(document.body, 'keyup')
 
         return {keyCode, touch: true}
       })
+  )
+  .merge(
+    listenInputs().map(v => {
+      var keyCode
+
+      if (v === 'left') { keyCode = LEFT }
+      if (v === 'right') { keyCode = RIGHT }
+
+      return {keyCode}
+    })
   )
   .map(({keyCode, touch}) => {
     switch (keyCode) {

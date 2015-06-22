@@ -5,11 +5,16 @@ uglifyjs = $(shell npm bin)/uglifyjs
 .PHONY: dist
 dist:
 	make dist/main.js
+	make dist/remote.js
 	make dist/common.css
 
 dist/main.js: src/*.js src/**/*.js Makefile
 	mkdir -p $(@D)
 	$(browserify) src/main.js -t babelify | $(uglifyjs) --mangle > $@
+
+dist/remote.js: src/*.js src/**/*.js Makefile
+	mkdir -p $(@D)
+	$(browserify) src/remote.js -t babelify | $(uglifyjs) --mangle > $@
 
 dist/common.css: src/*.css Makefile
 	mkdir -p $(@D)

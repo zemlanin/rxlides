@@ -16,6 +16,8 @@
     "uglify-js": "^2.4.23"
   },
   "dependencies": {
+    "firebase": "^2.2.7",
+    "lodash.merge": "^3.3.1",
     "lodash.range": "^3.0.0",
     "lodash.zipobject": "^3.0.0",
     "rx": "^2.5.2"
