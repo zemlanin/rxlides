@@ -8,6 +8,8 @@ if (metaPage !== 'index') {
   document.querySelector('nav .slide_name').textContent = 'slides/' + metaPage
 }
 
+sendSlide({name: metaPage}).subscribe()
+
 const [LEFT, UP, RIGHT, DOWN] = [37, 38, 39, 40]
 Rx.Observable.fromEvent(document.body, 'keyup')
   .map(e => ({keyCode: e.keyCode, touch: false}))
