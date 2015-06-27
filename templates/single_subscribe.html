@@ -1,0 +1,18 @@
+    <style type="text/css">
+      .wrapper {margin: 30vh auto; text-align: left; width: 70vw}
+      .canvas-wrapper { color: gray; margin-bottom: 3px}
+    </style>
+###
+<body style="font: 3vw monospace;">
+    <div class="wrapper">
+        <span>var clicks = Rx.Observable</span>
+        <br/>
+        <span>&nbsp;&nbsp;.fromEvent(document, 'click')</span>
+        <br/>
+        <br/>
+        <span style="color: gray;">
+        // clicks == <div class="canvas-wrapper"><canvas width="400" height="50"></canvas></div>
+        </span>
+        <br/>
+        <span>clicks.subscribe((<span id="subscribe_arg">event</span>) => {})</span>
+    </div>
