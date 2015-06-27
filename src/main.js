@@ -1,5 +1,6 @@
 import Rx from 'rx'
-import {slideLogic, nextSlide, prevSlide} from './slides'
+import omit from 'lodash.omit'
+import {slideLogic, nextSlide, prevSlide, SLIDES} from './slides'
 import {sendSlide, listenInputs} from './remote_io'
 
 var metaPage = document.querySelector('meta[property=page]').content
@@ -8,7 +9,7 @@ if (metaPage !== 'index') {
   document.querySelector('nav .slide_name').textContent = 'slides/' + metaPage
 }
 
-sendSlide({name: metaPage}).subscribe()
+sendSlide(omit(SLIDES.find(s => s.name == metaPage), 'logic')).subscribe()
 
 const [LEFT, UP, RIGHT, DOWN] = [37, 38, 39, 40]
 Rx.Observable.fromEvent(document.body, 'keyup')

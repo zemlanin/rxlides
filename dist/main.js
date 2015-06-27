@@ -560,13 +560,36 @@ var indexLogic = function indexLogic() {
   });
 };
 
-var slides = [{
+var KEYCODES = {
+  LEFT: { key: 37, name: 'LEFT' },
+  UP: { key: 38, name: 'UP' },
+  RIGHT: { key: 39, name: 'RIGHT' },
+  DOWN: { key: 40, name: 'DOWN' },
+  Q: { key: 81, name: 'Q' },
+  W: { key: 87, name: 'W' },
+  E: { key: 69, name: 'E' },
+  A: { key: 65, name: 'A' },
+  S: { key: 83, name: 'S' },
+  D: { key: 68, name: 'D' },
+  _0: { key: 48, name: '_0' },
+  _1: { key: 49, name: '_1' },
+  _2: { key: 50, name: '_2' },
+  _3: { key: 51, name: '_3' },
+  _4: { key: 52, name: '_4' } };
+
+exports.KEYCODES = KEYCODES;
+var MOUSE = {
+  CLICK: { mouse: 'click', name: 'click' } };
+
+exports.MOUSE = MOUSE;
+var SLIDES = [{
   name: 'index',
   logic: indexLogic }, {
   name: 'ui',
   logic: null }, {
   name: 'single_callback',
-  logic: _single_callbackJs2['default'] }, {
+  logic: _single_callbackJs2['default'],
+  actions: [MOUSE.CLICK] }, {
   name: 'microsoft_xhr',
   logic: null }, {
   name: 'callbacks_sync',
@@ -578,30 +601,38 @@ var slides = [{
   name: 'promises_chain',
   logic: null }, {
   name: 'promises_cons',
-  logic: _promises_consJs2['default'] }, {
+  logic: _promises_consJs2['default'],
+  actions: [MOUSE.CLICK] }, {
   name: 'microsoft_go4',
   logic: null }, {
   name: 'single_subscribe',
-  logic: _single_subscribeJs2['default'] }, {
+  logic: _single_subscribeJs2['default'],
+  actions: [MOUSE.CLICK] }, {
   name: 'map_filter_flatmap',
-  logic: _map_filter_flatmapJs2['default'] }, {
+  logic: _map_filter_flatmapJs2['default'],
+  actions: [KEYCODES.Q, KEYCODES.W, KEYCODES.E, KEYCODES.A, KEYCODES.S, KEYCODES.D] }, {
   name: 'interval_demo',
-  logic: _interval_demoJs2['default'] }, {
+  logic: _interval_demoJs2['default'],
+  actions: [KEYCODES.Q, KEYCODES.W, KEYCODES.E] }, {
   name: 'keyboard_demo',
-  logic: _keyboard_demoJs2['default'] }, {
+  logic: _keyboard_demoJs2['default'],
+  actions: [KEYCODES.Q, KEYCODES.W, KEYCODES.E, KEYCODES.A, KEYCODES.S, KEYCODES.D] }, {
   name: 'programmable_stream',
   logic: _programmable_streamJs2['default'] }, {
   name: 'gifflix_demo',
-  logic: _gifflix_demoJs2['default'] }, {
+  logic: _gifflix_demoJs2['default'],
+  actions: [KEYCODES._0, KEYCODES._1, KEYCODES._2, KEYCODES._3, KEYCODES._4] }, {
   name: 'components_communication',
-  logic: _components_communicationJs2['default'] }, {
+  logic: _components_communicationJs2['default'],
+  actions: [KEYCODES._0, KEYCODES._1, KEYCODES._2, KEYCODES._3, KEYCODES._4] }, {
   name: 'summary',
   logic: _summaryJs2['default'] }, {
   name: 'links',
   logic: null }];
 
+exports.SLIDES = SLIDES;
 var prevSlide = function prevSlide(slide) {
-  var slidesName = slides.map(function (s) {
+  var slidesName = SLIDES.map(function (s) {
     return s.name;
   });
   var slideIndex = slidesName.indexOf(slide);
@@ -619,7 +650,7 @@ var prevSlide = function prevSlide(slide) {
 
 exports.prevSlide = prevSlide;
 var nextSlide = function nextSlide(slide) {
-  var slidesName = slides.map(function (s) {
+  var slidesName = SLIDES.map(function (s) {
     return s.name;
   });
   var slideIndex = slidesName.indexOf(slide);
@@ -637,7 +668,7 @@ var nextSlide = function nextSlide(slide) {
 
 exports.nextSlide = nextSlide;
 var slideLogic = function slideLogic(slideName) {
-  var slide = slides.find(function (s) {
+  var slide = SLIDES.find(function (s) {
     return s.name == slideName;
   });
   if (slide && slide.logic) {
@@ -1435,6 +1466,10 @@ var _rx = require('rx');
 
 var _rx2 = _interopRequireDefault(_rx);
 
+var _lodashOmit = require('lodash.omit');
+
+var _lodashOmit2 = _interopRequireDefault(_lodashOmit);
+
 var _slides = require('./slides');
 
 var _remote_io = require('./remote_io');
@@ -1445,7 +1480,9 @@ if (metaPage !== 'index') {
   document.querySelector('nav .slide_name').textContent = 'slides/' + metaPage;
 }
 
-(0, _remote_io.sendSlide)({ name: metaPage }).subscribe();
+(0, _remote_io.sendSlide)((0, _lodashOmit2['default'])(_slides.SLIDES.find(function (s) {
+  return s.name == metaPage;
+}), 'logic')).subscribe();
 
 var LEFT = 37;
 var UP = 38;
@@ -1499,4 +1536,4 @@ _rx2['default'].Observable.fromEvent(document.body, 'keyup').map(function (e) {
   return location.href = page + (touch ? '#touch' : '');
 });
 
-},{"./remote_io":2,"./slides":6,"rx":"rx"}]},{},[16]);
+},{"./remote_io":2,"./slides":6,"lodash.omit":"lodash.omit","rx":"rx"}]},{},[16]);
