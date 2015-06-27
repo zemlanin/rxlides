@@ -21,7 +21,9 @@
     "lodash.merge": "^3.3.1",
     "lodash.omit": "^3.1.0",
     "lodash.range": "^3.0.0",
+    "lodash.values": "^3.0.0",
     "lodash.zipobject": "^3.0.0",
+    "react": "^0.13.3",
     "rx": "^2.5.2"
   }
 }

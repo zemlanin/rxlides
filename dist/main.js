@@ -76,6 +76,28 @@ var _firebase2 = _interopRequireDefault(_firebase);
 
 var firebaseRef = new _firebase2['default']('https://rxlides.firebaseio.com/');
 
+var KEYCODES = {
+  LEFT: { key: 37, name: 'LEFT' },
+  UP: { key: 38, name: 'UP' },
+  RIGHT: { key: 39, name: 'RIGHT' },
+  DOWN: { key: 40, name: 'DOWN' },
+  Q: { key: 81, name: 'Q' },
+  W: { key: 87, name: 'W' },
+  E: { key: 69, name: 'E' },
+  A: { key: 65, name: 'A' },
+  S: { key: 83, name: 'S' },
+  D: { key: 68, name: 'D' },
+  _0: { key: 48, name: '_0' },
+  _1: { key: 49, name: '_1' },
+  _2: { key: 50, name: '_2' },
+  _3: { key: 51, name: '_3' },
+  _4: { key: 52, name: '_4' } };
+
+exports.KEYCODES = KEYCODES;
+var MOUSE = {
+  CLICK: { mouse: 'click', name: 'click' } };
+
+exports.MOUSE = MOUSE;
 function _observeOnSuccess(obs, snapshot, prevName) {
   obs.onNext({ snapshot: snapshot, prevName: prevName });
 }
@@ -137,9 +159,13 @@ function listenInputs() {
 function listenSlide() {
   return on(firebaseRef.child('slide'), 'value').pluck('snapshot').map(function (s) {
     return s.val();
-  }).concat(on(firebaseRef.child('slide'), 'child_changed').pluck('snapshot').map(function (s) {
+  }).concat(_rx2['default'].Observable.merge(on(firebaseRef.child('slide'), 'child_changed').pluck('snapshot').map(function (s) {
     return _defineProperty({}, s.key(), s.val());
-  })).scan(_lodashMerge2['default']);
+  }), on(firebaseRef.child('slide'), 'child_removed').pluck('snapshot').map(function (s) {
+    return _defineProperty({}, s.key(), null);
+  }), on(firebaseRef.child('slide'), 'child_added').pluck('snapshot').map(function (s) {
+    return _defineProperty({}, s.key(), s.val());
+  }))).scan(_lodashMerge2['default']);
 }
 
 },{"firebase":"firebase","lodash.merge":"lodash.merge","rx":"rx"}],3:[function(require,module,exports){
@@ -550,6 +576,8 @@ var _summaryJs = require('./summary.js');
 
 var _summaryJs2 = _interopRequireDefault(_summaryJs);
 
+var _remote_ioJs = require('../remote_io.js');
+
 var puns = ['Tyrannosaurus Rx', 'Rx-xar, the Hunter', 'Commissar Rx', 'Rxless', 'Rx and Morty'];
 
 var indexLogic = function indexLogic() {
@@ -560,28 +588,6 @@ var indexLogic = function indexLogic() {
   });
 };
 
-var KEYCODES = {
-  LEFT: { key: 37, name: 'LEFT' },
-  UP: { key: 38, name: 'UP' },
-  RIGHT: { key: 39, name: 'RIGHT' },
-  DOWN: { key: 40, name: 'DOWN' },
-  Q: { key: 81, name: 'Q' },
-  W: { key: 87, name: 'W' },
-  E: { key: 69, name: 'E' },
-  A: { key: 65, name: 'A' },
-  S: { key: 83, name: 'S' },
-  D: { key: 68, name: 'D' },
-  _0: { key: 48, name: '_0' },
-  _1: { key: 49, name: '_1' },
-  _2: { key: 50, name: '_2' },
-  _3: { key: 51, name: '_3' },
-  _4: { key: 52, name: '_4' } };
-
-exports.KEYCODES = KEYCODES;
-var MOUSE = {
-  CLICK: { mouse: 'click', name: 'click' } };
-
-exports.MOUSE = MOUSE;
 var SLIDES = [{
   name: 'index',
   logic: indexLogic }, {
@@ -589,7 +595,7 @@ var SLIDES = [{
   logic: null }, {
   name: 'single_callback',
   logic: _single_callbackJs2['default'],
-  actions: [MOUSE.CLICK] }, {
+  actions: [_remote_ioJs.MOUSE.CLICK] }, {
   name: 'microsoft_xhr',
   logic: null }, {
   name: 'callbacks_sync',
@@ -602,29 +608,29 @@ var SLIDES = [{
   logic: null }, {
   name: 'promises_cons',
   logic: _promises_consJs2['default'],
-  actions: [MOUSE.CLICK] }, {
+  actions: [_remote_ioJs.MOUSE.CLICK] }, {
   name: 'microsoft_go4',
   logic: null }, {
   name: 'single_subscribe',
   logic: _single_subscribeJs2['default'],
-  actions: [MOUSE.CLICK] }, {
+  actions: [_remote_ioJs.MOUSE.CLICK] }, {
   name: 'map_filter_flatmap',
   logic: _map_filter_flatmapJs2['default'],
-  actions: [KEYCODES.Q, KEYCODES.W, KEYCODES.E, KEYCODES.A, KEYCODES.S, KEYCODES.D] }, {
+  actions: [_remote_ioJs.KEYCODES.Q, _remote_ioJs.KEYCODES.W, _remote_ioJs.KEYCODES.E, _remote_ioJs.KEYCODES.A, _remote_ioJs.KEYCODES.S, _remote_ioJs.KEYCODES.D] }, {
   name: 'interval_demo',
   logic: _interval_demoJs2['default'],
-  actions: [KEYCODES.Q, KEYCODES.W, KEYCODES.E] }, {
+  actions: [_remote_ioJs.KEYCODES.Q, _remote_ioJs.KEYCODES.W, _remote_ioJs.KEYCODES.E] }, {
   name: 'keyboard_demo',
   logic: _keyboard_demoJs2['default'],
-  actions: [KEYCODES.Q, KEYCODES.W, KEYCODES.E, KEYCODES.A, KEYCODES.S, KEYCODES.D] }, {
+  actions: [_remote_ioJs.KEYCODES.Q, _remote_ioJs.KEYCODES.W, _remote_ioJs.KEYCODES.E, _remote_ioJs.KEYCODES.A, _remote_ioJs.KEYCODES.S, _remote_ioJs.KEYCODES.D] }, {
   name: 'programmable_stream',
   logic: _programmable_streamJs2['default'] }, {
   name: 'gifflix_demo',
   logic: _gifflix_demoJs2['default'],
-  actions: [KEYCODES._0, KEYCODES._1, KEYCODES._2, KEYCODES._3, KEYCODES._4] }, {
+  actions: [_remote_ioJs.KEYCODES._0, _remote_ioJs.KEYCODES._1, _remote_ioJs.KEYCODES._2, _remote_ioJs.KEYCODES._3, _remote_ioJs.KEYCODES._4] }, {
   name: 'components_communication',
   logic: _components_communicationJs2['default'],
-  actions: [KEYCODES._0, KEYCODES._1, KEYCODES._2, KEYCODES._3, KEYCODES._4] }, {
+  actions: [_remote_ioJs.KEYCODES._0, _remote_ioJs.KEYCODES._1, _remote_ioJs.KEYCODES._2, _remote_ioJs.KEYCODES._3, _remote_ioJs.KEYCODES._4] }, {
   name: 'summary',
   logic: _summaryJs2['default'] }, {
   name: 'links',
@@ -677,7 +683,7 @@ var slideLogic = function slideLogic(slideName) {
 };
 exports.slideLogic = slideLogic;
 
-},{"./callbacks_chain.js":3,"./components_communication.js":4,"./gifflix_demo.js":5,"./interval_demo.js":7,"./keyboard_demo.js":8,"./map_filter_flatmap.js":9,"./programmable_stream.js":10,"./promises_cons.js":11,"./single_callback.js":12,"./single_subscribe.js":13,"./summary.js":14,"lodash.zipobject":"lodash.zipobject","rx":"rx"}],7:[function(require,module,exports){
+},{"../remote_io.js":2,"./callbacks_chain.js":3,"./components_communication.js":4,"./gifflix_demo.js":5,"./interval_demo.js":7,"./keyboard_demo.js":8,"./map_filter_flatmap.js":9,"./programmable_stream.js":10,"./promises_cons.js":11,"./single_callback.js":12,"./single_subscribe.js":13,"./summary.js":14,"lodash.zipobject":"lodash.zipobject","rx":"rx"}],7:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -1508,10 +1514,10 @@ _rx2['default'].Observable.fromEvent(document.body, 'keyup').map(function (e) {
 })).merge((0, _remote_io.listenInputs)().map(function (v) {
   var keyCode;
 
-  if (v === 'left') {
+  if (v === 'LEFT') {
     keyCode = LEFT;
   }
-  if (v === 'right') {
+  if (v === 'RIGHT') {
     keyCode = RIGHT;
   }
 

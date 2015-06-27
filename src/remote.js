@@ -1,5 +1,9 @@
-import {sendInput, listenSlide} from './remote_io'
 import Rx from 'rx'
+import React from 'react'
+import _values from 'lodash.values'
+
+import {sendInput, listenSlide} from './remote_io'
+import actionsClass from './components/actions'
 
 function getDomPath(e) {
   if (e.path) { return e.path }
@@ -23,6 +27,18 @@ Rx.Observable.fromEvent(document.body, 'click')
   .flatMap(sendInput)
   .subscribe()
 
-listenSlide()
+var currentSlide = listenSlide().share()
+
+currentSlide
   .pluck('name')
   .subscribe(name => document.getElementById('slide_name').textContent = name)
+
+currentSlide
+  .pluck('actions')
+  // .map(_values)
+  .subscribe(actions => {
+    React.render(
+      React.createElement(actionsClass, {actions: _values(actions)}),
+      document.getElementById('actions')
+    )
+  })

@@ -34,8 +34,8 @@ Rx.Observable.fromEvent(document.body, 'keyup')
     listenInputs().map(v => {
       var keyCode
 
-      if (v === 'left') { keyCode = LEFT }
-      if (v === 'right') { keyCode = RIGHT }
+      if (v === 'LEFT') { keyCode = LEFT }
+      if (v === 'RIGHT') { keyCode = RIGHT }
 
       return {keyCode}
     })

@@ -13,6 +13,8 @@ import gifflixDemo from './gifflix_demo.js'
 import componentsCommunication from './components_communication.js'
 import summary from './summary.js'
 
+import {KEYCODES, MOUSE} from '../remote_io.js'
+
 const puns = [
   'Tyrannosaurus Rx',
   'Rx-xar, the Hunter',
@@ -30,28 +32,6 @@ var indexLogic = () => {
     .take(puns.length)
     .repeat()
     .subscribe(pun => document.getElementsByTagName('h1')[0].textContent = pun )
-}
-
-export const KEYCODES = {
-  LEFT: {key: 37, name: 'LEFT'},
-  UP: {key: 38, name: 'UP'},
-  RIGHT: {key: 39, name: 'RIGHT'},
-  DOWN: {key: 40, name: 'DOWN'},
-  Q: {key: 81, name: 'Q'},
-  W: {key: 87, name: 'W'},
-  E: {key: 69, name: 'E'},
-  A: {key: 65, name: 'A'},
-  S: {key: 83, name: 'S'},
-  D: {key: 68, name: 'D'},
-  _0: {key: 48, name: '_0'},
-  _1: {key: 49, name: '_1'},
-  _2: {key: 50, name: '_2'},
-  _3: {key: 51, name: '_3'},
-  _4: {key: 52, name: '_4'},
-}
-
-export const MOUSE = {
-  CLICK: {mouse: 'click', name: 'click'},
 }
 
 export const SLIDES = [

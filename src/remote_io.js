@@ -4,6 +4,28 @@ import Firebase from 'firebase'
 
 var firebaseRef = new Firebase('https://rxlides.firebaseio.com/');
 
+export const KEYCODES = {
+  LEFT: {key: 37, name: 'LEFT'},
+  UP: {key: 38, name: 'UP'},
+  RIGHT: {key: 39, name: 'RIGHT'},
+  DOWN: {key: 40, name: 'DOWN'},
+  Q: {key: 81, name: 'Q'},
+  W: {key: 87, name: 'W'},
+  E: {key: 69, name: 'E'},
+  A: {key: 65, name: 'A'},
+  S: {key: 83, name: 'S'},
+  D: {key: 68, name: 'D'},
+  _0: {key: 48, name: '_0'},
+  _1: {key: 49, name: '_1'},
+  _2: {key: 50, name: '_2'},
+  _3: {key: 51, name: '_3'},
+  _4: {key: 52, name: '_4'},
+}
+
+export const MOUSE = {
+  CLICK: {mouse: 'click', name: 'click'},
+}
+
 function _observeOnSuccess(obs, snapshot, prevName) { obs.onNext({snapshot, prevName}) }
 function _observeOnSuccessValue(obs, snapshot) {
   obs.onNext({snapshot})
@@ -64,9 +86,17 @@ export function listenSlide() {
   return on(firebaseRef.child('slide'), 'value')
     .pluck('snapshot').map(s => s.val())
     .concat(
-      on(firebaseRef.child('slide'), 'child_changed')
-        .pluck('snapshot')
-        .map(s => ({[s.key()]: s.val()}))
+      Rx.Observable.merge(
+        on(firebaseRef.child('slide'), 'child_changed')
+          .pluck('snapshot')
+          .map(s => ({[s.key()]: s.val()})),
+        on(firebaseRef.child('slide'), 'child_removed')
+          .pluck('snapshot')
+          .map(s => ({[s.key()]: null})),
+        on(firebaseRef.child('slide'), 'child_added')
+          .pluck('snapshot')
+          .map(s => ({[s.key()]: s.val()}))
+      )
     )
     .scan(merge)
 }
