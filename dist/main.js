@@ -550,7 +550,7 @@ var _summaryJs = require('./summary.js');
 
 var _summaryJs2 = _interopRequireDefault(_summaryJs);
 
-var puns = ['Tyrannosaurus Rx', 'Rx-xar, the Hunter', 'Rxless', 'Rx and Morty'];
+var puns = ['Tyrannosaurus Rx', 'Rx-xar, the Hunter', 'Commissar Rx', 'Rxless', 'Rx and Morty'];
 
 var indexLogic = function indexLogic() {
   _rx2['default'].Observable.interval(1000).zip(_rx2['default'].Observable.from(puns), function (m, pun) {
@@ -560,11 +560,49 @@ var indexLogic = function indexLogic() {
   });
 };
 
-var slides = [['index', indexLogic], ['ui', null], ['single_callback', _single_callbackJs2['default']], ['microsoft_xhr', null], ['callbacks_sync', null], ['callbacks_chain', _callbacks_chainJs2['default']], ['promises', null], ['promises_chain', null], ['promises_cons', _promises_consJs2['default']], ['microsoft_go4', null], ['single_subscribe', _single_subscribeJs2['default']], ['map_filter_flatmap', _map_filter_flatmapJs2['default']], ['interval_demo', _interval_demoJs2['default']], ['keyboard_demo', _keyboard_demoJs2['default']], ['programmable_stream', _programmable_streamJs2['default']], ['gifflix_demo', _gifflix_demoJs2['default']], ['components_communication', _components_communicationJs2['default']], ['summary', _summaryJs2['default']], ['links', null]];
+var slides = [{
+  name: 'index',
+  logic: indexLogic }, {
+  name: 'ui',
+  logic: null }, {
+  name: 'single_callback',
+  logic: _single_callbackJs2['default'] }, {
+  name: 'microsoft_xhr',
+  logic: null }, {
+  name: 'callbacks_sync',
+  logic: null }, {
+  name: 'callbacks_chain',
+  logic: _callbacks_chainJs2['default'] }, {
+  name: 'promises',
+  logic: null }, {
+  name: 'promises_chain',
+  logic: null }, {
+  name: 'promises_cons',
+  logic: _promises_consJs2['default'] }, {
+  name: 'microsoft_go4',
+  logic: null }, {
+  name: 'single_subscribe',
+  logic: _single_subscribeJs2['default'] }, {
+  name: 'map_filter_flatmap',
+  logic: _map_filter_flatmapJs2['default'] }, {
+  name: 'interval_demo',
+  logic: _interval_demoJs2['default'] }, {
+  name: 'keyboard_demo',
+  logic: _keyboard_demoJs2['default'] }, {
+  name: 'programmable_stream',
+  logic: _programmable_streamJs2['default'] }, {
+  name: 'gifflix_demo',
+  logic: _gifflix_demoJs2['default'] }, {
+  name: 'components_communication',
+  logic: _components_communicationJs2['default'] }, {
+  name: 'summary',
+  logic: _summaryJs2['default'] }, {
+  name: 'links',
+  logic: null }];
 
 var prevSlide = function prevSlide(slide) {
   var slidesName = slides.map(function (s) {
-    return s[0];
+    return s.name;
   });
   var slideIndex = slidesName.indexOf(slide);
 
@@ -582,7 +620,7 @@ var prevSlide = function prevSlide(slide) {
 exports.prevSlide = prevSlide;
 var nextSlide = function nextSlide(slide) {
   var slidesName = slides.map(function (s) {
-    return s[0];
+    return s.name;
   });
   var slideIndex = slidesName.indexOf(slide);
 
@@ -598,10 +636,12 @@ var nextSlide = function nextSlide(slide) {
 };
 
 exports.nextSlide = nextSlide;
-var slideLogic = function slideLogic(slide) {
-  var logic = (0, _lodashZipobject2['default'])(slides)[slide];
-  if (logic) {
-    logic();
+var slideLogic = function slideLogic(slideName) {
+  var slide = slides.find(function (s) {
+    return s.name == slideName;
+  });
+  if (slide && slide.logic) {
+    slide.logic();
   }
 };
 exports.slideLogic = slideLogic;
@@ -1404,6 +1444,8 @@ var metaPage = document.querySelector('meta[property=page]').content;
 if (metaPage !== 'index') {
   document.querySelector('nav .slide_name').textContent = 'slides/' + metaPage;
 }
+
+(0, _remote_io.sendSlide)({ name: metaPage }).subscribe();
 
 var LEFT = 37;
 var UP = 38;

@@ -32,30 +32,86 @@ var indexLogic = () => {
 }
 
 const slides = [
-  ['index', indexLogic],
-  ['ui', null],
-  ['single_callback', singleCallback],
-  ['microsoft_xhr', null],
-  ['callbacks_sync', null],
-  ['callbacks_chain', callbacksChain],
-  ['promises', null],
-  ['promises_chain', null],
-  ['promises_cons', promisesCons],
-  ['microsoft_go4', null],
-  ['single_subscribe', singleSubscribe],
-  ['map_filter_flatmap', mapFilterFlatmap],
-  ['interval_demo', intervalDemo],
-  ['keyboard_demo', keyboardDemo],
-  ['programmable_stream', programmableStream],
-  ['gifflix_demo', gifflixDemo],
-  ['components_communication', componentsCommunication],
-
-  ['summary', summary],
-  ['links', null],
+  {
+    name: 'index',
+    logic: indexLogic,
+  },
+  {
+    name: 'ui',
+    logic: null,
+  },
+  {
+    name: 'single_callback',
+    logic: singleCallback,
+  },
+  {
+    name: 'microsoft_xhr',
+    logic: null,
+  },
+  {
+    name: 'callbacks_sync',
+    logic: null,
+  },
+  {
+    name: 'callbacks_chain',
+    logic: callbacksChain,
+  },
+  {
+    name: 'promises',
+    logic: null,
+  },
+  {
+    name: 'promises_chain',
+    logic: null,
+  },
+  {
+    name: 'promises_cons',
+    logic: promisesCons,
+  },
+  {
+    name: 'microsoft_go4',
+    logic: null,
+  },
+  {
+    name: 'single_subscribe',
+    logic: singleSubscribe,
+  },
+  {
+    name: 'map_filter_flatmap',
+    logic: mapFilterFlatmap,
+  },
+  {
+    name: 'interval_demo',
+    logic: intervalDemo,
+  },
+  {
+    name: 'keyboard_demo',
+    logic: keyboardDemo,
+  },
+  {
+    name: 'programmable_stream',
+    logic: programmableStream,
+  },
+  {
+    name: 'gifflix_demo',
+    logic: gifflixDemo,
+  },
+  {
+    name: 'components_communication',
+    logic: componentsCommunication,
+  },
+  {
+    name: 'summary',
+    logic: summary,
+  },
+  {
+    name: 'links',
+    logic: null,
+  },
 ]
 
 export var prevSlide = slide => {
-  var slidesName = slides.map(s => s[0])
+  var slidesName = slides.map(s => s.name)
   var slideIndex = slidesName.indexOf(slide)
 
   switch (slideIndex) {
@@ -70,7 +126,7 @@ export var prevSlide = slide => {
 }
 
 export var nextSlide = slide => {
-  var slidesName = slides.map(s => s[0])
+  var slidesName = slides.map(s => s.name)
   var slideIndex = slidesName.indexOf(slide)
 
   switch (slideIndex) {
@@ -84,7 +140,7 @@ export var nextSlide = slide => {
   }
 }
 
-export var slideLogic = slide => {
-  var logic = zipObject(slides)[slide]
-  if (logic) { logic() }
+export var slideLogic = slideName => {
+  var slide = slides.find(s => s.name == slideName)
+  if (slide && slide.logic) { slide.logic() }
 }
