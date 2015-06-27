@@ -16,6 +16,7 @@ import summary from './summary.js'
 const puns = [
   'Tyrannosaurus Rx',
   'Rx-xar, the Hunter',
+  'Commissar Rx',
   'Rxless',
   'Rx and Morty',
 ]
