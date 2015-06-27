@@ -16,7 +16,7 @@ function getDomPath(e) {
 Rx.Observable.fromEvent(document.body, 'click')
   .map(getDomPath)
   .map(path => path.find(p =>
-      p.classList && p.classList.contains('remote-button')
+    p.classList && p.classList.contains('remote-button')
   ))
   .filter(el => el)
   .map(el => el.getAttribute('data-input'))

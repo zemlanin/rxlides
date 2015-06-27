@@ -2,8 +2,6 @@ import Rx from 'rx'
 import {slideLogic, nextSlide, prevSlide} from './slides'
 import {sendSlide, listenInputs} from './remote_io'
 
-import 'babel/polyfill'
-
 var metaPage = document.querySelector('meta[property=page]').content
 slideLogic(metaPage)
 if (metaPage !== 'index') {
