@@ -1,0 +1,19 @@
+    <style type="text/css">
+        .wrapper {margin: 38vh auto; text-align: center; }
+        .canvas-wrapper { color: gray; }
+        .canvas-wrapper::before { content: "["; }
+        .canvas-wrapper::after { content: "]"; }
+    </style>
+###
+<body style="font: 3vw monospace;">
+    <div class="wrapper">
+        <div>
+            <span style="color: gray"> // events == </span>
+            <div class="canvas-wrapper">
+                <canvas width="400" height="60"></canvas>
+            </div>
+        </div>
+        <span>
+            document.onclick = function (<span id="subscribe_arg">event</span>) {}
+        </span>
+    </div>
