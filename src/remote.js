@@ -2,6 +2,7 @@ import Rx from 'rx'
 import React from 'react'
 import _values from 'lodash.values'
 
+import {SLIDES_MAP} from './slides'
 import {sendInput, listenSlide} from './remote_io'
 import actionsClass from './components/actions'
 
@@ -34,11 +35,11 @@ currentSlide
   .subscribe(name => document.getElementById('slide_name').textContent = name)
 
 currentSlide
-  .pluck('actions')
-  // .map(_values)
+  .pluck('name')
+  .map(name => SLIDES_MAP[name].actions)
   .subscribe(actions => {
     React.render(
-      React.createElement(actionsClass, {actions: _values(actions)}),
+      React.createElement(actionsClass, {actions}),
       document.getElementById('actions')
     )
   })

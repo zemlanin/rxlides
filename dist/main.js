@@ -637,6 +637,16 @@ var SLIDES = [{
   logic: null }];
 
 exports.SLIDES = SLIDES;
+var SLIDES_MAP = (function () {
+  var slides_map = {};
+  for (var i = 0; i < SLIDES.length; i++) {
+    slides_map[SLIDES[i].name] = SLIDES[i];
+  }
+
+  return slides_map;
+})();
+
+exports.SLIDES_MAP = SLIDES_MAP;
 var prevSlide = function prevSlide(slide) {
   var slidesName = SLIDES.map(function (s) {
     return s.name;
@@ -674,9 +684,7 @@ var nextSlide = function nextSlide(slide) {
 
 exports.nextSlide = nextSlide;
 var slideLogic = function slideLogic(slideName) {
-  var slide = SLIDES.find(function (s) {
-    return s.name == slideName;
-  });
+  var slide = SLIDES_MAP[slideName];
   if (slide && slide.logic) {
     slide.logic();
   }
@@ -1486,9 +1494,7 @@ if (metaPage !== 'index') {
   document.querySelector('nav .slide_name').textContent = 'slides/' + metaPage;
 }
 
-(0, _remote_io.sendSlide)((0, _lodashOmit2['default'])(_slides.SLIDES.find(function (s) {
-  return s.name == metaPage;
-}), 'logic')).subscribe();
+(0, _remote_io.sendSlide)({ name: metaPage }).subscribe();
 
 var LEFT = 37;
 var UP = 38;

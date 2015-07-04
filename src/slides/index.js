@@ -157,6 +157,15 @@ export const SLIDES = [
   },
 ]
 
+export const SLIDES_MAP = (() => {
+  var slides_map = {}
+  for (var i = 0; i < SLIDES.length; i++) {
+    slides_map[SLIDES[i].name] = SLIDES[i]
+  }
+
+  return slides_map
+})()
+
 export var prevSlide = slide => {
   var slidesName = SLIDES.map(s => s.name)
   var slideIndex = slidesName.indexOf(slide)
@@ -188,6 +197,6 @@ export var nextSlide = slide => {
 }
 
 export var slideLogic = slideName => {
-  var slide = SLIDES.find(s => s.name == slideName)
+  var slide = SLIDES_MAP[slideName]
   if (slide && slide.logic) { slide.logic() }
 }
