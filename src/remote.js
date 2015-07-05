@@ -1,6 +1,5 @@
 import Rx from 'rx'
 import React from 'react'
-import _values from 'lodash.values'
 
 import {SLIDES_MAP} from './slides'
 import {sendInput, listenSlide} from './remote_io'
@@ -9,13 +8,13 @@ import actionsClass from './components/actions'
 function getDomPath(e) {
   if (e.path) { return e.path }
 
-  var path = [];
-  var node = e.target;
-  while (node != document.body) {
-    path.push(node);
-    node = node.parentNode;
+  var path = []
+  var node = e.target
+  while (node !== document.body) {
+    path.push(node)
+    node = node.parentNode
   }
-  return path;
+  return path
 }
 
 Rx.Observable.fromEvent(document.body, 'click')

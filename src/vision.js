@@ -22,7 +22,7 @@ export function accumutate(acc, [value, shift]) {
 
   return acc
     .filter(({position}) => position <= document.body.clientWidth)
-    .map(({text, position, mirror}) => ({text, position: position+shift, mirror}))
+    .map(({text, position, mirror}) => ({text, position: position + shift, mirror}))
 }
 
 export function wrapToDisplay(ctx) {
@@ -35,6 +35,6 @@ export function getMockKeys() {
   return Rx.Observable.interval(2000)
     .startWith(null)
     .flatMap(() => Rx.Observable.timer(Math.random() * 2000 - 500))
-    .map(() => touchMockKeys[parseInt(Math.random() * touchMockKeys.length)])
+    .map(() => touchMockKeys[parseInt(Math.random() * touchMockKeys.length, 10)])
     .share()
 }

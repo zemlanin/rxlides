@@ -8,13 +8,13 @@ const [inactiveStar, activeStar] = ['☆', '★']
 function getDomPath(e) {
   if (e.path) { return e.path }
 
-  var path = [];
-  var node = e.target;
-  while (node != document.body) {
-    path.push(node);
-    node = node.parentNode;
+  var path = []
+  var node = e.target
+  while (node !== document.body) {
+    path.push(node)
+    node = node.parentNode
   }
-  return path;
+  return path
 }
 
 export default () => {
@@ -29,7 +29,11 @@ export default () => {
       active: cell.querySelector('.star').textContent === inactiveStar
     }))
     .scan(new Set([1, 2, 4]), (acc, v) => {
-      v.active ? acc.add(v.id) : acc.delete(v.id)
+      if (v.active) {
+        acc.add(v.id)
+      } else {
+        acc.delete(v.id)
+      }
       return acc
     })
     .subscribe(favsStream)
@@ -57,8 +61,8 @@ export default () => {
       }
     })
     .subscribe(({acc, parts}) => {
-      for (var index of range(1, parts+1)) {
-        document.getElementById('part_'+index).style.color = (!acc || acc === index) ? 'black' : 'gray'
+      for (var index of range(1, parts + 1)) {
+        document.getElementById('part_' + index).style.color = (!acc || acc === index) ? 'black' : 'gray'
       }
     })
 }

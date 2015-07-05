@@ -1,6 +1,5 @@
 import Rx from 'rx'
-import omit from 'lodash.omit'
-import {slideLogic, nextSlide, prevSlide, SLIDES_MAP} from './slides'
+import {slideLogic, nextSlide, prevSlide} from './slides'
 import {sendSlide, listenInputs} from './remote_io'
 
 var metaPage = document.querySelector('meta[property=page]').content
@@ -11,7 +10,9 @@ if (metaPage !== 'index') {
 
 sendSlide({name: metaPage}).subscribe()
 
+/*eslint-disable no-unused-vars */
 const [LEFT, UP, RIGHT, DOWN] = [37, 38, 39, 40]
+/*eslint-enable no-unused-vars */
 Rx.Observable.fromEvent(document.body, 'keyup')
   .map(e => ({keyCode: e.keyCode, touch: false}))
   .merge(
@@ -47,7 +48,7 @@ Rx.Observable.fromEvent(document.body, 'keyup')
       case RIGHT:
         return {page: nextSlide(metaPage), touch}
       default:
-        return
+        return {}
     }
   })
   .filter(v => v && v.page)

@@ -1,5 +1,4 @@
 import Rx from 'rx'
-import zipObject from 'lodash.zipobject'
 
 import mapFilterFlatmap from './map_filter_flatmap.js'
 import keyboardDemo from './keyboard_demo.js'
@@ -23,7 +22,7 @@ const puns = [
   'Rx and Morty',
 ]
 
-var indexLogic = () => {
+function indexLogic() {
   Rx.Observable.interval(1000)
     .zip(
       Rx.Observable.from(puns),
@@ -158,22 +157,22 @@ export const SLIDES = [
 ]
 
 export const SLIDES_MAP = (() => {
-  var slides_map = {}
+  var slidesMap = {}
   for (var i = 0; i < SLIDES.length; i++) {
-    slides_map[SLIDES[i].name] = SLIDES[i]
+    slidesMap[SLIDES[i].name] = SLIDES[i]
   }
 
-  return slides_map
+  return slidesMap
 })()
 
-export var prevSlide = slide => {
+export function prevSlide(slide) {
   var slidesName = SLIDES.map(s => s.name)
   var slideIndex = slidesName.indexOf(slide)
 
   switch (slideIndex) {
     case -1:
     case 0:
-      return
+      return null
     case 1:
       return '../index.html'
     default:
@@ -181,14 +180,14 @@ export var prevSlide = slide => {
   }
 }
 
-export var nextSlide = slide => {
+export function nextSlide(slide) {
   var slidesName = SLIDES.map(s => s.name)
   var slideIndex = slidesName.indexOf(slide)
 
   switch (slideIndex) {
     case -1:
     case slidesName.length - 1:
-      return
+      return null
     case 0:
       return `./slides/${slidesName[1]}.html`
     default:
@@ -196,7 +195,7 @@ export var nextSlide = slide => {
   }
 }
 
-export var slideLogic = slideName => {
+export function slideLogic(slideName) {
   var slide = SLIDES_MAP[slideName]
   if (slide && slide.logic) { slide.logic() }
 }

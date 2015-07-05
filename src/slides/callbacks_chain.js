@@ -1,5 +1,3 @@
-import range from 'lodash.range'
-
 import {getNavigationStream} from '../navigation'
 
 export default () => {

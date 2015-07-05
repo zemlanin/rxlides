@@ -1,6 +1,6 @@
 import Rx from 'rx'
 
-import {wrapToDisplay, renderStream, accumutate, getMockKeys} from '../vision'
+import {wrapToDisplay, renderStream, accumutate} from '../vision'
 
 export default () => {
   var frameStream = Rx.Observable.create(observer => (function loop() {

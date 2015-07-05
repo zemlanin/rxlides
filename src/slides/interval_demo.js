@@ -40,22 +40,6 @@ export default () => {
     .scan([], accumutate)
     .distinctUntilChanged()
 
-  var canvasQs = keyCodesStream
-    .filter(keyCode => keyCode === Q)
-    .map(keyCode => `[${String.fromCharCode(keyCode)}]`)
-    .map(wrapToDisplay(ctx))
-    .merge(frameStream)
-    .scan([], accumutate)
-    .distinctUntilChanged()
-
-  var canvasWs = keyCodesStream
-    .filter(keyCode => keyCode === W)
-    .map(keyCode => `[${String.fromCharCode(keyCode)}]`)
-    .map(wrapToDisplay(ctx))
-    .merge(frameStream)
-    .scan([], accumutate)
-    .distinctUntilChanged()
-
   var canvasSkipUntil = keyCodesStream
     .filter(keyCode => keyCode === Q)
     .skipUntil(keyCodesStream.filter(keyCode => keyCode === W))
@@ -97,7 +81,7 @@ export default () => {
   getNavigationStream(false)
     .subscribe(({acc, parts}) => {
       for (var index of range(parts)) {
-        document.getElementById('part_'+index).hidden = acc <= index
+        document.getElementById('part_' + index).hidden = acc <= index
       }
     })
 }

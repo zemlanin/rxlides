@@ -7,8 +7,6 @@ import {getNavigationStream} from '../navigation'
 export default () => {
   var keyCodesStream = getMockKeys()
 
-  var ctx = document.querySelector('#main canvas').getContext("2d")
-
   var frameStream = Rx.Observable.create(observer => (function loop() {
     window.requestAnimationFrame(() => {
       observer.onNext([null, 1.3])
@@ -41,7 +39,7 @@ export default () => {
   getNavigationStream(false)
     .subscribe(({acc, parts}) => {
       for (var index of range(parts)) {
-        document.getElementById('part_'+index).hidden = acc <= index
+        document.getElementById('part_' + index).hidden = acc <= index
       }
     })
 }

@@ -106,7 +106,7 @@ function _observeOnSuccessValue(obs, snapshot) {
   obs.onCompleted();
 }
 function _observeOnError(obs, err) {
-  observer.onError(err);
+  obs.onError(err);
 }
 
 function on(childPath, eventType) {
@@ -175,12 +175,6 @@ Object.defineProperty(exports, '__esModule', {
   value: true
 });
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-var _lodashRange = require('lodash.range');
-
-var _lodashRange2 = _interopRequireDefault(_lodashRange);
-
 var _navigation = require('../navigation');
 
 exports['default'] = function () {
@@ -195,7 +189,7 @@ exports['default'] = function () {
 
 module.exports = exports['default'];
 
-},{"../navigation":1,"lodash.range":"lodash.range"}],4:[function(require,module,exports){
+},{"../navigation":1}],4:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -224,7 +218,7 @@ function getDomPath(e) {
 
   var path = [];
   var node = e.target;
-  while (node != document.body) {
+  while (node !== document.body) {
     path.push(node);
     node = node.parentNode;
   }
@@ -246,7 +240,11 @@ exports['default'] = function () {
       active: cell.querySelector('.star').textContent === inactiveStar
     };
   }).scan(new Set([1, 2, 4]), function (acc, v) {
-    v.active ? acc.add(v.id) : acc['delete'](v.id);
+    if (v.active) {
+      acc.add(v.id);
+    } else {
+      acc['delete'](v.id);
+    }
     return acc;
   }).subscribe(favsStream);
 
@@ -372,7 +370,7 @@ function getDomPath(e) {
 
   var path = [];
   var node = e.target;
-  while (node != document.body) {
+  while (node !== document.body) {
     path.push(node);
     node = node.parentNode;
   }
@@ -394,7 +392,11 @@ exports['default'] = function () {
       active: cell.querySelector('.star').textContent === inactiveStar
     };
   }).scan(new Set([1, 2, 4]), function (acc, v) {
-    v.active ? acc.add(v.id) : acc['delete'](v.id);
+    if (v.active) {
+      acc.add(v.id);
+    } else {
+      acc['delete'](v.id);
+    }
     return acc;
   }).subscribe(favsStream);
 
@@ -441,7 +443,11 @@ exports['default'] = function () {
         for (var _iterator2 = document.querySelectorAll('img')[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
           var img = _step2.value;
 
-          acc ? img.classList.add('transparent') : img.classList.remove('transparent');
+          if (acc) {
+            img.classList.add('transparent');
+          } else {
+            img.classList.remove('transparent');
+          }
         }
       } catch (err) {
         _didIteratorError2 = true;
@@ -464,9 +470,13 @@ exports['default'] = function () {
 
       try {
         for (var _iterator3 = document.querySelectorAll('.star')[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-          var img = _step3.value;
+          var star = _step3.value;
 
-          acc ? img.classList.add('visible') : img.classList.remove('visible');
+          if (acc) {
+            star.classList.add('visible');
+          } else {
+            star.classList.remove('visible');
+          }
         }
       } catch (err) {
         _didIteratorError3 = true;
@@ -521,16 +531,15 @@ module.exports = exports['default'];
 Object.defineProperty(exports, '__esModule', {
   value: true
 });
+exports.prevSlide = prevSlide;
+exports.nextSlide = nextSlide;
+exports.slideLogic = slideLogic;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 var _rx = require('rx');
 
 var _rx2 = _interopRequireDefault(_rx);
-
-var _lodashZipobject = require('lodash.zipobject');
-
-var _lodashZipobject2 = _interopRequireDefault(_lodashZipobject);
 
 var _map_filter_flatmapJs = require('./map_filter_flatmap.js');
 
@@ -580,13 +589,13 @@ var _remote_ioJs = require('../remote_io.js');
 
 var puns = ['Tyrannosaurus Rx', 'Rx-xar, the Hunter', 'Commissar Rx', 'Rxless', 'Rx and Morty'];
 
-var indexLogic = function indexLogic() {
+function indexLogic() {
   _rx2['default'].Observable.interval(1000).zip(_rx2['default'].Observable.from(puns), function (m, pun) {
     return pun;
   }).take(puns.length).repeat().subscribe(function (pun) {
     return document.getElementsByTagName('h1')[0].textContent = pun;
   });
-};
+}
 
 var SLIDES = [{
   name: 'index',
@@ -638,16 +647,17 @@ var SLIDES = [{
 
 exports.SLIDES = SLIDES;
 var SLIDES_MAP = (function () {
-  var slides_map = {};
+  var slidesMap = {};
   for (var i = 0; i < SLIDES.length; i++) {
-    slides_map[SLIDES[i].name] = SLIDES[i];
+    slidesMap[SLIDES[i].name] = SLIDES[i];
   }
 
-  return slides_map;
+  return slidesMap;
 })();
 
 exports.SLIDES_MAP = SLIDES_MAP;
-var prevSlide = function prevSlide(slide) {
+
+function prevSlide(slide) {
   var slidesName = SLIDES.map(function (s) {
     return s.name;
   });
@@ -656,16 +666,15 @@ var prevSlide = function prevSlide(slide) {
   switch (slideIndex) {
     case -1:
     case 0:
-      return;
+      return null;
     case 1:
       return '../index.html';
     default:
       return './' + slidesName[slideIndex - 1] + '.html';
   }
-};
+}
 
-exports.prevSlide = prevSlide;
-var nextSlide = function nextSlide(slide) {
+function nextSlide(slide) {
   var slidesName = SLIDES.map(function (s) {
     return s.name;
   });
@@ -674,24 +683,22 @@ var nextSlide = function nextSlide(slide) {
   switch (slideIndex) {
     case -1:
     case slidesName.length - 1:
-      return;
+      return null;
     case 0:
       return './slides/' + slidesName[1] + '.html';
     default:
       return './' + slidesName[slideIndex + 1] + '.html';
   }
-};
+}
 
-exports.nextSlide = nextSlide;
-var slideLogic = function slideLogic(slideName) {
+function slideLogic(slideName) {
   var slide = SLIDES_MAP[slideName];
   if (slide && slide.logic) {
     slide.logic();
   }
-};
-exports.slideLogic = slideLogic;
+}
 
-},{"../remote_io.js":2,"./callbacks_chain.js":3,"./components_communication.js":4,"./gifflix_demo.js":5,"./interval_demo.js":7,"./keyboard_demo.js":8,"./map_filter_flatmap.js":9,"./programmable_stream.js":10,"./promises_cons.js":11,"./single_callback.js":12,"./single_subscribe.js":13,"./summary.js":14,"lodash.zipobject":"lodash.zipobject","rx":"rx"}],7:[function(require,module,exports){
+},{"../remote_io.js":2,"./callbacks_chain.js":3,"./components_communication.js":4,"./gifflix_demo.js":5,"./interval_demo.js":7,"./keyboard_demo.js":8,"./map_filter_flatmap.js":9,"./programmable_stream.js":10,"./promises_cons.js":11,"./single_callback.js":12,"./single_subscribe.js":13,"./summary.js":14,"rx":"rx"}],7:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -741,18 +748,6 @@ exports['default'] = function () {
   });
 
   var canvasKeys = keyCodesStream.map(function (keyCode) {
-    return '[' + String.fromCharCode(keyCode) + ']';
-  }).map((0, _vision.wrapToDisplay)(ctx)).merge(frameStream).scan([], _vision.accumutate).distinctUntilChanged();
-
-  var canvasQs = keyCodesStream.filter(function (keyCode) {
-    return keyCode === Q;
-  }).map(function (keyCode) {
-    return '[' + String.fromCharCode(keyCode) + ']';
-  }).map((0, _vision.wrapToDisplay)(ctx)).merge(frameStream).scan([], _vision.accumutate).distinctUntilChanged();
-
-  var canvasWs = keyCodesStream.filter(function (keyCode) {
-    return keyCode === W;
-  }).map(function (keyCode) {
     return '[' + String.fromCharCode(keyCode) + ']';
   }).map((0, _vision.wrapToDisplay)(ctx)).merge(frameStream).scan([], _vision.accumutate).distinctUntilChanged();
 
@@ -863,54 +858,56 @@ var _lodashRange2 = _interopRequireDefault(_lodashRange);
 
 var _navigation = require('../navigation');
 
-var Q = 81;
-var W = 87;
-var E = 69;
-var A = 65;
-var S = 83;
-var D = 68;
+var _remote_io = require('../remote_io');
 
-var keyIds = (_keyIds = {}, _defineProperty(_keyIds, Q, 'wasd_q'), _defineProperty(_keyIds, W, 'wasd_w'), _defineProperty(_keyIds, E, 'wasd_e'), _defineProperty(_keyIds, A, 'wasd_a'), _defineProperty(_keyIds, S, 'wasd_s'), _defineProperty(_keyIds, D, 'wasd_d'), _keyIds);
+var Q = _remote_io.KEYCODES.Q;
+var W = _remote_io.KEYCODES.W;
+var E = _remote_io.KEYCODES.E;
+var A = _remote_io.KEYCODES.A;
+var S = _remote_io.KEYCODES.S;
+var D = _remote_io.KEYCODES.D;
+
+var keyIds = (_keyIds = {}, _defineProperty(_keyIds, Q.key, 'wasd_q'), _defineProperty(_keyIds, W.key, 'wasd_w'), _defineProperty(_keyIds, E.key, 'wasd_e'), _defineProperty(_keyIds, A.key, 'wasd_a'), _defineProperty(_keyIds, S.key, 'wasd_s'), _defineProperty(_keyIds, D.key, 'wasd_d'), _keyIds);
+
+function setActive(keyCode) {
+  var _iteratorNormalCompletion = true;
+  var _didIteratorError = false;
+  var _iteratorError = undefined;
+
+  try {
+    for (var _iterator = document.querySelectorAll('.wasd.active')[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+      var keySpan = _step.value;
+
+      keySpan.classList.remove('active');
+    }
+  } catch (err) {
+    _didIteratorError = true;
+    _iteratorError = err;
+  } finally {
+    try {
+      if (!_iteratorNormalCompletion && _iterator['return']) {
+        _iterator['return']();
+      }
+    } finally {
+      if (_didIteratorError) {
+        throw _iteratorError;
+      }
+    }
+  }
+
+  if (keyCode) {
+    document.getElementById(keyIds[keyCode]).classList.add('active');
+  }
+}
 
 exports['default'] = function () {
   var keys = _rx2['default'].Observable.fromEvent(document.body, 'keydown').pluck('keyCode');
   var startStream = keys.filter(function (keyCode) {
-    return keyCode === Q;
+    return keyCode === Q.key;
   });
   var stopStream = keys.filter(function (keyCode) {
-    return keyCode === E;
+    return keyCode === E.key;
   });
-
-  var setActive = function setActive(keyCode) {
-    var _iteratorNormalCompletion = true;
-    var _didIteratorError = false;
-    var _iteratorError = undefined;
-
-    try {
-      for (var _iterator = document.querySelectorAll('.wasd.active')[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-        var keySpan = _step.value;
-
-        keySpan.classList.remove('active');
-      }
-    } catch (err) {
-      _didIteratorError = true;
-      _iteratorError = err;
-    } finally {
-      try {
-        if (!_iteratorNormalCompletion && _iterator['return']) {
-          _iterator['return']();
-        }
-      } finally {
-        if (_didIteratorError) {
-          throw _iteratorError;
-        }
-      }
-    }
-
-    if (keyCode) {
-      document.getElementById(keyIds[keyCode]).classList.add('active');
-    }
-  };
 
   _rx2['default'].Observable.fromEvent(document.body, 'keyup').map(null).subscribe(setActive);
   startStream.map(function (q) {
@@ -951,7 +948,7 @@ exports['default'] = function () {
 
 module.exports = exports['default'];
 
-},{"../navigation":1,"lodash.range":"lodash.range","rx":"rx"}],9:[function(require,module,exports){
+},{"../navigation":1,"../remote_io":2,"lodash.range":"lodash.range","rx":"rx"}],9:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -1467,7 +1464,7 @@ function getMockKeys() {
   return _rx2['default'].Observable.interval(2000).startWith(null).flatMap(function () {
     return _rx2['default'].Observable.timer(Math.random() * 2000 - 500);
   }).map(function () {
-    return touchMockKeys[parseInt(Math.random() * touchMockKeys.length)];
+    return touchMockKeys[parseInt(Math.random() * touchMockKeys.length, 10)];
   }).share();
 }
 
@@ -1479,10 +1476,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'd
 var _rx = require('rx');
 
 var _rx2 = _interopRequireDefault(_rx);
-
-var _lodashOmit = require('lodash.omit');
-
-var _lodashOmit2 = _interopRequireDefault(_lodashOmit);
 
 var _slides = require('./slides');
 
@@ -1496,11 +1489,13 @@ if (metaPage !== 'index') {
 
 (0, _remote_io.sendSlide)({ name: metaPage }).subscribe();
 
+/*eslint-disable no-unused-vars */
 var LEFT = 37;
 var UP = 38;
 var RIGHT = 39;
 var DOWN = 40;
 
+/*eslint-enable no-unused-vars */
 _rx2['default'].Observable.fromEvent(document.body, 'keyup').map(function (e) {
   return { keyCode: e.keyCode, touch: false };
 }).merge(_rx2['default'].Observable.fromEvent(document, 'touchstart').map(function (e) {
@@ -1538,7 +1533,7 @@ _rx2['default'].Observable.fromEvent(document.body, 'keyup').map(function (e) {
     case RIGHT:
       return { page: (0, _slides.nextSlide)(metaPage), touch: touch };
     default:
-      return;
+      return {};
   }
 }).filter(function (v) {
   return v && v.page;
@@ -1548,4 +1543,4 @@ _rx2['default'].Observable.fromEvent(document.body, 'keyup').map(function (e) {
   return location.href = page + (touch ? '#touch' : '');
 });
 
-},{"./remote_io":2,"./slides":6,"lodash.omit":"lodash.omit","rx":"rx"}]},{},[16]);
+},{"./remote_io":2,"./slides":6,"rx":"rx"}]},{},[16]);

@@ -45,7 +45,7 @@ export default () => {
   var pongWidth = ctx.measureText('pong').width
   var canvasKeysFlatmap = canvasKeysFilter
     // delay pongs without jitter
-    .map(keys => keys.map(({text, position, mirror}) => ({text: 'pong', position: position-30, mirror})))
+    .map(keys => keys.map(({text, position, mirror}) => ({text: 'pong', position: position - 30, mirror})))
     // appear instead of moving in
     .map(keys => keys.filter(({position}) => position > pongWidth))
 
@@ -63,7 +63,7 @@ export default () => {
   getNavigationStream(false)
     .subscribe(({acc, parts}) => {
       for (var index of range(parts)) {
-        document.getElementById('part_'+index).hidden = acc <= index
+        document.getElementById('part_' + index).hidden = acc <= index
       }
     })
 }

@@ -2,7 +2,7 @@ import Rx from 'rx'
 import merge from 'lodash.merge'
 import Firebase from 'firebase'
 
-var firebaseRef = new Firebase('https://rxlides.firebaseio.com/');
+var firebaseRef = new Firebase('https://rxlides.firebaseio.com/')
 
 export const KEYCODES = {
   LEFT: {key: 37, name: 'LEFT'},
@@ -31,7 +31,7 @@ function _observeOnSuccessValue(obs, snapshot) {
   obs.onNext({snapshot})
   obs.onCompleted()
 }
-function _observeOnError(obs, err) { observer.onError(err) }
+function _observeOnError(obs, err) { obs.onError(err) }
 
 function on(childPath, eventType) {
   var successCallback
@@ -40,12 +40,12 @@ function on(childPath, eventType) {
     case 'value':
     case 'child_removed':
       successCallback = _observeOnSuccessValue
-      break;
+      break
     case 'child_added':
     case 'child_changed':
     case 'child_moved':
       successCallback = _observeOnSuccess
-      break;
+      break
   }
 
   return Rx.Observable.create(obs => {
@@ -53,7 +53,7 @@ function on(childPath, eventType) {
       eventType,
       successCallback.bind(null, obs),
       _observeOnError.bind(null, obs)
-    );
+    )
 
     return () => childPath.off(eventType, listener)
   }).publish().refCount()
