@@ -3,12 +3,6 @@
     "env": {
       "browser": true
     },
-    "globals": {
-      "require": true,
-      "module": true,
-      "process": true,
-      "cast": true
-    },
     "rules": {
       "strict": 0,
       "quotes": 0,
