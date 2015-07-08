@@ -1,11 +1,12 @@
+### style
    <style type="text/css">
       .wrapper { margin: 20vh auto 0; }
     </style>
-###
+### content
 <body style="font: 2vw monospace;">
     <div class="wrapper">
         <table>
-            <tr id="main"> 
+            <tr id="main">
                 <td>
                     var <b>keyups</b> = Rx.Observable<br/>
                     &nbsp;&nbsp;.fromEvent(document.body, 'keyup')
@@ -17,7 +18,7 @@
                 </td>
             </tr>
             <tr><td>&nbsp;</td></tr>
-            <tr id="part_0" hidden> 
+            <tr id="part_0" hidden>
                 <td>
                     var <b>keyCodes</b> = keyups<br/>
                     &nbsp;&nbsp;.map(e => e.keyCode)
@@ -29,7 +30,7 @@
                 </td>
             </tr>
             <tr><td>&nbsp;</td></tr>
-            <tr id="part_1" hidden> 
+            <tr id="part_1" hidden>
                 <td>
                     var <b>bigCodes</b> = keyCodes<br/>
                     &nbsp;&nbsp;.filter(keyCode => keyCode > 73)
@@ -41,7 +42,7 @@
                 </td>
             </tr>
             <tr><td>&nbsp;</td></tr>
-            <tr id="part_2" hidden> 
+            <tr id="part_2" hidden>
                 <td>
                     var <b>pongs</b> = bigCodes<br/>
                     &nbsp;&nbsp;.flatMap(() => Rx.GET('/ping'))
@@ -53,7 +54,7 @@
                 </td>
             </tr>
             <tr><td>&nbsp;</td></tr>
-            <tr id="part_3" hidden style="font-size:1.7vw"> 
+            <tr id="part_3" hidden style="font-size:1.7vw">
                 <td colspan="2">
                     var <b>pongsCopy</b> = keyups<wbr/>.filter(e => e.keyCode > 73)<wbr/>.flatMap(() => Rx.GET('/ping'))
                 </td>

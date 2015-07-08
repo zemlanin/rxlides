@@ -4,13 +4,11 @@
     <title>rxlides/interval_demo</title>
     <meta property="page" content="interval_demo">
     <link rel="stylesheet" type="text/css" href="../dist/common.css">
-        <style type="text/css">
+    <style type="text/css">
         .wrapper { margin: 20vh auto 0; }
     </style>
-
 </head>
-    
-<body style="font: 2vw monospace;">
+    <body style="font: 2vw monospace;">
     <div class="wrapper">
         <table>
             <tr>
@@ -26,19 +24,19 @@
                     </div>
                 </td>
             </tr>
-            <tr id="qs"> 
+            <tr id="qs">
                 <td colspan="2">
                     var <b>qs</b> = keys.filter(e => e.keyCode === Q)
                 </td>
             </tr>
-            <tr id="ws"> 
+            <tr id="ws">
                 <td colspan="2">
                     var <b>ws</b> = keys.filter(e => e.keyCode === W)
                 </td>
             </tr>
             <tr><td>&nbsp;</td></tr>
             <tr><td>&nbsp;</td></tr>
-            <tr id="part_0" hidden> 
+            <tr id="part_0" hidden>
                 <td>
                     var <b>skipped</b> = qs.skipUntil(ws)
                 </td>
@@ -49,7 +47,7 @@
                 </td>
             </tr>
             <tr><td>&nbsp;</td></tr>
-            <tr id="part_1" hidden> 
+            <tr id="part_1" hidden>
                 <td>
                     var <b>delayed</b> = qs.delay(1000)
                 </td>
@@ -60,7 +58,7 @@
                 </td>
             </tr>
             <tr><td>&nbsp;</td></tr>
-            <tr id="part_2" hidden> 
+            <tr id="part_2" hidden>
                 <td>
                     var <b>intervals</b> = qs.timeInterval()<br/>
                     &nbsp;&nbsp;.map(v => v.interval/1000)
@@ -73,7 +71,6 @@
             </tr>
         </table>
     </div>
-
     <nav>
         <span class="arrow">&larr;</span>
         <span class="arrow" id="nav_u">&nbsp;</span>
