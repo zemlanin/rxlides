@@ -173,8 +173,6 @@ export function prevSlide(slide) {
     case -1:
     case 0:
       return null
-    case 1:
-      return '../index.html'
     default:
       return `./${slidesName[slideIndex - 1]}.html`
   }
@@ -188,8 +186,6 @@ export function nextSlide(slide) {
     case -1:
     case slidesName.length - 1:
       return null
-    case 0:
-      return `./slides/${slidesName[1]}.html`
     default:
       return `./${slidesName[slideIndex + 1]}.html`
   }

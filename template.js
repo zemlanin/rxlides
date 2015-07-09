@@ -1,8 +1,8 @@
 /*eslint-env node*/
 var mustache = require('mustache')
 var fs = require('fs')
-var base = fs.readFileSync('templates/base.html', 'utf8')
-var templates = fs.readdirSync('templates/')
+var base = fs.readFileSync('src/templates/_base.html', 'utf8')
+var templates = fs.readdirSync('src/templates/')
 
 var slideName
 var tmplTokens
@@ -11,8 +11,8 @@ var tmplData
 for (var i = 0; i < templates.length; i++) {
   slideName = templates[i].split('.')[0]
 
-  if (slideName !== 'base') {
-    tmplTokens = fs.readFileSync('templates/' + templates[i], 'utf8')
+  if (slideName !== '_base') {
+    tmplTokens = fs.readFileSync('src/templates/' + templates[i], 'utf8')
       .split(/### *([a-z_]+) */ig)
       // split(regex) adds an empty string if splited string starts with a match
       .splice(1)
@@ -29,6 +29,6 @@ for (var i = 0; i < templates.length; i++) {
 }
 
 function writeToFile(data, fileName) {
-   fs.writeFileSync('slides/' + fileName + '.html', data, 'utf8')
+   fs.writeFileSync('dist/' + fileName + '.html', data, 'utf8')
    console.log(fileName + " :write completed.")
 }

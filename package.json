@@ -17,6 +17,7 @@
     "json": "^9.0.3",
     "mustache": "^2.1.2",
     "node-static": "^0.7.6",
+    "surge": "^0.14.3",
     "uglify-js": "^2.4.23"
   },
   "dependencies": {

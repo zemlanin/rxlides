@@ -1,6 +1,7 @@
 browserify = $(shell npm bin)/browserify
 node_static = $(shell npm bin)/static
 uglifyjs = $(shell npm bin)/uglifyjs
+surge = $(shell npm bin)/surge
 json = $(shell npm bin)/json
 
 dependencies = $(shell set -o pipefail && cat package.json | $(json) dependencies | $(json) -ka)
@@ -9,17 +10,24 @@ prepend-x = sed 's/\([^ ]*\)/-x \1/g' # prepending '-x' to each dependency
 
 .PHONY: dist
 dist:
-	make dist/babel-polyfill.js
-	make dist/common.js
-	make dist/main.js
-	make dist/remote.js
-	make dist/common.css
+	make dist/js/babel-polyfill.js
+	make dist/js/common.js
+	make dist/js/main.js
+	make dist/js/remote.js
+	make dist/css/common.css
 
-dist/babel-polyfill.js: node_modules/babel/node_modules/babel-core/browser-polyfill.min.js Makefile
+	node template.js
+	cp src/index.html src/remote.html dist
+	cp -r gifs dist
+	cp CNAME dist
+
+dist/js: dist/js/babel-polyfill.js dist/js/common.js dist/js/main.js dist/js/remote.js dist/common.css
+
+dist/js/babel-polyfill.js: node_modules/babel/node_modules/babel-core/browser-polyfill.min.js Makefile
 	mkdir -p $(@D)
 	cp node_modules/babel/node_modules/babel-core/browser-polyfill.min.js $@
 
-dist/common.js: package.json Makefile
+dist/js/common.js: package.json Makefile
 	mkdir -p $(@D)
 	echo $(dependencies) \
 		| $(prepend-r) \
@@ -27,21 +35,21 @@ dist/common.js: package.json Makefile
 		| $(uglifyjs) --mangle \
 		> $@
 
-dist/main.js: src/*.js src/**/*.js Makefile
+dist/js/main.js: src/*.js src/**/*.js Makefile
 	mkdir -p $(@D)
 	echo $(dependencies) \
 		| $(prepend-x) \
 		| xargs $(browserify) src/main.js -t babelify \
 		> $@
 
-dist/remote.js: src/*.js src/**/*.js Makefile
+dist/js/remote.js: src/*.js src/**/*.js Makefile
 	mkdir -p $(@D)
 	echo $(dependencies) \
 		| $(prepend-x) \
 		| xargs $(browserify) src/remote.js -t babelify \
 		> $@
 
-dist/common.css: src/*.css Makefile
+dist/css/common.css: src/*.css Makefile
 	mkdir -p $(@D)
 	cp src/common.css $@
 
@@ -49,3 +57,9 @@ dist/common.css: src/*.css Makefile
 serve:
 	@echo serving at http://localhost:8000
 	@$(node_static) . -p 8000 -z > /dev/null
+
+.PHONY: deploy
+deploy:
+	rm -rf dist
+	$(MAKE)
+	$(surge) dist
