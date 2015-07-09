@@ -9,6 +9,7 @@ import callbacksChain from './callbacks_chain.js'
 import promisesCons from './promises_cons.js'
 import programmableStream from './programmable_stream.js'
 import gifflixDemo from './gifflix_demo.js'
+import gifflixClicker from './gifflix_clicker.js'
 import componentsCommunication from './components_communication.js'
 import summary from './summary.js'
 
@@ -133,6 +134,13 @@ export const SLIDES = [
       KEYCODES._2,
       KEYCODES._3,
       KEYCODES._4,
+    ],
+  },
+  {
+    name: 'gifflix_clicker',
+    logic: gifflixClicker,
+    actions: [
+      MOUSE.CLICK,
     ],
   },
   {

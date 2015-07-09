@@ -1,0 +1,45 @@
+### style
+    <style type="text/css">
+      .wrapper { margin: 20vh auto; text-align: left; width: 75vw; }
+      .canvas-wrapper { color: gray; margin-bottom: 3px; }
+      #star { transition: color .5s; cursor: pointer; }
+      #star.clicked { color: #00a500; transition: color 0s; }
+    </style>
+### fontStyle
+    2.5vw monospace
+### content
+    <div class="wrapper">
+      <table>
+        <tr>
+          <td colspan="3">
+            <span>window.appBus = new Rx.Subject()</span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span id="star" style="font-size: 10vw">★</span>
+          </td>
+          <td style="width: 5vw"></td>
+          <td>
+            <br/>
+            <span>
+                onClick: => <b>window.appBus.onNext</b>({<br/>
+                &nbsp;&nbsp;to: <b>'favorites'</b>,<br/>
+                &nbsp;&nbsp;from: 'star_' + id,<br/>
+                &nbsp;&nbsp;tell: <b>'singleFavUpdate'</b>,<br/>
+                &nbsp;&nbsp;data: {id, active: !active},<br/>
+                })
+            </span>
+            <br/>
+            <br/>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="3">
+            <div style="color: gray;">
+                // window.appBus == <div class="canvas-wrapper"><canvas width="500" height="50"></canvas></div>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>

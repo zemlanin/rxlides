@@ -10,18 +10,14 @@ prepend-x = sed 's/\([^ ]*\)/-x \1/g' # prepending '-x' to each dependency
 
 .PHONY: dist
 dist:
-	make dist/js/babel-polyfill.js
-	make dist/js/common.js
-	make dist/js/main.js
-	make dist/js/remote.js
-	make dist/css/common.css
-
 	node template.js
+	make dist/js
+	make dist/css/common.css
 	cp src/index.html src/remote.html dist
 	cp -r gifs dist
 	cp CNAME dist
 
-dist/js: dist/js/babel-polyfill.js dist/js/common.js dist/js/main.js dist/js/remote.js dist/common.css
+dist/js: dist/js/babel-polyfill.js dist/js/common.js dist/js/main.js dist/js/remote.js
 
 dist/js/babel-polyfill.js: node_modules/babel/node_modules/babel-core/browser-polyfill.min.js Makefile
 	mkdir -p $(@D)
