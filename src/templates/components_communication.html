@@ -15,7 +15,7 @@
         <table>
             <tr>
                 <td id="part_1" rowspan="2">
-                    onClick: <b>send_via_appbus</b>({<br/>
+                    onClick: => <b>window.appBus</b>.onNext({<br/>
                     &nbsp;&nbsp;to: <b>'favorites'</b>,<br/>
                     &nbsp;&nbsp;from: 'star_' + id,<br/>
                     &nbsp;&nbsp;tell: <b>'singleFavUpdate'</b>,<br/>
@@ -48,7 +48,7 @@
             </tr>
             <tr>
                 <td id="part_2">
-                    var <b>favsStream</b> = <b>get_appbus()</b><br/>
+                    var <b>favsStream</b> = <b>window.appBus</b><br/>
                     &nbsp;&nbsp;.filter(v => v.from === 'favorites')<br/>
                     &nbsp;&nbsp;.filter(v => v.tell === <b>'favsUpdate'</b>)<br/>
                     &nbsp;&nbsp;.pluck('data')<br/>
@@ -83,7 +83,7 @@
                 </td>
                 <td colspan="3" rowspan="2">
                     <span id="part_5">
-                    <b>get_appbus()</b><br/>
+                    <b>window.appBus</b><br/>
                     &nbsp;&nbsp;.filter(v => v.tell === <b>'singleFavUpdate'</b>)<br/>
                     &nbsp;&nbsp;.pluck('data')<br/>
                     &nbsp;&nbsp;.scan(new Set(), (acc, v) => {<br/>
@@ -96,7 +96,7 @@
                     &nbsp;&nbsp;&nbsp;&nbsp;to: '*', from: 'favorites',<br/>
                     &nbsp;&nbsp;&nbsp;&nbsp;tell: <b>'favsUpdate'</b>, data: favs,<br/>
                     &nbsp;&nbsp;}))<br/>
-                    &nbsp;&nbsp;.subscribe(<b>send_via_appbus</b>)
+                    &nbsp;&nbsp;.subscribe(msg => <b>window.appBus</b>.onNext(msg))
                     </span>
                 </td>
             </tr>
