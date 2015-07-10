@@ -22,19 +22,44 @@ function setActive(keyCode) {
   if (keyCode) { document.getElementById(keyIds[keyCode]).classList.add('active') }
 }
 
-export default () => {
-  var keys = Rx.Observable.fromEvent(document.body, 'keydown').pluck('keyCode')
-  var startStream = keys.filter(keyCode => keyCode === Q.key)
-  var stopStream = keys.filter(keyCode => keyCode === E.key)
+function emulateKeyboardEventWith(event) {
+  return Object.keys(keyIds).reduce((previous, keyCode) => {
+    previous.push(
+      Rx.Observable.fromEvent(document.getElementById(keyIds[keyCode]), event)
+        .map(parseInt(keyCode, 10))
+    )
+    return previous
+  }, [])
+}
 
-  Rx.Observable.fromEvent(document.body, 'keyup').map(null).subscribe(setActive)
+export default () => {
+  var emulatedKeydowns = Rx.Observable.merge.call(
+    Rx.Observable, emulateKeyboardEventWith('mousedown')
+  )
+  var emulatedKeyups = Rx.Observable.merge.call(
+    Rx.Observable, emulateKeyboardEventWith('mouseup')
+  )
+  var keydowns = Rx.Observable.fromEvent(document.body, 'keydown')
+    .pluck('keyCode')
+    .merge(emulatedKeydowns)
+  var keyups = Rx.Observable.fromEvent(document.body, 'keyup')
+    .pluck('keyCode')
+    .merge(emulatedKeyups)
+
+  var startStream = keydowns.filter(keyCode => keyCode === Q.key)
+  var stopStream = keydowns.filter(keyCode => keyCode === E.key)
+
   startStream
-    .map(q => keys
+    .map(q => keydowns
       .startWith(q)
       .takeUntil(stopStream)
     )
     .switch()
     .filter(keyCode => keyIds[keyCode])
+    .subscribe(setActive)
+
+  keyups
+    .map(null)
     .subscribe(setActive)
 
   getNavigationStream(true)
