@@ -144,6 +144,9 @@ export const SLIDES = [
     ],
   },
   {
+    name: 'gifflix_favsStream',
+  },
+  {
     name: 'components_communication',
     logic: componentsCommunication,
     actions: [
