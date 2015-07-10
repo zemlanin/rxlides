@@ -57,5 +57,6 @@ serve:
 .PHONY: deploy
 deploy:
 	rm -rf dist
+	mkdir -p dist
 	$(MAKE)
 	$(surge) dist
