@@ -5,7 +5,7 @@ import {sendSlide, listenInputs} from './remote_io'
 var metaPage = document.querySelector('meta[property=page]').content
 slideLogic(metaPage)
 if (metaPage !== 'index') {
-  document.querySelector('nav .slide_name').textContent = 'slides/' + metaPage
+  document.querySelector('nav .slide_name').textContent = metaPage
 }
 
 sendSlide({name: metaPage}).subscribe()
