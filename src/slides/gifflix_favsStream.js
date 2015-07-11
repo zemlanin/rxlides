@@ -1,17 +1,22 @@
 import Rx from 'rx'
 
 import {wrapToDisplay, renderStream, accumutate} from '../vision'
+import {listenInputs, KEYCODES} from '../remote_io'
 
 export default () => {
   var favsStream = Rx.Observable.merge(
     Rx.Observable.fromEvent(document.getElementById('set_1'), 'click')
+      .merge(listenInputs().filter(v => v === KEYCODES._0.name))
       .map('1'),
     Rx.Observable.fromEvent(document.getElementById('set_1_3'), 'click')
+      .merge(listenInputs().filter(v => v === KEYCODES._1.name))
       .map('1,3'),
-    Rx.Observable.fromEvent(document.getElementById('set_1_4'), 'click')
-      .map('1,4'),
     Rx.Observable.fromEvent(document.getElementById('set_1_3_4'), 'click')
-      .map('1,3,4')
+      .merge(listenInputs().filter(v => v === KEYCODES._2.name))
+      .map('1,3,4'),
+    Rx.Observable.fromEvent(document.getElementById('set_1_4'), 'click')
+      .merge(listenInputs().filter(v => v === KEYCODES._3.name))
+      .map('1,4')
   )
 
   var frameStream = Rx.Observable.create(observer => (function loop() {

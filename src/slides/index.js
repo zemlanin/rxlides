@@ -147,6 +147,12 @@ export const SLIDES = [
   {
     name: 'gifflix_favsStream',
     logic: gifflixFavsStream,
+    actions: [
+      KEYCODES._0,
+      KEYCODES._1,
+      KEYCODES._2,
+      KEYCODES._3,
+    ],
   },
   {
     name: 'components_communication',
