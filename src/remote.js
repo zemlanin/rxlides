@@ -38,7 +38,10 @@ currentSlide
   .map(name => SLIDES_MAP[name].actions)
   .subscribe(actions => {
     React.render(
-      React.createElement(actionsClass, {actions}),
+      React.createElement(actionsClass, {
+        actions,
+        actionOnClick: action => () => sendInput(action.name).subscribe(),
+      }),
       document.getElementById('actions')
     )
   })
