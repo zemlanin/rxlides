@@ -1,6 +1,6 @@
 import Rx from 'rx'
 import {slideLogic, nextSlide, prevSlide} from './slides'
-import {sendSlide, listenInputs} from './remote_io'
+import {sendSlide, listenInputs, KEYCODES} from './remote_io'
 
 var metaPage = document.querySelector('meta[property=page]').content
 slideLogic(metaPage)
@@ -10,9 +10,6 @@ if (metaPage !== 'index') {
 
 sendSlide({name: metaPage}).subscribe()
 
-/*eslint-disable no-unused-vars */
-const [LEFT, UP, RIGHT, DOWN] = [37, 38, 39, 40]
-/*eslint-enable no-unused-vars */
 Rx.Observable.fromEvent(document.body, 'keyup')
   .map(e => ({keyCode: e.keyCode, touch: false}))
   .merge(
@@ -25,27 +22,29 @@ Rx.Observable.fromEvent(document.body, 'keyup')
       )
       .map(touch => {
         var keyCode
-        if (touch.clientX < document.body.clientWidth / 4) { keyCode = LEFT }
-        if (touch.clientX > 3 * document.body.clientWidth / 4) { keyCode = RIGHT }
+        if (touch.clientX < document.body.clientWidth / 4) { keyCode = KEYCODES.LEFT.key }
+        if (touch.clientX > 3 * document.body.clientWidth / 4) { keyCode = KEYCODES.RIGHT.key }
 
         return {keyCode, touch: true}
       })
   )
   .merge(
-    listenInputs().map(v => {
+    listenInputs()
+    .filter(v => v === KEYCODES.LEFT.name || v === KEYCODES.RIGHT.name)
+    .map(v => {
       var keyCode
 
-      if (v === 'LEFT') { keyCode = LEFT }
-      if (v === 'RIGHT') { keyCode = RIGHT }
+      if (v === 'LEFT') { keyCode = KEYCODES.LEFT.key }
+      if (v === 'RIGHT') { keyCode = KEYCODES.RIGHT.key }
 
       return {keyCode}
     })
   )
   .map(({keyCode, touch}) => {
     switch (keyCode) {
-      case LEFT:
+      case KEYCODES.LEFT.key:
         return {page: prevSlide(metaPage), touch}
-      case RIGHT:
+      case KEYCODES.RIGHT.key:
         return {page: nextSlide(metaPage), touch}
       default:
         return {}
