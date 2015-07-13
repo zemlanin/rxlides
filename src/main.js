@@ -6,6 +6,8 @@ var metaPage = document.querySelector('meta[property=page]').content
 slideLogic(metaPage)
 if (metaPage !== 'index') {
   document.querySelector('nav .slide_name').textContent = metaPage
+} else {
+  document.querySelector('nav #presentation_id').textContent = '#' + localStorage.getItem('presentationId')
 }
 
 sendSlide({name: metaPage}).subscribe()

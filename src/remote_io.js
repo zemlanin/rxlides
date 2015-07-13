@@ -69,31 +69,48 @@ function push(childPath, value) {
 }
 
 export function sendSlide(slide) {
-  return set(firebaseRef.child('slide'), slide)
+  var id = localStorage.getItem('presentationId')
+  if (!id) {
+    id = parseInt(Math.random() * 36 * 36 * 36 * 36, 10).toString(36)
+    localStorage.setItem('presentationId', id)
+  }
+  return set(firebaseRef.child('slide/' + id), slide)
 }
 
 export function sendInput(input) {
-  return push(firebaseRef.child('inputs'), input)
+  var id = localStorage.getItem('presentationId')
+  if (!id) { return Rx.Observable.return(null) }
+
+  return push(firebaseRef.child('inputs/' + id), input)
 }
 
 export function listenInputs() {
-  return on(firebaseRef.child('inputs'), 'child_added')
+  var id = localStorage.getItem('presentationId')
+  if (!id) {
+    id = parseInt(Math.random() * 36 * 36 * 36 * 36, 10).toString(36)
+    localStorage.setItem('presentationId', id)
+  }
+
+  return on(firebaseRef.child('inputs/' + id), 'child_added')
     .pluck('snapshot')
     .flatMap(s => set(s.ref(), null).map(s.val()))
 }
 
 export function listenSlide() {
-  return on(firebaseRef.child('slide'), 'value')
+  var id = location.hash.replace('#', '')
+  if (!id) { return Rx.Observable.return(null) }
+
+  return on(firebaseRef.child('slide/' + id), 'value')
     .pluck('snapshot').map(s => s.val())
     .concat(
       Rx.Observable.merge(
-        on(firebaseRef.child('slide'), 'child_changed')
+        on(firebaseRef.child('slide/' + id), 'child_changed')
           .pluck('snapshot')
           .map(s => ({[s.key()]: s.val()})),
-        on(firebaseRef.child('slide'), 'child_removed')
+        on(firebaseRef.child('slide/' + id), 'child_removed')
           .pluck('snapshot')
           .map(s => ({[s.key()]: null})),
-        on(firebaseRef.child('slide'), 'child_added')
+        on(firebaseRef.child('slide/' + id), 'child_added')
           .pluck('snapshot')
           .map(s => ({[s.key()]: s.val()}))
       )
