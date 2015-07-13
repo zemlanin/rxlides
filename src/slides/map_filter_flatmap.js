@@ -3,6 +3,7 @@ import range from 'lodash.range'
 
 import {wrapToDisplay, renderStream, accumutate, getMockKeys} from '../vision'
 import {getNavigationStream} from '../navigation'
+import {listenInputs, KEYCODES} from '../remote_io'
 
 export default () => {
   var keyCodesStream
@@ -13,6 +14,10 @@ export default () => {
     keyCodesStream = Rx.Observable
     .fromEvent(document.body, 'keyup')
     .pluck('keyCode')
+    .merge(listenInputs()
+      .filter(v => KEYCODES[v])
+      .map(v => KEYCODES[v].key)
+    )
     .filter(keyCode => keyCode === 32 || keyCode >= 65 && keyCode <= 90)
   }
 

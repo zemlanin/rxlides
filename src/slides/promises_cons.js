@@ -1,6 +1,7 @@
 import Rx from 'rx'
 
 import {wrapToDisplay, renderStream, accumutate} from '../vision'
+import {listenInputs, MOUSE} from '../remote_io'
 
 export default () => {
   var frameStream = Rx.Observable.create(observer => (function loop() {
@@ -10,7 +11,9 @@ export default () => {
     })
   })())
 
-  var clickStream = Rx.Observable.fromEvent(document, 'click').map('click')
+  var clickStream = Rx.Observable.fromEvent(document, 'click')
+    .merge(listenInputs().filter(v => v === MOUSE.CLICK.name))
+    .map('click')
 
   var visualStream = clickStream
     .map(wrapToDisplay(document.querySelector('canvas').getContext("2d")))
