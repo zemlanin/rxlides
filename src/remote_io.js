@@ -78,7 +78,7 @@ export function sendSlide(slide) {
 }
 
 export function sendInput(input) {
-  var id = localStorage.getItem('presentationId')
+  var id = location.hash.replace('#', '')
   if (!id) { return Rx.Observable.return(null) }
 
   return push(firebaseRef.child('inputs/' + id), input)
