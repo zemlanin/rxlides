@@ -7,14 +7,41 @@
       .wrapper {margin: 40vh auto; width: 90vw; text-align: center;}
 
       a {cursor: pointer;}
-      .remote-button {font-size: 30vw}
-      #actions span {margin: 5vw}
+      .nav-button {
+        font-size: 30vw;
+        width: 22vw;
+        display: inline-block;
+      }
+      .nav-button#left, .nav-button#up {
+        font-size: 15vw;
+      }
+      #slide_name {
+        text-align: center;
+        width: 100%;
+      }
+      #actions {
+        margin: 5vh auto 0;
+      }
+      .action-button {
+        width: 39vw;
+        text-align: center;
+        background: white;
+        float: left;
+        cursor: pointer;
+        padding: 5vw;
+      }
+      .action-button:nth-child(4n + 1), .action-button:nth-child(4n) {
+        background: gray;
+        color: white;
+      }
     </style>
 </head>
 <body style="font: 5vw monospace;">
+    <a id="left" class="nav-button" data-input="LEFT">&larr;</a>
+    <a id="up" class="nav-button" data-input="UP">&uarr;</a>
+    <a id="down" class="nav-button" data-input="DOWN">&darr;</a>
+    <a id="right" class="nav-button" data-input="RIGHT">&rarr;</a>
     <div id="slide_name">???</div>
-    <a class="remote-button" data-input="LEFT">&lt;</a>
-    <a class="remote-button" data-input="RIGHT">&gt;</a>
     <div id="actions"></div>
     <script type="text/javascript" src="./js/babel-polyfill.js"></script>
     <script type="text/javascript" src="./js/common.js"></script>

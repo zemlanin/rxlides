@@ -5,13 +5,11 @@ export default class actionsClass extends Component {
     if (!this.props.actions) { return DOM.div() }
     return DOM.div(
       {},
-      this.props.actions.map(action => DOM.span(
+      this.props.actions.map(action => DOM.div(
         {
           key: action.name,
           onClick: this.props.actionOnClick(action),
-          style: {
-            cursor: 'pointer',
-          }
+          className: 'action-button'
         },
         action.name
       ))

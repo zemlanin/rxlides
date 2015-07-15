@@ -1,6 +1,6 @@
 import Rx from 'rx'
+import {listenInputs, KEYCODES} from './remote_io'
 
-const [UP, DOWN] = [38, 40]
 const partsSelector = '[id^=part_]'
 
 export function getNavigationStream(cycle) {
@@ -8,7 +8,11 @@ export function getNavigationStream(cycle) {
 
   return Rx.Observable.fromEvent(document.body, 'keyup')
     .pluck('keyCode')
-    .filter(keyCode => keyCode === UP || keyCode === DOWN)
+    .merge(listenInputs()
+      .filter(v => KEYCODES[v])
+      .map(v => KEYCODES[v].key)
+    )
+    .filter(keyCode => keyCode === KEYCODES.UP.key || keyCode === KEYCODES.DOWN.key)
     .map(keyCode => keyCode - 39) // UP = -1, DOWN = +1
     .scan(0, (acc, move) => {
       var newAcc = acc + move
