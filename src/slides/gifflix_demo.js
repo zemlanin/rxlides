@@ -2,6 +2,7 @@ import Rx from 'rx'
 import range from 'lodash.range'
 
 import {getNavigationStream} from '../navigation'
+import {listenInputs} from '../remote_io'
 
 const [inactiveStar, activeStar] = ['☆', '★']
 
@@ -23,6 +24,11 @@ export default () => {
   Rx.Observable.fromEvent(document.body, 'click')
     .map(getDomPath)
     .map(path => path.find(p => p.classList && p.classList.contains('gif_cell')))
+    .merge(listenInputs()
+      .filter(v => /_\d/.test(v))
+      .map(v => v.replace('_', ''))
+      .map(v => document.querySelector(`.gif_cell[data-id='${v}']`))
+    )
     .filter(cell => cell)
     .map(cell => ({
       id: parseInt(cell.dataset.id, 10),
