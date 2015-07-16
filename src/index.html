@@ -5,11 +5,19 @@
     <meta property="page" content="index">
     <link rel="stylesheet" type="text/css" href="./css/common.css">
     <style type="text/css">
-      .wrapper {margin: 40vh auto; width: 90vw; text-align: center;}
+        .wrapper {margin: 40vh auto; width: 90vw; text-align: center;}
+        #progress {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            background: gray;
+            width: 100vw;
+            height: 1vh;
+        }
 
-      @media (max-width: 1000px) {
-        nav span { display: none; }
-      }
+        @media (max-width: 1000px) {
+            nav span { display: none; }
+        }
     </style>
 </head>
 <body style="font: 3vw monospace;">
@@ -19,6 +27,7 @@
         <span>&rarr;</span>
         <span class="slide_name" style="font-size: 2vw">rxlides.surge.sh</span>
     </nav>
+    <div id="progress"></div>
     <script type="text/javascript" src="./js/common.js"></script>
     <script type="text/javascript" src="./js/main.js"></script>
 </body>

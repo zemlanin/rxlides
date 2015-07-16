@@ -16,7 +16,7 @@ import summary from './summary.js'
 
 import {KEYCODES, MOUSE} from '../remote_io.js'
 
-const puns = [
+const PUNS = [
   'Tyrannosaurus Rx',
   'Rx-xar, the Hunter',
   'Commissar Rx',
@@ -24,15 +24,39 @@ const puns = [
   'Rx and Morty',
 ]
 
+const GIFS = [
+  '0_200w.gif',
+  '1_200w.gif',
+  '2_200w.gif',
+  '3_200w.gif',
+  '4_200w.gif',
+  '0_200w_s.gif',
+  '1_200w_s.gif',
+  '2_200w_s.gif',
+  '3_200w_s.gif',
+  '4_200w_s.gif',
+  'everything_burrito.gif',
+  'not_true.gif',
+]
+
 function indexLogic() {
   Rx.Observable.interval(1000)
     .zip(
-      Rx.Observable.from(puns),
+      Rx.Observable.from(PUNS),
       (m, pun) => pun
     )
-    .take(puns.length)
+    .take(PUNS.length)
     .repeat()
     .subscribe(pun => document.getElementsByTagName('h1')[0].textContent = pun )
+
+  Rx.Observable.from(GIFS)
+    .flatMap(gif => Rx.Observable.create(obs => {
+      var img = new Image()
+      img.src = './gifs/' + gif
+      img.onload = e => obs.onNext(gif)
+    }))
+    .scan(0, (acc, v) => 100 - (acc + 100 / GIFS.length))
+    .subscribe(progress => document.getElementById('progress').style.width = progress + 'vw')
 }
 
 export const SLIDES = [
