@@ -123,6 +123,10 @@ export const SLIDES = [
     ],
   },
   {
+    name: 'mvwtf',
+    logic: null,
+  },
+  {
     name: 'programmable_stream',
     logic: programmableStream,
   },
