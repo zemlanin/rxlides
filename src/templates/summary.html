@@ -1,10 +1,17 @@
 ### style
     <style type="text/css">
       .wrapper {
-        margin: 30vh auto;
+        margin: 20vh auto 0;
         text-align: center;
       }
       .spaced {margin-top: 5vh}
+      .rainbow {
+        background-image: -webkit-gradient( linear, left top, right top, color-stop(0, #f22), color-stop(0.15, #f2f), color-stop(0.3, #22f), color-stop(0.45, #2ff), color-stop(0.6, #2f2),color-stop(0.75, #2f2), color-stop(0.9, #ff2), color-stop(1, #f22) );
+        background-image: gradient( linear, left top, right top, color-stop(0, #f22), color-stop(0.15, #f2f), color-stop(0.3, #22f), color-stop(0.45, #2ff), color-stop(0.6, #2f2),color-stop(0.75, #2f2), color-stop(0.9, #ff2), color-stop(1, #f22) );
+        color: transparent;
+        -webkit-background-clip: text;
+        background-clip: text;
+      }
     </style>
 ### fontStyle
     3.5vw monospace
@@ -19,6 +26,8 @@
             <div class="canvas-wrapper"><canvas width="400" height="70"></canvas></div>
         </div>
         <div class="spaced" id="part_1" hidden>
-            messages-based architecture
+            stream == <span class="rainbow">everything</span>
+            <br>
+            <img class="center-img" src="./gifs/everything_burrito.gif" />
         </div>
     </div>
