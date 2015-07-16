@@ -1,5 +1,7 @@
 import Rx from 'rx'
+import range from 'lodash.range'
 
+import {getNavigationStream} from '../navigation'
 import {wrapToDisplay, renderStream, accumutate} from '../vision'
 import {listenInputs, KEYCODES} from '../remote_io'
 
@@ -55,4 +57,11 @@ export default () => {
   canvasSingleFavUpdates.subscribe(renderStream(document.querySelector('canvas#plucked')))
   canvasScanned.subscribe(renderStream(document.querySelector('canvas#scanned')))
   canvasMapped.subscribe(renderStream(document.querySelector('canvas#mapped')))
+
+  getNavigationStream(true)
+    .subscribe(({acc, parts}) => {
+      for (var index of range(1, parts + 1)) {
+        document.getElementById('part_' + index).style.color = (!acc || acc === index) ? 'black' : 'gray'
+      }
+    })
 }
