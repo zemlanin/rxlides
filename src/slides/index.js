@@ -72,6 +72,10 @@ export const SLIDES = [
     logic: null,
   },
   {
+    name: 'not_true',
+    logic: null,
+  },
+  {
     name: 'promises_cons',
     logic: promisesCons,
     actions: [
