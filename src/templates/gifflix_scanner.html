@@ -1,0 +1,78 @@
+### style
+    <style type="text/css">
+        .wrapper { margin: 10vh auto 0; width: 60vw; }
+        .canvas-wrapper { color: gray; margin-bottom: 3px; }
+        .set {
+          margin-left: 4vw;
+          cursor: pointer;
+        }
+        .set#set_1 {
+          margin-left: 0;
+        }
+    </style>
+### fontStyle
+    1.7vw monospace
+### content
+    <div class="wrapper">
+      <table>
+        <tr>
+          <td id="part_1">
+            <b>window.appBus</b><br/>
+            &nbsp;&nbsp;.filter(v => v.tell === <b>'singleFavUpdate'</b>)<br/>
+            &nbsp;&nbsp;.pluck('data')
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <div style="color: gray; text-align: right;">
+              // == <div class="canvas-wrapper"><canvas id="plucked" width="400" height="50"></canvas></div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td id="part_2">
+            &nbsp;&nbsp;.scan(new Set(), (acc, v) => {<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;v.active ? acc.add(v.id) : acc.delete(v.id)<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;return acc<br/>
+            &nbsp;&nbsp;})
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <div style="color: gray; text-align: right;">
+              // == <div class="canvas-wrapper"><canvas id="scanned" width="400" height="50"></canvas></div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td id="part_3">
+            &nbsp;&nbsp;.map(favs => ({<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;to: '*', from: 'favorites',<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;tell: <b>'favsUpdate'</b>, data: favs,<br/>
+            &nbsp;&nbsp;}))
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <div style="color: gray; text-align: right;">
+              // == <div class="canvas-wrapper"><canvas id="mapped" width="400" height="50"></canvas></div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td id="part_4">
+            &nbsp;&nbsp;.subscribe(msg => <b>window.appBus</b>.onNext(msg))
+          </td>
+        </tr>
+        <tr><td>&nbsp;</td></tr>
+        <tr><td>&nbsp;</td></tr>
+        <tr>
+          <td colspan="2">
+            <b id="add_1" class="set">1:t</b>
+            <b id="remove_1" class="set">1:f</b>
+            <b id="add_2" class="set">2:t</b>
+            <b id="remove_2" class="set">2:f</b>
+          </td>
+        </tr>
+      </table>
+    </div>
