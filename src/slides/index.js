@@ -55,7 +55,7 @@ function indexLogic() {
       img.src = './gifs/' + gif
       img.onload = e => obs.onNext(gif)
     }))
-    .scan(0, (acc, v) => 100 - (acc + 100 / GIFS.length))
+    .scan(100, (acc, v) => acc - (100 / GIFS.length))
     .subscribe(progress => document.getElementById('progress').style.width = progress + 'vw')
 }
 
