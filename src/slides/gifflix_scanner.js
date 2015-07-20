@@ -38,7 +38,11 @@ export default () => {
     .map(fav => fav.split(':'))
     .map(([id, a]) => ({id, active: a === 't'}))
     .scan(new Set(), (acc, v) => {
-      v.active ? acc.add(v.id) : acc.delete(v.id)
+      if (v.active) {
+        acc.add(v.id)
+      } else {
+        acc.delete(v.id)
+      }
       return acc
     })
     .map(acc => `{${[...acc]}}`)

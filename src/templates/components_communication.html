@@ -77,9 +77,10 @@
                 <td id="part_3">
                     var <b>singleStream</b> = favsStream<br/>
                     &nbsp;&nbsp;.map(favs => favs.has(id))<br/>
-                    &nbsp;&nbsp;.subscribe(active => {<br/>
-                    &nbsp;&nbsp;&nbsp;&nbsp;component.setProps({active})<br/>
-                    &nbsp;&nbsp;})
+                    &nbsp;&nbsp;.subscribe(active => React.render(<br/>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;Star active={active} gifId={id}&gt;,<br/>
+                    &nbsp;&nbsp;&nbsp;&nbsp;starNode<br/>
+                    &nbsp;&nbsp;))
                 </td>
                 <td colspan="3" rowspan="2">
                     <span id="part_5">
@@ -104,9 +105,9 @@
                 <td id="part_4">
                     <br/>
                     var <b>countStream</b> = favsStream<wbr/>.pluck('size')<br/>
-                    countStream.subscribe(count => {<br/>
-                    &nbsp;&nbsp;component.setProps({count})<br/>
-                    })
+                    countStream.subscribe(count => React.render(<br/>
+                    &nbsp;&nbsp;&lt;Counter count={count}&gt;, countNode<br/>
+                    ))
                 </td>
             </tr>
         </table>
