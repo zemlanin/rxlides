@@ -14,6 +14,7 @@
                     <span style="color: gray">// controller.js</span>
                     <br/>
                     <span id="part_1">
+                    import _ from 'lodash'<br/>
                     import Rx from 'rx'<br/>
                     import React from 'react'<br/>
                     import Btn from './component'<br/>
@@ -21,18 +22,19 @@
                     <br/>
                     <span id="part_2">
                     var <b>bus</b> = new Rx.Subject()<br/>
-                    var <b>button</b> = React.render(Btn, {bus})<br/>
+                    var <b>button</b> = React.render(Btn, {bus}, node)<br/>
                     </span>
                     <br/>
                     <span id="part_3">
                     var <b>propsStream</b> = bus<br/>
                     &nbsp;&nbsp;.filter(e => e.type === 'click')<br/>
                     &nbsp;&nbsp;.map(e => getNewProps(e))<br/>
+                    &nbsp;&nbsp;.map(props => _.assign({bus}, props))<br/>
                     </span>
                     <br/>
                     <span id="part_4">
                     propsStream.subscribe(props => {<br/>
-                    &nbsp;&nbsp;button.setProps(props)<br/>
+                    &nbsp;&nbsp;React.render(Btn, props, node)<br/>
                     })
                     </span>
                 </td>
